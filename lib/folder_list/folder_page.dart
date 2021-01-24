@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sort_note/component/folder_item.dart';
 
 class FolderPage extends StatelessWidget {
   @override
@@ -8,15 +9,14 @@ class FolderPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('フォルダー'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'リスト一覧を表示します',
-            ),
-          ],
-        ),
+      body: GridView.extent(
+        // Create a grid with 2 columns. If you change the scrollDirection to
+        // horizontal, this produces 2 rows.
+        maxCrossAxisExtent: 150,
+        // Generate 100 widgets that display their index in the List.
+        children: List.generate(100, (index) {
+          return FolderItem((index + 1).toString());
+        }),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
