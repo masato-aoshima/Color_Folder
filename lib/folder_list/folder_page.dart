@@ -10,10 +10,7 @@ class FolderPage extends StatelessWidget {
         title: Text('フォルダー'),
       ),
       body: GridView.extent(
-        // Create a grid with 2 columns. If you change the scrollDirection to
-        // horizontal, this produces 2 rows.
         maxCrossAxisExtent: 150,
-        // Generate 100 widgets that display their index in the List.
         children: List.generate(100, (index) {
           return FolderItem((index + 1).toString());
         }),
@@ -22,7 +19,7 @@ class FolderPage extends StatelessWidget {
         onPressed: () {},
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
