@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/folder_item.dart';
+import 'package:sort_note/component/text_input_dialog.dart';
 import 'package:sort_note/folder_list/folder_model.dart';
 import 'package:sort_note/model/models.dart';
 import 'package:sort_note/repository/database.dart';
@@ -27,11 +28,21 @@ class FolderPage extends HookWidget {
         }),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Input Dialogを表示する
+        onPressed: () async {
+          String folderName = await showInputTextDialog(context);
+          print(folderName);
         },
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  Future<String> showInputTextDialog(BuildContext context) {
+    final dialog = TextInputDialog();
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return dialog;
+        });
   }
 }
