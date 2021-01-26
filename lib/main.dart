@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/folder_list/folder_page.dart';
 
 void main() {
-  runApp(MyApp());
+  // 1. ProviderScopeで囲む
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
