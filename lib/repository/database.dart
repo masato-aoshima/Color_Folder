@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:sort_note/model/models.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -32,7 +33,36 @@ class DBProvider {
     });
   }
 
-  void insertFolder() async {
+  /// フォルダーを一件追加
+  void insertFolder(Folder folder) async {
     final db = await database;
+    // db.insert の戻り値として、最後に挿入された行のIDを返す (今回は受け取らない)
+    await db.insert(_tableName, folder.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  /// 全てのフォルダーを取得
+  Future<List<Folder>> getAllFolders() async {
+    final db = await database;
+    final List<Map<String, dynamic>> folders = await db.query(_tableName);
+    return folders
+        .map((folder) => Folder(
+            id: folder['id'],
+            title: folder['title'],
+            priority: folder['priority']))
+        .toList();
+  }
+
+  /// フォルダーを一件更新
+  void updateFolder(Folder folder) async {
+    final db = await database;
+    await db.update(_tableName, folder.toMap(),
+        where: "id = ?", whereArgs: [folder.id]);
+  }
+
+  /// フォルダーを一件削除
+  void deleteFolder(String id) async {
+    final db = await database;
+    await db.delete(_tableName, where: "id = ?", whereArgs: [id]);
   }
 }
