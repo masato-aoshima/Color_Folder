@@ -28,7 +28,7 @@ class DBProvider {
         join(await getDatabasesPath(), 'sort_note_database.db'),
         onCreate: (db, version) async {
       return db.execute(
-        "CREATE TABLE folders(id INTEGER PRIMARY KEY, title TEXT, priority INTEGER)",
+        "CREATE TABLE folders(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, priority INTEGER)",
       );
     }, version: 1);
   }

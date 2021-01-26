@@ -28,7 +28,7 @@ class FolderPage extends HookWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          DBProvider.db.insertFolder(Folder(id: 2, title: '二つ目', priority: 1));
+          // Input Dialogを表示する
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
