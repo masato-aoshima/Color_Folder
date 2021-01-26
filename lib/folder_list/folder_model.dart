@@ -12,4 +12,11 @@ class FolderModel extends ChangeNotifier {
     _folders = await DBProvider.db.getAllFolders();
     notifyListeners(); // liveDataみたいな使い方はどうやるの
   }
+
+  void addFolders(Folder folder) async {
+    await DBProvider.db.insertFolder(folder);
+    _folders = await DBProvider.db
+        .getAllFolders(); // TODO ここ、データベースから取る必要はないかも？(フィールドに直接追加)
+    notifyListeners();
+  }
 }

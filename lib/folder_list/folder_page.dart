@@ -16,7 +16,8 @@ class FolderPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // 4. 観察する変数を useProvider を使って宣言
-    final folders = useProvider(folderProvider).folders;
+    final provider = useProvider(folderProvider);
+    final folders = provider.folders;
     return Scaffold(
       appBar: AppBar(
         title: Text('フォルダー'),
@@ -30,7 +31,7 @@ class FolderPage extends HookWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           String folderName = await showInputTextDialog(context);
-          print(folderName);
+          provider.addFolders(Folder(title: folderName));
         },
         child: Icon(Icons.add),
       ),

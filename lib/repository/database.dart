@@ -34,7 +34,7 @@ class DBProvider {
   }
 
   /// フォルダーを一件追加
-  void insertFolder(Folder folder) async {
+  Future insertFolder(Folder folder) async {
     final db = await database;
     // db.insert の戻り値として、最後に挿入された行のIDを返す (今回は受け取らない)
     await db.insert(_tableName, folder.toMap(),

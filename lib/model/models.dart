@@ -5,7 +5,7 @@ class Folder {
   final String title;
   final int priority;
 
-  Folder({this.id = 0, this.title, this.priority = 0});
+  Folder({this.id, this.title, this.priority = 0});
 
   // SQLiteのテーブルにinsertするために、Map型に変換
   Map<String, dynamic> toMap() {
