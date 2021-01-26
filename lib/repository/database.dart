@@ -30,7 +30,7 @@ class DBProvider {
       return db.execute(
         "CREATE TABLE folders(id INTEGER PRIMARY KEY, title TEXT, priority INTEGER)",
       );
-    });
+    }, version: 1);
   }
 
   /// フォルダーを一件追加
