@@ -30,7 +30,6 @@ class FolderPage extends HookWidget {
         onPressed: () {
           // Input Dialogを表示する
         },
-        tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
