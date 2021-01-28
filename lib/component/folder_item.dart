@@ -13,7 +13,8 @@ class FolderItem extends StatelessWidget {
         Expanded(
             flex: 3,
             child: FittedBox(
-                fit: BoxFit.fill, child: Icon(Icons.folder_outlined))),
+                fit: BoxFit.fill,
+                child: Icon(Icons.folder, color: Colors.yellow[600]))),
         Expanded(flex: 1, child: Text(text))
       ],
     );

@@ -31,7 +31,9 @@ class FolderPage extends HookWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           String folderName = await showInputTextDialog(context);
-          provider.addFolders(Folder(title: folderName));
+          if (folderName != null && folderName.isNotEmpty) {
+            provider.addFolders(Folder(title: folderName));
+          }
         },
         child: Icon(Icons.add),
       ),
