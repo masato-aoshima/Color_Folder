@@ -23,11 +23,16 @@ class FolderPage extends HookWidget {
         title: Text('フォルダー'),
       ),
       body: GridView.extent(
-        maxCrossAxisExtent: 150,
-        children: List.generate(folders.length, (index) {
-          return FolderItem(folders[index].title);
-        }),
-      ),
+          maxCrossAxisExtent: 150,
+          children: folders
+              .map((folder) => FolderItem(
+                    id: folder.id,
+                    title: folder.title,
+                    callback: (id) {
+                      print(id.toString());
+                    },
+                  ))
+              .toList()),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           String folderName = await showInputTextDialog(context);
