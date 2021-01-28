@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
+import 'package:sort_note/component/edit_or_delete_dialog.dart';
 import 'package:sort_note/component/folder_item.dart';
 import 'package:sort_note/component/text_input_dialog.dart';
 import 'package:sort_note/folder_list/folder_model.dart';
@@ -29,10 +30,15 @@ class FolderPage extends HookWidget {
                     id: folder.id,
                     title: folder.title,
                     callback: (id) {
+                      // TODO メモ一覧画面に遷移
                       print(id.toString());
                     },
                     longPressCallback: (id) {
-                      print('long  $id');
+                      EditOrDeleteDialog.show(context, () {
+                        print('編集'); // TODO 編集ダイアログ表示
+                      }, () {
+                        print('削除'); // TODO 削除ダイアログ表示
+                      });
                     },
                   ))
               .toList()),
