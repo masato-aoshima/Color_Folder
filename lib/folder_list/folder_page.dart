@@ -31,6 +31,9 @@ class FolderPage extends HookWidget {
                     callback: (id) {
                       print(id.toString());
                     },
+                    longPressCallback: (id) {
+                      print('long  $id');
+                    },
                   ))
               .toList()),
       floatingActionButton: FloatingActionButton(
