@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NoteItemWidget extends StatelessWidget {
-  NoteItemWidget({this.id, this.text, this.callback});
+  NoteItemWidget({this.id, this.text, this.onTapCallback});
 
   final int id;
   final String text;
-  final Function(int) callback;
+  final Function(int, String) onTapCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,9 @@ class NoteItemWidget extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             trailing: Icon(Icons.navigate_next),
+            onTap: () {
+              onTapCallback(id, text);
+            },
           ),
         ),
       ),

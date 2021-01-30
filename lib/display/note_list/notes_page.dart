@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/note_item_widget.dart';
 import 'package:sort_note/component/text_input_dialog.dart';
+import 'package:sort_note/display/note_add_edit/note_add_edit_page.dart';
 import 'package:sort_note/model/note.dart';
 import 'package:sort_note/repository/database.dart';
 
@@ -33,16 +34,21 @@ class NotePage extends HookWidget {
             .map((note) => NoteItemWidget(
                   id: note.id,
                   text: note.text,
-                  callback: (id) {},
+                  onTapCallback: (id, text) {
+                    // メモ編集ページに移動
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              NoteAddEditPage(id, text, provider),
+                        ));
+                  },
                 ))
             .toList(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          String noteText = await showInputTextDialog(context, "");
-          if (noteText != null && noteText.isNotEmpty) {
-            provider.addNote(Note(text: noteText, folderId: folderId));
-          }
+          // メモ追加ページに移動
         },
         child: Icon(Icons.add),
       ),
