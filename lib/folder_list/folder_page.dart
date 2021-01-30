@@ -21,8 +21,8 @@ class FolderPage extends HookWidget {
     final folders = provider.folders;
 
     final dialog = EditOrDeleteDialog(
-      editFunction: (id) {
-        print('編集 $id');
+      editFunction: (id, title) {
+        print('編集 $id$title');
       },
       deleteFunction: (id) {
         provider.deleteFolder(id);
@@ -44,14 +44,14 @@ class FolderPage extends HookWidget {
                       // TODO メモ一覧画面に遷移
                       print(id.toString());
                     },
-                    longPressCallback: (id) {
-                      EditOrDeleteDialog.show(context, dialog, id);
+                    longPressCallback: (id, title) {
+                      EditOrDeleteDialog.show(context, dialog, id, title);
                     },
                   ))
               .toList()),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          String folderName = await showInputTextDialog(context);
+          String folderName = await showInputTextDialog(context, "");
           if (folderName != null && folderName.isNotEmpty) {
             provider.addFolders(Folder(title: folderName));
           }
@@ -61,8 +61,8 @@ class FolderPage extends HookWidget {
     );
   }
 
-  Future<String> showInputTextDialog(BuildContext context) {
-    final dialog = TextInputDialog();
+  Future<String> showInputTextDialog(BuildContext context, String text) {
+    final dialog = TextInputDialog(text);
     return showDialog(
         context: context,
         builder: (BuildContext context) {

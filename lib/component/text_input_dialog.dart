@@ -2,12 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TextInputDialog extends StatefulWidget {
+  TextInputDialog(this.text);
+  final text;
+
   @override
-  State<StatefulWidget> createState() => TextInputDialogState();
+  State<StatefulWidget> createState() => TextInputDialogState(text);
 }
 
 class TextInputDialogState extends State<TextInputDialog> {
-  final textEditingController = TextEditingController();
+  TextInputDialogState(String text) {
+    textEditingController = TextEditingController(text: text);
+  }
+
+  var textEditingController;
 
   @override
   Widget build(BuildContext context) {

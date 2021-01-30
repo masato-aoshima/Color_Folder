@@ -7,7 +7,7 @@ class FolderItem extends StatelessWidget {
   final int id;
   final String title;
   final Function(int) callback;
-  final Function(int) longPressCallback;
+  final Function(int id, String title) longPressCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class FolderItem extends StatelessWidget {
         Expanded(
             flex: 3,
             child: GestureDetector(
-              onLongPress: () => longPressCallback(id),
+              onLongPress: () => longPressCallback(id, title),
               child: IconButton(
                 icon: Icon(Icons.folder),
                 color: Colors.yellow[600],
