@@ -15,10 +15,13 @@ class NoteItemWidget extends StatelessWidget {
       child: Card(
         margin: const EdgeInsets.all(8.0),
         elevation: 8.0,
-        child: ListTile(
-          title: Text(
-            text.split("n").first,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        child: Center(
+          child: ListTile(
+            title: Text(
+              text.split("n").first,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            trailing: Icon(Icons.navigate_next),
           ),
         ),
       ),
