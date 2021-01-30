@@ -54,7 +54,7 @@ class DBProvider {
   }
 
   /// フォルダーを一件更新
-  void updateFolder(Folder folder) async {
+  Future updateFolder(Folder folder) async {
     final db = await database;
     await db.update(_tableName, folder.toMap(),
         where: "id = ?", whereArgs: [folder.id]);

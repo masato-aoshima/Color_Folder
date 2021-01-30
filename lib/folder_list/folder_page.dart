@@ -21,8 +21,11 @@ class FolderPage extends HookWidget {
     final folders = provider.folders;
 
     final dialog = EditOrDeleteDialog(
-      editFunction: (id, title) {
-        print('編集 $id$title');
+      editFunction: (id, title) async {
+        final newFolderName = await showInputTextDialog(context, title);
+        final folder = Folder(id: id, title: newFolderName);
+        provider.upDateFolderName(folder);
+        Navigator.pop(context);
       },
       deleteFunction: (id) {
         provider.deleteFolder(id);

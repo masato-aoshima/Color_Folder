@@ -25,4 +25,10 @@ class FolderModel extends ChangeNotifier {
     _folders = await DBProvider.db.getAllFolders();
     notifyListeners();
   }
+
+  void upDateFolderName(Folder folder) async {
+    await DBProvider.db.updateFolder(folder);
+    _folders = await DBProvider.db.getAllFolders();
+    notifyListeners();
+  }
 }
