@@ -6,7 +6,7 @@ import 'package:sort_note/component/edit_or_delete_dialog.dart';
 import 'package:sort_note/component/folder_item.dart';
 import 'package:sort_note/component/text_input_dialog.dart';
 import 'package:sort_note/folder_list/folder_model.dart';
-import 'package:sort_note/model/models.dart';
+import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/repository/database.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
@@ -23,8 +23,10 @@ class FolderPage extends HookWidget {
     final dialog = EditOrDeleteDialog(
       editFunction: (id, title) async {
         final newFolderName = await showInputTextDialog(context, title);
-        final folder = Folder(id: id, title: newFolderName);
-        provider.upDateFolderName(folder);
+        if (newFolderName != null && newFolderName.isNotEmpty) {
+          final folder = Folder(id: id, title: newFolderName);
+          provider.upDateFolderName(folder); // TODO priority が 0に戻る
+        }
         Navigator.pop(context);
       },
       deleteFunction: (id) {
