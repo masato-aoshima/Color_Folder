@@ -77,6 +77,8 @@ class DBProvider {
   Future deleteFolder(String id) async {
     final db = await database;
     await db.delete(_folderTableName, where: "id = ?", whereArgs: [id]);
+    await db.delete(_noteTableName,
+        where: "folderId = ?", whereArgs: [id]); //TODO Database Inspector でデバッグ
   }
 
   /**
