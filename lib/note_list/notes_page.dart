@@ -27,14 +27,15 @@ class NotePage extends HookWidget {
       appBar: AppBar(
         title: Text(folderName),
       ),
-      body: GridView.extent(
-          maxCrossAxisExtent: 150,
-          children: notes
-              .map((note) => NoteItemWidget(
-                    id: note.id,
-                    text: note.text,
-                  ))
-              .toList()),
+      body: ListView(
+        children: notes
+            .map((note) => NoteItemWidget(
+                  id: note.id,
+                  text: note.text,
+                  callback: (id) {},
+                ))
+            .toList(),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           String noteText = await showInputTextDialog(context, "");
