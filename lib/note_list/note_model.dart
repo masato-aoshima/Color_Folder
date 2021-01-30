@@ -13,7 +13,7 @@ class NoteModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addNotes(Note note) async {
+  void addNote(Note note) async {
     await DBProvider.db.insertNote(note);
     _notes = await DBProvider.db.getNotesInFolder(note.folderId);
     notifyListeners();

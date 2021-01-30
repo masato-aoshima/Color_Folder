@@ -36,7 +36,12 @@ class NotePage extends HookWidget {
                   ))
               .toList()),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {},
+        onPressed: () async {
+          String noteText = await showInputTextDialog(context, "");
+          if (noteText != null && noteText.isNotEmpty) {
+            provider.addNote(Note(text: noteText, folderId: folderId));
+          }
+        },
         child: Icon(Icons.add),
       ),
     );
