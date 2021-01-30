@@ -61,7 +61,7 @@ class DBProvider {
   }
 
   /// フォルダーを一件削除
-  void deleteFolder(String id) async {
+  Future deleteFolder(String id) async {
     final db = await database;
     await db.delete(_tableName, where: "id = ?", whereArgs: [id]);
   }

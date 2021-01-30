@@ -19,4 +19,10 @@ class FolderModel extends ChangeNotifier {
         .getAllFolders(); // TODO ここ、データベースから取る必要はないかも？(フィールドに直接追加)
     notifyListeners();
   }
+
+  void deleteFolder(int id) async {
+    await DBProvider.db.deleteFolder(id.toString());
+    _folders = await DBProvider.db.getAllFolders();
+    notifyListeners();
+  }
 }

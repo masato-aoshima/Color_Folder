@@ -14,20 +14,22 @@ final folderProvider =
     ChangeNotifierProvider((ref) => FolderModel()..getFolders());
 
 class FolderPage extends HookWidget {
-  final dialog = EditOrDeleteDialog(
-    editFunction: (id) {
-      print('編集 $id');
-    },
-    deleteFunction: (id) {
-      print('削除 $id');
-    },
-  );
-
   @override
   Widget build(BuildContext context) {
     // 4. 観察する変数を useProvider を使って宣言
     final provider = useProvider(folderProvider);
     final folders = provider.folders;
+
+    final dialog = EditOrDeleteDialog(
+      editFunction: (id) {
+        print('編集 $id');
+      },
+      deleteFunction: (id) {
+        provider.deleteFolder(id);
+        Navigator.pop(context);
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('フォルダー'),
