@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/edit_or_delete_dialog.dart';
-import 'package:sort_note/component/folder_item.dart';
+import 'package:sort_note/component/folder_item_widget.dart';
 import 'package:sort_note/component/text_input_dialog.dart';
 import 'package:sort_note/folder_list/folder_model.dart';
 import 'package:sort_note/model/folder.dart';
+import 'package:sort_note/note_list/notes_page.dart';
 import 'package:sort_note/repository/database.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
@@ -42,12 +43,15 @@ class FolderPage extends HookWidget {
       body: GridView.extent(
           maxCrossAxisExtent: 150,
           children: folders
-              .map((folder) => FolderItem(
+              .map((folder) => FolderItemWidget(
                     id: folder.id,
                     title: folder.title,
-                    callback: (id) {
-                      // TODO メモ一覧画面に遷移
-                      print(id.toString());
+                    callback: (id, title) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NotePage(id, title),
+                          ));
                     },
                     longPressCallback: (id, title) {
                       EditOrDeleteDialog.show(context, dialog, id, title);
