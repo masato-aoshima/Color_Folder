@@ -14,7 +14,7 @@ class NoteItemWidget extends StatelessWidget {
       height: 100,
       child: Card(
         margin: const EdgeInsets.all(8.0),
-        elevation: 8.0,
+        elevation: 4.0,
         child: Center(
           child: ListTile(
             title: Text(

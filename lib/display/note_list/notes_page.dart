@@ -49,6 +49,11 @@ class NotePage extends HookWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // メモ追加ページに移動
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NoteAddEditPage(null, null, provider),
+              ));
         },
         child: Icon(Icons.add),
       ),

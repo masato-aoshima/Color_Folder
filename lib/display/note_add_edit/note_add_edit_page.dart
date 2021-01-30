@@ -15,8 +15,11 @@ class NoteAddEditPage extends HookWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(noteId.toString()),
+          title: Text(noteId == null ? "新規メモ" : noteText.split("n").first),
         ),
-        body: Text(noteText));
+        body: TextFormField(
+            maxLines: null,
+            expands: true,
+            initialValue: noteText == null ? "" : noteText));
   }
 }
