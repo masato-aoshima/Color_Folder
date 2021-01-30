@@ -4,9 +4,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/note_item_widget.dart';
 import 'package:sort_note/component/text_input_dialog.dart';
-import 'package:sort_note/note_list/note_model.dart';
 import 'package:sort_note/model/note.dart';
 import 'package:sort_note/repository/database.dart';
+
+import 'note_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
 final noteProvider = ChangeNotifierProvider((ref) => NoteModel());
