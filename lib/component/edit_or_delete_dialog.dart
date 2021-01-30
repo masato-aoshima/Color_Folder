@@ -6,20 +6,25 @@ class EditOrDeleteDialog extends StatelessWidget {
 
   final Function editFunction;
   final Function deleteFunction;
+  var folderId;
 
   @override
   Widget build(BuildContext context) {
     final dialog = SimpleDialog(children: [
       // 編集
       SimpleDialogOption(
-        onPressed: () => editFunction,
+        onPressed: () {
+          editFunction(folderId);
+        },
         child: Row(
           children: [Expanded(child: Text('編集')), Icon(Icons.edit_sharp)],
         ),
       ),
       // 削除
       SimpleDialogOption(
-        onPressed: () => deleteFunction(),
+        onPressed: () {
+          deleteFunction(folderId);
+        },
         child: Row(
           children: [
             Expanded(
@@ -39,12 +44,11 @@ class EditOrDeleteDialog extends StatelessWidget {
   }
 
   static void show(
-      BuildContext context, Function editFunction, Function deleteFunction) {
-    final dialog = EditOrDeleteDialog();
+      BuildContext context, EditOrDeleteDialog dialog, int folderId) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return dialog;
+          return dialog..folderId = folderId;
         });
   }
 }

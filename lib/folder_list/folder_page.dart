@@ -14,6 +14,15 @@ final folderProvider =
     ChangeNotifierProvider((ref) => FolderModel()..getFolders());
 
 class FolderPage extends HookWidget {
+  final dialog = EditOrDeleteDialog(
+    editFunction: (id) {
+      print('編集 $id');
+    },
+    deleteFunction: (id) {
+      print('削除 $id');
+    },
+  );
+
   @override
   Widget build(BuildContext context) {
     // 4. 観察する変数を useProvider を使って宣言
@@ -34,11 +43,7 @@ class FolderPage extends HookWidget {
                       print(id.toString());
                     },
                     longPressCallback: (id) {
-                      EditOrDeleteDialog.show(context, () {
-                        print('編集'); // TODO 編集ダイアログ表示
-                      }, () {
-                        print('削除'); // TODO 削除ダイアログ表示
-                      });
+                      EditOrDeleteDialog.show(context, dialog, id);
                     },
                   ))
               .toList()),
