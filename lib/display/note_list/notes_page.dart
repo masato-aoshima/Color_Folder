@@ -38,8 +38,8 @@ class NotePage extends HookWidget {
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => NoteAddEditPage(
-                              note.id, note.text, note.folderId),
+                          builder: (context) =>
+                              NoteAddEditPage(note.id, note.text, folderId),
                         ));
                   },
                 ))

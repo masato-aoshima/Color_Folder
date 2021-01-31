@@ -16,11 +16,11 @@ class NoteAddEditModel extends ChangeNotifier {
     await DBProvider.db.insertNote(note);
   }
 
-  void deleteNote(int id, int folderId) async {
+  Future deleteNote(int id) async {
     await DBProvider.db.deleteNote(id.toString());
   }
 
-  void upDateNote(Note note) async {
+  Future upDateNote(Note note) async {
     await DBProvider.db.updateNote(note);
   }
 
@@ -30,6 +30,19 @@ class NoteAddEditModel extends ChangeNotifier {
       if (inputText.isEmpty) return;
       final newNote = Note(text: inputText, folderId: folderId);
       await addNote(newNote);
+    }
+
+    // 更新・削除
+    if (noteId != null) {
+      if (inputText.isNotEmpty) {
+        // 更新
+        final newNote = Note(id: noteId, text: inputText, folderId: folderId);
+        await upDateNote(newNote);
+      }
+      if (inputText.isEmpty) {
+        // 削除
+        await deleteNote(noteId);
+      }
     }
   }
 }
