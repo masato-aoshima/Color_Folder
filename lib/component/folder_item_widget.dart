@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FolderItemWidget extends StatelessWidget {
-  FolderItemWidget({this.title, this.callback, this.longPressCallback});
+  FolderItemWidget(
+      {this.title, this.callback, this.longPressCallback, this.enable = true});
+
   final String title;
   final Function() callback;
   final Function() longPressCallback;
+  final bool enable;
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +17,21 @@ class FolderItemWidget extends StatelessWidget {
         Expanded(
             flex: 3,
             child: GestureDetector(
-              onLongPress: () => longPressCallback(),
+              onLongPress: () {
+                if (longPressCallback != null) {
+                  longPressCallback();
+                }
+              },
               child: IconButton(
                 icon: Icon(Icons.folder),
-                color: Colors.yellow[600],
+                color: enable ? Colors.yellow[600] : Colors.grey,
                 padding: EdgeInsets.all(0.0),
                 iconSize: 100,
-                onPressed: () => callback(),
+                onPressed: () {
+                  if (enable) {
+                    callback();
+                  }
+                },
               ),
             )),
         Expanded(flex: 1, child: Text(title))

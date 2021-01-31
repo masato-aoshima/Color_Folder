@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NoteItemWidget extends StatelessWidget {
-  NoteItemWidget({this.text, this.onTapCallback});
+  NoteItemWidget({this.text, this.onTapCallback, this.onLongPressCallback});
 
   final String text;
   final Function() onTapCallback;
+  final Function() onLongPressCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,9 @@ class NoteItemWidget extends StatelessWidget {
             trailing: Icon(Icons.navigate_next),
             onTap: () {
               onTapCallback();
+            },
+            onLongPress: () {
+              onLongPressCallback();
             },
           ),
         ),

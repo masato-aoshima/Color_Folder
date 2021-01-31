@@ -99,10 +99,11 @@ class DBProvider {
     final List<Map<String, dynamic>> notes = await db
         .query(_noteTableName, where: 'folderId = ?', whereArgs: [folderId]);
     return notes
-        .map((folder) => Note(
-            id: folder['id'],
-            text: folder['text'],
-            priority: folder['priority']))
+        .map((note) => Note(
+            id: note['id'],
+            text: note['text'],
+            priority: note['priority'],
+            folderId: note['folderId']))
         .toList();
   }
 
@@ -117,5 +118,12 @@ class DBProvider {
   Future deleteNote(String id) async {
     final db = await database;
     await db.delete(_noteTableName, where: "id = ?", whereArgs: [id]);
+  }
+
+  // ノートの所属するフォルダーを変更
+  Future moveAnotherFolder(int noteId, int newFolderId) async {
+    final db = await database;
+    await db.rawUpdate(
+        'UPDATE notes SET folderId = ? WHERE id = ?', [newFolderId, noteId]);
   }
 }
