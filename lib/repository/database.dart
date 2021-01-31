@@ -99,10 +99,11 @@ class DBProvider {
     final List<Map<String, dynamic>> notes = await db
         .query(_noteTableName, where: 'folderId = ?', whereArgs: [folderId]);
     return notes
-        .map((folder) => Note(
-            id: folder['id'],
-            text: folder['text'],
-            priority: folder['priority']))
+        .map((note) => Note(
+            id: note['id'],
+            text: note['text'],
+            priority: note['priority'],
+            folderId: note['folderId']))
         .toList();
   }
 

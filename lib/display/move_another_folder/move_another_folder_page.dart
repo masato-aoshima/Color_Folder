@@ -42,6 +42,7 @@ class MoveAnotherFolderPage extends HookWidget {
                         await provider.upDateFolderId(folder.id);
                         Navigator.pop(context);
                       },
+                      enable: folderId != folder.id,
                     ))
                 .toList()));
   }
