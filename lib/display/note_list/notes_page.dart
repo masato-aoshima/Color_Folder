@@ -8,7 +8,6 @@ import 'package:sort_note/component/text_input_dialog.dart';
 import 'package:sort_note/display/move_another_folder/move_another_folder_page.dart';
 import 'package:sort_note/display/note_add_edit/note_add_edit_page.dart';
 import 'package:sort_note/model/note.dart';
-import 'package:sort_note/repository/database.dart';
 
 import 'note_model.dart';
 

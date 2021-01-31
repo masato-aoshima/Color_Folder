@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class Folder {
   final int id;
   final String title;

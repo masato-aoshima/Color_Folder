@@ -1,10 +1,7 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
+import 'package:path/path.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/model/note.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
 class DBProvider {
   DBProvider._();
