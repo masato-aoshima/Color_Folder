@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
+import 'package:sort_note/component/move_or_delete_dialog.dart';
 import 'package:sort_note/component/note_item_widget.dart';
 import 'package:sort_note/component/text_input_dialog.dart';
 import 'package:sort_note/display/note_add_edit/note_add_edit_page.dart';
@@ -58,6 +59,23 @@ class NotePage extends HookWidget {
                           builder: (context) =>
                               NoteAddEditPage(note.id, note.text, folderId),
                         ));
+                  },
+                  onLongPressCallback: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return MoveOrDeleteDialog(
+                            noteText: note.text,
+                            moveFunction: () {
+                              print('移動');
+                              Navigator.pop(context);
+                            },
+                            deleteFunction: () {
+                              print('削除');
+                              Navigator.pop(context);
+                            },
+                          );
+                        });
                   },
                 ))
             .toList(),

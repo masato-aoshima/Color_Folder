@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+// TODO 毎回長押しされるたびにダイアログを生成するよう修正
 class EditOrDeleteDialog extends StatelessWidget {
   EditOrDeleteDialog({this.editFunction, this.deleteFunction});
 
