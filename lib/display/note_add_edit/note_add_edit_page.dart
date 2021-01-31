@@ -35,12 +35,16 @@ class NoteAddEditPage extends HookWidget {
           appBar: AppBar(
             title: Text(noteId == null ? "新規メモ" : noteText.split("\n").first),
           ),
-          body: TextFormField(
-            controller: myController,
-            onChanged: provider.changeText,
-            maxLines: null,
-            expands: true,
-            autofocus: noteId == null,
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: myController,
+              onChanged: provider.changeText,
+              maxLines: null,
+              expands: true,
+              autofocus: noteId == null,
+              style: TextStyle(fontSize: 20),
+            ),
           )),
     );
   }
