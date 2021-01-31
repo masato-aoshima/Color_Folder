@@ -28,8 +28,12 @@ class NotePage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(folderName),
-      ),
+          title: Text(
+            folderName,
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+          backgroundColor: Colors.yellow[600],
+          iconTheme: IconThemeData(color: Colors.black)),
       body: getListViewWithEmptyMessage(context, notes, provider),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

@@ -37,7 +37,10 @@ class FolderPage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('フォルダー'),
+        title: Text(
+          'フォルダー',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: getGridViewWithEmptyMessage(context, folders, dialog),
       floatingActionButton: FloatingActionButton(

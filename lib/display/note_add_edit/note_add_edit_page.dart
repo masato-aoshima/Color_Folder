@@ -30,7 +30,13 @@ class NoteAddEditPage extends HookWidget {
       },
       child: Scaffold(
           appBar: AppBar(
-            title: Text(noteId == null ? "新規メモ" : noteText.split("\n").first),
+            title: Text(
+              noteId == null ? "新規メモ" : noteText.split("\n").first,
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+            backgroundColor: Colors.white,
+            iconTheme: IconThemeData(color: Colors.black),
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
