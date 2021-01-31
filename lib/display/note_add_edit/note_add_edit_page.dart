@@ -13,7 +13,6 @@ final noteAddEditProvider = ChangeNotifierProvider((ref) => NoteAddEditModel());
 class NoteAddEditPage extends HookWidget {
   NoteAddEditPage(this.noteId, this.noteText, this.folderId);
 
-  // TODO Noteオブジェクトをもらった方がいい？
   final int noteId;
   final String noteText;
   final int folderId;
@@ -22,27 +21,19 @@ class NoteAddEditPage extends HookWidget {
   Widget build(BuildContext context) {
     final provider = useProvider(noteAddEditProvider)
       ..noteId = noteId
-      ..inputText = noteText;
+      ..inputText = noteText
+      ..folderId = folderId;
     final myController = TextEditingController(text: provider.inputText);
 
     return WillPopScope(
       onWillPop: () {
-        print('画面がポップされます');
-        // ここで、更新か追加を行う
-        // noteID がからの場合は追加 ただし、テキストが空の場合は何もしない
-        // if (noteId == null) {
-        //   // 追加
-        //   if (provider.inputText.isNotEmpty){
-        //     final note = Note(id: null,)
-        //   }
-        // }
-
+        provider.onPagePop(); // 追加 or 更新 or 削除
         Navigator.of(context).pop();
         return Future.value(false);
       },
       child: Scaffold(
           appBar: AppBar(
-            title: Text(noteId == null ? "新規メモ" : noteText.split("n").first),
+            title: Text(noteId == null ? "新規メモ" : noteText.split("\n").first),
           ),
           body: TextFormField(
               controller: myController,

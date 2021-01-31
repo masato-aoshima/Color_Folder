@@ -51,7 +51,7 @@ class NotePage extends HookWidget {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NoteAddEditPage(null, null, null),
+                builder: (context) => NoteAddEditPage(null, null, folderId),
               ));
         },
         child: Icon(Icons.add),

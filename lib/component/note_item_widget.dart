@@ -17,7 +17,7 @@ class NoteItemWidget extends StatelessWidget {
         child: Center(
           child: ListTile(
             title: Text(
-              text.split("n").first,
+              text.split("\n").first,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             trailing: Icon(Icons.navigate_next),

@@ -6,12 +6,13 @@ import 'package:sort_note/repository/database.dart';
 class NoteAddEditModel extends ChangeNotifier {
   int noteId;
   String inputText;
+  int folderId;
 
   void changeText(String text) {
     inputText = text;
   }
 
-  void addNote(Note note) async {
+  Future addNote(Note note) async {
     await DBProvider.db.insertNote(note);
   }
 
@@ -21,5 +22,14 @@ class NoteAddEditModel extends ChangeNotifier {
 
   void upDateNote(Note note) async {
     await DBProvider.db.updateNote(note);
+  }
+
+  void onPagePop() async {
+    // 新規追加
+    if (noteId == null) {
+      if (inputText.isEmpty) return;
+      final newNote = Note(text: inputText, folderId: folderId);
+      await addNote(newNote);
+    }
   }
 }
