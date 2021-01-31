@@ -29,7 +29,24 @@ class NotePage extends HookWidget {
       appBar: AppBar(
         title: Text(folderName),
       ),
-      body: ListView(
+      body: getListViewWithEmptyMessage(context, notes),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          // メモ追加ページに移動
+          await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NoteAddEditPage(null, null, folderId),
+              ));
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget getListViewWithEmptyMessage(BuildContext context, List<Note> notes) {
+    if (notes.length > 0) {
+      return ListView(
         children: notes
             .map((note) => NoteItemWidget(
                   text: note.text,
@@ -44,19 +61,18 @@ class NotePage extends HookWidget {
                   },
                 ))
             .toList(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // メモ追加ページに移動
-          await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NoteAddEditPage(null, null, folderId),
-              ));
-        },
-        child: Icon(Icons.add),
-      ),
-    );
+      );
+    } else {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text('+ ボタンを押して、メモを追加しましょう！',
+                  style: TextStyle(fontSize: 100))),
+        ),
+      );
+    }
   }
 }
 
