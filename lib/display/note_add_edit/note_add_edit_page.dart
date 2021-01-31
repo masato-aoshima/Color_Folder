@@ -36,10 +36,12 @@ class NoteAddEditPage extends HookWidget {
             title: Text(noteId == null ? "新規メモ" : noteText.split("\n").first),
           ),
           body: TextFormField(
-              controller: myController,
-              onChanged: provider.changeText,
-              maxLines: null,
-              expands: true)),
+            controller: myController,
+            onChanged: provider.changeText,
+            maxLines: null,
+            expands: true,
+            autofocus: noteId == null,
+          )),
     );
   }
 }
