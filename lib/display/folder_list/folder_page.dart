@@ -44,17 +44,18 @@ class FolderPage extends HookWidget {
           maxCrossAxisExtent: 150,
           children: folders
               .map((folder) => FolderItemWidget(
-                    id: folder.id,
                     title: folder.title,
-                    callback: (id, title) {
+                    callback: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NotePage(id, title),
+                            builder: (context) =>
+                                NotePage(folder.id, folder.title),
                           ));
                     },
-                    longPressCallback: (id, title) {
-                      EditOrDeleteDialog.show(context, dialog, id, title);
+                    longPressCallback: () {
+                      EditOrDeleteDialog.show(
+                          context, dialog, folder.id, folder.title);
                     },
                   ))
               .toList()),
