@@ -40,25 +40,7 @@ class FolderPage extends HookWidget {
       appBar: AppBar(
         title: Text('フォルダー'),
       ),
-      body: GridView.extent(
-          maxCrossAxisExtent: 150,
-          children: folders
-              .map((folder) => FolderItemWidget(
-                    title: folder.title,
-                    callback: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                NotePage(folder.id, folder.title),
-                          ));
-                    },
-                    longPressCallback: () {
-                      EditOrDeleteDialog.show(
-                          context, dialog, folder.id, folder.title);
-                    },
-                  ))
-              .toList()),
+      body: getGridViewWithEmptyMessage(context, folders, dialog),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           String folderName = await showInputTextDialog(context, "");
@@ -78,5 +60,40 @@ class FolderPage extends HookWidget {
         builder: (BuildContext context) {
           return dialog;
         });
+  }
+
+  Widget getGridViewWithEmptyMessage(
+      BuildContext context, List<Folder> folders, EditOrDeleteDialog dialog) {
+    if (folders.length > 0) {
+      return GridView.extent(
+          maxCrossAxisExtent: 150,
+          children: folders
+              .map((folder) => FolderItemWidget(
+                    title: folder.title,
+                    callback: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                NotePage(folder.id, folder.title),
+                          ));
+                    },
+                    longPressCallback: () {
+                      EditOrDeleteDialog.show(
+                          context, dialog, folder.id, folder.title);
+                    },
+                  ))
+              .toList());
+    } else {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text('+ ボタンを押して、フォルダーを追加しましょう！',
+                  style: TextStyle(fontSize: 100))),
+        ),
+      );
+    }
   }
 }
