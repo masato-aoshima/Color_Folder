@@ -37,6 +37,19 @@ class NoteAddEditPage extends HookWidget {
             ),
             backgroundColor: Colors.white,
             iconTheme: IconThemeData(color: Colors.black),
+            actions: [
+              NoteAddEditPagePopupMenu(
+                moveCallback: () {
+                  // TODO
+                },
+                deleteCallback: () async {
+                  if (noteId != null) {
+                    await provider.deleteNote(noteId);
+                  }
+                  Navigator.pop(context); // TODO ここではonWillPopは呼ばれない　らしい(調べる)
+                },
+              )
+            ],
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -49,6 +62,37 @@ class NoteAddEditPage extends HookWidget {
               style: TextStyle(fontSize: 20),
             ),
           )),
+    );
+  }
+}
+
+class NoteAddEditPagePopupMenu extends StatelessWidget {
+  NoteAddEditPagePopupMenu({this.moveCallback, this.deleteCallback});
+
+  final Function moveCallback;
+  final Function deleteCallback;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<String>(
+      onSelected: (value) {
+        if (value == "Move") {
+          moveCallback();
+        }
+        if (value == "Delete") {
+          deleteCallback();
+        }
+      },
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+        const PopupMenuItem<String>(
+          value: "Move",
+          child: Text('別のフォルダーに移動'),
+        ),
+        const PopupMenuItem<String>(
+          value: "Delete",
+          child: Text('削除'),
+        ),
+      ],
     );
   }
 }

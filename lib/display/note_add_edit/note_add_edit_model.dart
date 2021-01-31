@@ -27,7 +27,7 @@ class NoteAddEditModel extends ChangeNotifier {
   void onPagePop() async {
     // 新規追加
     if (noteId == null) {
-      if (inputText.isEmpty) return;
+      if (inputText == null || inputText.isEmpty) return;
       final newNote = Note(text: inputText, folderId: folderId);
       await addNote(newNote);
     }
