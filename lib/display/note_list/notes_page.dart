@@ -32,15 +32,14 @@ class NotePage extends HookWidget {
       body: ListView(
         children: notes
             .map((note) => NoteItemWidget(
-                  id: note.id,
                   text: note.text,
-                  onTapCallback: (id, text) {
+                  onTapCallback: () async {
                     // メモ編集ページに移動
-                    Navigator.push(
+                    await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              NoteAddEditPage(id, text, provider),
+                              NoteAddEditPage(note.id, note.text, folderId),
                         ));
                   },
                 ))
@@ -49,10 +48,10 @@ class NotePage extends HookWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // メモ追加ページに移動
-          Navigator.push(
+          await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NoteAddEditPage(null, null, provider),
+                builder: (context) => NoteAddEditPage(null, null, folderId),
               ));
         },
         child: Icon(Icons.add),
