@@ -30,7 +30,7 @@ class NotePage extends HookWidget {
       appBar: AppBar(
         title: Text(folderName),
       ),
-      body: getListViewWithEmptyMessage(context, notes),
+      body: getListViewWithEmptyMessage(context, notes, provider),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // メモ追加ページに移動
@@ -45,7 +45,8 @@ class NotePage extends HookWidget {
     );
   }
 
-  Widget getListViewWithEmptyMessage(BuildContext context, List<Note> notes) {
+  Widget getListViewWithEmptyMessage(
+      BuildContext context, List<Note> notes, NoteModel provider) {
     if (notes.length > 0) {
       return ListView(
         children: notes
@@ -70,8 +71,9 @@ class NotePage extends HookWidget {
                               print('移動');
                               Navigator.pop(context);
                             },
-                            deleteFunction: () {
-                              print('削除');
+                            deleteFunction: () async {
+                              await provider.deleteNote(note.id,
+                                  note.folderId); //TODO ここで残りが0件だとワーニングが出る
                               Navigator.pop(context);
                             },
                           );

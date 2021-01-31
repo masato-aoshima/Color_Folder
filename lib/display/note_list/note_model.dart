@@ -19,7 +19,7 @@ class NoteModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteNote(int id, int folderId) async {
+  Future deleteNote(int id, int folderId) async {
     await DBProvider.db.deleteNote(id.toString());
     _notes = await DBProvider.db.getNotesInFolder(folderId);
     notifyListeners();
