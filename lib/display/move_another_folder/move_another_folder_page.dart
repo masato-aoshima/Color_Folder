@@ -16,85 +16,33 @@ final folderProvider =
     ChangeNotifierProvider((ref) => MoveAnotherFolderModel()..getFolders());
 
 class MoveAnotherFolderPage extends HookWidget {
+  MoveAnotherFolderPage(this.noteId, this.folderId);
+
+  final int noteId;
+  final int folderId;
+
   @override
   Widget build(BuildContext context) {
     // 4. 観察する変数を useProvider を使って宣言
-    final provider = useProvider(folderProvider);
+    final provider = useProvider(folderProvider)
+      ..noteId = noteId
+      ..noteFolderId = folderId;
     final folders = provider.folders;
 
-    final dialog = EditOrDeleteDialog(
-      editFunction: (id, title) async {
-        final newFolderName = await showInputTextDialog(context, title);
-        if (newFolderName != null && newFolderName.isNotEmpty) {
-          final folder = Folder(id: id, title: newFolderName);
-          provider.upDateFolderName(folder); // TODO priority が 0に戻る
-        }
-        Navigator.pop(context);
-      },
-      deleteFunction: (id) {
-        provider.deleteFolder(id);
-        Navigator.pop(context);
-      },
-    );
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text('フォルダー'),
-      ),
-      body: getGridViewWithEmptyMessage(context, folders, dialog),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          String folderName = await showInputTextDialog(context, "");
-          if (folderName != null && folderName.isNotEmpty) {
-            provider.addFolders(Folder(title: folderName));
-          }
-        },
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-
-  Future<String> showInputTextDialog(BuildContext context, String text) {
-    final dialog = TextInputDialog(text);
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return dialog;
-        });
-  }
-
-  Widget getGridViewWithEmptyMessage(
-      BuildContext context, List<Folder> folders, EditOrDeleteDialog dialog) {
-    if (folders.length > 0) {
-      return GridView.extent(
-          maxCrossAxisExtent: 150,
-          children: folders
-              .map((folder) => FolderItemWidget(
-                    title: folder.title,
-                    callback: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                NotePage(folder.id, folder.title),
-                          ));
-                    },
-                    longPressCallback: () {
-                      EditOrDeleteDialog.show(
-                          context, dialog, folder.id, folder.title);
-                    },
-                  ))
-              .toList());
-    } else {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text('+ ボタンを押して、フォルダーを追加しましょう！',
-                  style: TextStyle(fontSize: 100))),
+        appBar: AppBar(
+          title: Text('移動先のフォルダーを選択'),
         ),
-      );
-    }
+        body: GridView.extent(
+            maxCrossAxisExtent: 150,
+            children: folders
+                .map((folder) => FolderItemWidget(
+                      title: folder.title,
+                      callback: () async {
+                        await provider.upDateFolderId(folder.id);
+                        Navigator.pop(context);
+                      },
+                    ))
+                .toList()));
   }
 }

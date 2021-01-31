@@ -68,13 +68,15 @@ class NotePage extends HookWidget {
                         builder: (BuildContext context) {
                           return MoveOrDeleteDialog(
                             noteText: note.text,
-                            moveFunction: () {
-                              Navigator.push(
+                            moveFunction: () async {
+                              await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          MoveAnotherFolderPage(),
+                                          MoveAnotherFolderPage(
+                                              note.id, note.folderId),
                                       fullscreenDialog: true));
+                              Navigator.pop(context);
                             },
                             deleteFunction: () async {
                               await provider.deleteNote(note.id,
