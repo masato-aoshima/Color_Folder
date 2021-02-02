@@ -14,8 +14,10 @@ class MoveAnotherFolderPage extends HookWidget {
   MoveAnotherFolderPage(this.noteId, this.folderId, this.noteText);
 
   // TODO メモ追加ページから遷移した場合
+  // ノートをnewFolderIdを使って追加する
 
   // TODO メモ編集ページから遷移した場合
+  // noteTextを使ってNoteオブジェクトを作って、アップデートする
 
   final int noteId;
   final int folderId;
@@ -33,7 +35,8 @@ class MoveAnotherFolderPage extends HookWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('移動先のフォルダーを選択'),
+          title: Text('移動先のフォルダーを選択',
+              style: TextStyle(fontWeight: FontWeight.bold)),
         ),
         body: GridView.extent(
             maxCrossAxisExtent: 150,

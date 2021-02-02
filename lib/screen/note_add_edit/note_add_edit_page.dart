@@ -35,10 +35,8 @@ class NoteAddEditPage extends HookWidget {
           appBar: AppBar(
             title: Text(
               noteId == null ? "新規メモ" : noteText.split("\n").first,
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            backgroundColor: Colors.white,
             iconTheme: IconThemeData(color: Colors.black),
             actions: [
               NoteAddEditPagePopupMenu(
