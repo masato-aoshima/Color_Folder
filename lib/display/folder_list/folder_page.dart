@@ -67,6 +67,7 @@ class FolderPage extends HookWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return EditOrDeleteDialog(
+                              title: folder.title,
                               editFunction: () async {
                                 final newFolderName = await showInputTextDialog(
                                     context, folder.title);
