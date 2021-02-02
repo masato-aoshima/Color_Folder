@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sort_note/component/icon/folder_small_icon.dart';
 
 class MoveOrDeleteDialog extends StatelessWidget {
   MoveOrDeleteDialog({this.noteText, this.moveFunction, this.deleteFunction});
@@ -18,10 +19,7 @@ class MoveOrDeleteDialog extends StatelessWidget {
           moveFunction();
         },
         child: Row(
-          children: [
-            Expanded(child: Text('別のフォルダーに移動')),
-            Icon(Icons.folder_outlined)
-          ],
+          children: [Expanded(child: Text('別のフォルダーに移動')), FolderSmallIcon()],
         ),
       ),
       // 削除

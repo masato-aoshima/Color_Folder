@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sort_note/util/color.dart';
 
 class FolderItemWidget extends StatelessWidget {
   FolderItemWidget(
@@ -22,16 +23,18 @@ class FolderItemWidget extends StatelessWidget {
                   longPressCallback();
                 }
               },
-              child: IconButton(
-                icon: Icon(Icons.folder),
-                color: enable ? Colors.yellow[600] : Colors.grey,
-                padding: EdgeInsets.all(0.0),
-                iconSize: 100,
-                onPressed: () {
-                  if (enable) {
-                    callback();
-                  }
-                },
+              child: FolderGradientMask(
+                child: IconButton(
+                  icon: Icon(Icons.folder),
+                  color: enable ? Colors.yellow[600] : Colors.grey,
+                  padding: EdgeInsets.all(0.0),
+                  iconSize: 100,
+                  onPressed: () {
+                    if (enable) {
+                      callback();
+                    }
+                  },
+                ),
               ),
             )),
         Expanded(flex: 1, child: Text(title))

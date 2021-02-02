@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sort_note/component/icon/folder_small_icon.dart';
 
 class EditOrDeleteDialog extends StatelessWidget {
   EditOrDeleteDialog({this.title, this.editFunction, this.deleteFunction});
@@ -11,14 +12,8 @@ class EditOrDeleteDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dialog = SimpleDialog(
-        title: Row(children: [
-          Icon(
-            Icons.folder_sharp,
-            color: Colors.yellow[600],
-          ),
-          SizedBox(width: 10),
-          Text(title)
-        ]),
+        title: Row(
+            children: [FolderSmallIcon(), SizedBox(width: 10), Text(title)]),
         children: [
           // 編集
           SimpleDialogOption(
