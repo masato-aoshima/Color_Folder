@@ -18,21 +18,6 @@ class FolderPage extends HookWidget {
     // 4. 観察する変数を useProvider を使って宣言
     final provider = useProvider(folderProvider);
 
-    final dialog = EditOrDeleteDialog(
-      editFunction: (id, title) async {
-        final newFolderName = await showInputTextDialog(context, title);
-        if (newFolderName != null && newFolderName.isNotEmpty) {
-          final folder = Folder(id: id, title: newFolderName);
-          provider.upDateFolderName(folder); // TODO priority が 0に戻る
-        }
-        Navigator.pop(context);
-      },
-      deleteFunction: (id) {
-        provider.deleteFolder(id);
-        Navigator.pop(context);
-      },
-    );
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -46,7 +31,7 @@ class FolderPage extends HookWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          return getGridViewWithEmptyMessage(context, snapshot.data, dialog);
+          return getGridViewWithEmptyMessage(context, snapshot.data, provider);
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -61,17 +46,8 @@ class FolderPage extends HookWidget {
     );
   }
 
-  Future<String> showInputTextDialog(BuildContext context, String text) {
-    final dialog = TextInputDialog(text);
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return dialog;
-        });
-  }
-
   Widget getGridViewWithEmptyMessage(
-      BuildContext context, List<Folder> folders, EditOrDeleteDialog dialog) {
+      BuildContext context, List<Folder> folders, FolderModel provider) {
     if (folders.length > 0) {
       return GridView.extent(
           maxCrossAxisExtent: 150,
@@ -87,8 +63,28 @@ class FolderPage extends HookWidget {
                           ));
                     },
                     longPressCallback: () {
-                      EditOrDeleteDialog.show(
-                          context, dialog, folder.id, folder.title);
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return EditOrDeleteDialog(
+                              editFunction: () async {
+                                final newFolderName = await showInputTextDialog(
+                                    context, folder.title);
+                                if (newFolderName != null &&
+                                    newFolderName.isNotEmpty) {
+                                  final newFolder = Folder(
+                                      id: folder.id, title: newFolderName);
+                                  provider.upDateFolderName(
+                                      newFolder); // TODO priority が 0に戻る
+                                }
+                                Navigator.pop(context);
+                              },
+                              deleteFunction: () {
+                                provider.deleteFolder(folder.id);
+                                Navigator.pop(context);
+                              },
+                            );
+                          });
                     },
                   ))
               .toList());
@@ -103,5 +99,14 @@ class FolderPage extends HookWidget {
         ),
       );
     }
+  }
+
+  Future<String> showInputTextDialog(BuildContext context, String text) {
+    final dialog = TextInputDialog(text);
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return dialog;
+        });
   }
 }

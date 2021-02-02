@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// TODO 毎回長押しされるたびにダイアログを生成するよう修正
 class EditOrDeleteDialog extends StatelessWidget {
   EditOrDeleteDialog({this.editFunction, this.deleteFunction});
 
   final Function editFunction;
   final Function deleteFunction;
-  var folderId;
-  var folderTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +13,7 @@ class EditOrDeleteDialog extends StatelessWidget {
       // 編集
       SimpleDialogOption(
         onPressed: () {
-          editFunction(folderId, folderTitle);
+          editFunction();
         },
         child: Row(
           children: [Expanded(child: Text('編集')), Icon(Icons.edit_sharp)],
@@ -25,7 +22,7 @@ class EditOrDeleteDialog extends StatelessWidget {
       // 削除
       SimpleDialogOption(
         onPressed: () {
-          deleteFunction(folderId);
+          deleteFunction();
         },
         child: Row(
           children: [
@@ -43,16 +40,5 @@ class EditOrDeleteDialog extends StatelessWidget {
       )
     ]);
     return dialog;
-  }
-
-  static void show(BuildContext context, EditOrDeleteDialog dialog,
-      int folderId, String title) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return dialog
-            ..folderId = folderId
-            ..folderTitle = title;
-        });
   }
 }
