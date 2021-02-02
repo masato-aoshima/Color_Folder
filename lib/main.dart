@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/all.dart';
-import 'package:sort_note/display/folder_list/folder_page.dart';
+import 'package:sort_note/screen/folder_list/folder_page.dart';
 
 void main() {
   // 1. ProviderScopeで囲む

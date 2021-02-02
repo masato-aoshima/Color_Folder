@@ -5,9 +5,10 @@ import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/dialog/edit_or_delete_dialog.dart';
 import 'package:sort_note/component/icon/folder_item_widget.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
-import 'package:sort_note/display/folder_list/folder_model.dart';
-import 'package:sort_note/display/note_list/notes_page.dart';
 import 'package:sort_note/model/folder.dart';
+import 'package:sort_note/screen/note_list/notes_page.dart';
+
+import 'folder_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
 final folderProvider = ChangeNotifierProvider((ref) => FolderModel());

@@ -5,9 +5,9 @@ import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/dialog/move_or_delete_dialog.dart';
 import 'package:sort_note/component/note_item_widget.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
-import 'package:sort_note/display/move_another_folder/move_another_folder_page.dart';
-import 'package:sort_note/display/note_add_edit/note_add_edit_page.dart';
 import 'package:sort_note/model/note.dart';
+import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
+import 'package:sort_note/screen/note_add_edit/note_add_edit_page.dart';
 
 import 'note_model.dart';
 

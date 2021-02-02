@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/icon/folder_item_widget.dart';
-import 'package:sort_note/display/move_another_folder/move_another_folder_model.dart';
+
+import 'move_another_folder_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
 final folderProvider =
