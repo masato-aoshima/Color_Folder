@@ -7,9 +7,9 @@ class FolderModel extends ChangeNotifier {
   var _folders = List<Folder>();
   List<Folder> get folders => _folders;
 
-  void getFolders() async {
+  Future getFolders() async {
     _folders = await DBProvider.db.getAllFolders();
-    notifyListeners(); // liveDataみたいな使い方はどうやるの
+    return _folders;
   }
 
   void addFolders(Folder folder) async {

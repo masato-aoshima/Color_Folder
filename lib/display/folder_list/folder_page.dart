@@ -10,15 +10,13 @@ import 'package:sort_note/display/note_list/notes_page.dart';
 import 'package:sort_note/model/folder.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
-final folderProvider =
-    ChangeNotifierProvider((ref) => FolderModel()..getFolders());
+final folderProvider = ChangeNotifierProvider((ref) => FolderModel());
 
 class FolderPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // 4. 観察する変数を useProvider を使って宣言
     final provider = useProvider(folderProvider);
-    final folders = provider.folders;
 
     final dialog = EditOrDeleteDialog(
       editFunction: (id, title) async {
@@ -42,7 +40,15 @@ class FolderPage extends HookWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: getGridViewWithEmptyMessage(context, folders, dialog),
+      body: FutureBuilder(
+        future: provider.getFolders(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          return getGridViewWithEmptyMessage(context, snapshot.data, dialog);
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           String folderName = await showInputTextDialog(context, "");
