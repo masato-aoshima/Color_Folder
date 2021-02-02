@@ -77,7 +77,7 @@ class NotePage extends HookWidget {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           MoveAnotherFolderPage(
-                                              note.id, note.folderId),
+                                              note.id, note.folderId, null),
                                       fullscreenDialog: true));
                               Navigator.pop(context);
                             },

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sort_note/display/move_another_folder/move_another_folder_page.dart';
 import 'package:sort_note/display/note_add_edit/note_add_edit_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
@@ -39,8 +40,18 @@ class NoteAddEditPage extends HookWidget {
             iconTheme: IconThemeData(color: Colors.black),
             actions: [
               NoteAddEditPagePopupMenu(
-                moveCallback: () {
-                  // TODO
+                moveCallback: () async {
+                  if (provider.inputText == null ||
+                      provider.inputText.isEmpty) {
+                  } else {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MoveAnotherFolderPage(
+                                noteId, folderId, provider.inputText),
+                            fullscreenDialog: true));
+                    Navigator.pop(context);
+                  }
                 },
                 deleteCallback: () async {
                   if (noteId != null) {
@@ -86,7 +97,7 @@ class NoteAddEditPagePopupMenu extends StatelessWidget {
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
         const PopupMenuItem<String>(
           value: "Move",
-          child: Text('別のフォルダーに移動'),
+          child: Text('別のフォルダーに移す'),
         ),
         const PopupMenuItem<String>(
           value: "Delete",

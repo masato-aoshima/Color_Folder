@@ -10,6 +10,7 @@ class MoveAnotherFolderModel extends ChangeNotifier {
 
   int noteId;
   int noteFolderId;
+  String noteText;
 
   void getFolders() async {
     _folders = await DBProvider.db.getAllFolders();
