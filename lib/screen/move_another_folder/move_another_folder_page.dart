@@ -13,12 +13,6 @@ final folderProvider =
 class MoveAnotherFolderPage extends HookWidget {
   MoveAnotherFolderPage(this.noteId, this.folderId, this.noteText);
 
-  // TODO メモ追加ページから遷移した場合
-  // ノートをnewFolderIdを使って追加する
-
-  // TODO メモ編集ページから遷移した場合
-  // noteTextを使ってNoteオブジェクトを作って、アップデートする
-
   final int noteId;
   final int folderId;
   final String noteText;
@@ -28,7 +22,6 @@ class MoveAnotherFolderPage extends HookWidget {
     // 4. 観察する変数を useProvider を使って宣言
     final provider = useProvider(folderProvider)
       ..noteId = noteId
-      ..noteFolderId = folderId
       ..noteText = noteText;
 
     provider.getFolders();
@@ -44,7 +37,7 @@ class MoveAnotherFolderPage extends HookWidget {
                 .map((folder) => FolderItemWidget(
                       title: folder.title,
                       callback: () async {
-                        await await provider.upDateFolderId(folder.id);
+                        await provider.onTapFolder(folder.id);
                         Navigator.pop(context);
                       },
                       enable: folderId != folder.id,
