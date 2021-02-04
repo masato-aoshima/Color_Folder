@@ -15,7 +15,9 @@ class ListItemFolder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: FolderSmallIcon(),
+      leading: FolderSmallIcon(
+        enable: enable,
+      ),
       title: Text(title),
       enabled: enable,
       onTap: callback,
