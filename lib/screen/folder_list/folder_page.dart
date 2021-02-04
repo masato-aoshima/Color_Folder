@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/dialog/edit_or_delete_dialog.dart';
-import 'package:sort_note/component/icon/folder_item_widget.dart';
+import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/screen/note_list/notes_page.dart';
@@ -56,7 +56,7 @@ class FolderPage extends HookWidget {
               Divider(color: Colors.grey),
           itemBuilder: (BuildContext context, int index) {
             final folder = folders[index];
-            return FolderItemWidget(
+            return ListItemFolder(
               title: folder.title,
               callback: () {
                 Navigator.push(

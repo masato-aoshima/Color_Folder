@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class NoteItemWidget extends StatelessWidget {
-  NoteItemWidget({this.text, this.onTapCallback, this.onLongPressCallback});
+class ListItemNote extends StatelessWidget {
+  ListItemNote({this.text, this.onTapCallback, this.onLongPressCallback});
 
   final String text;
   final Function() onTapCallback;

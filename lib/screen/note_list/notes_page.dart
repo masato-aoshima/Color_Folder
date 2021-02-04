@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/dialog/move_or_delete_dialog.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
-import 'package:sort_note/component/note_item_widget.dart';
+import 'package:sort_note/component/list_item/list_item_note.dart';
 import 'package:sort_note/model/note.dart';
 import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
 import 'package:sort_note/screen/note_add_edit/note_add_edit_page.dart';
@@ -54,7 +54,7 @@ class NotePage extends HookWidget {
     if (notes.length > 0) {
       return ListView(
         children: notes
-            .map((note) => NoteItemWidget(
+            .map((note) => ListItemNote(
                   text: note.text,
                   onTapCallback: () async {
                     // メモ編集ページに移動

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
-import 'package:sort_note/component/icon/folder_item_widget.dart';
+import 'package:sort_note/component/list_item/list_item_folder.dart';
 
 import 'move_another_folder_model.dart';
 
@@ -37,7 +37,7 @@ class MoveAnotherFolderPage extends HookWidget {
                 Divider(color: Colors.grey),
             itemBuilder: (BuildContext context, int index) {
               final folder = provider.folders[index];
-              return FolderItemWidget(
+              return ListItemFolder(
                 title: folder.title,
                 callback: () async {
                   await provider.onTapFolder(folder.id);

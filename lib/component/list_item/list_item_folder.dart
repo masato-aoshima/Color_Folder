@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/util/color.dart';
 
-class FolderItemWidget extends StatelessWidget {
-  FolderItemWidget(
+class ListItemFolder extends StatelessWidget {
+  ListItemFolder(
       {this.title, this.callback, this.longPressCallback, this.enable = true});
 
   final String title;
