@@ -32,7 +32,7 @@ class FolderPage extends HookWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          return getGridViewWithEmptyMessage(context, snapshot.data, provider);
+          return getListViewWithEmptyMessage(context, snapshot.data, provider);
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -47,7 +47,7 @@ class FolderPage extends HookWidget {
     );
   }
 
-  Widget getGridViewWithEmptyMessage(
+  Widget getListViewWithEmptyMessage(
       BuildContext context, List<Folder> folders, FolderModel provider) {
     if (folders.length > 0) {
       return Container(
