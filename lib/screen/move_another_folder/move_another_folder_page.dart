@@ -31,17 +31,20 @@ class MoveAnotherFolderPage extends HookWidget {
           title: Text('移動先のフォルダーを選択',
               style: TextStyle(fontWeight: FontWeight.bold)),
         ),
-        body: GridView.extent(
-            maxCrossAxisExtent: 150,
-            children: provider.folders
-                .map((folder) => FolderItemWidget(
-                      title: folder.title,
-                      callback: () async {
-                        await provider.onTapFolder(folder.id);
-                        Navigator.pop(context);
-                      },
-                      enable: folderId != folder.id,
-                    ))
-                .toList()));
+        body: ListView.separated(
+            itemCount: provider.folders.length,
+            separatorBuilder: (BuildContext context, int index) =>
+                Divider(color: Colors.grey),
+            itemBuilder: (BuildContext context, int index) {
+              final folder = provider.folders[index];
+              return FolderItemWidget(
+                title: folder.title,
+                callback: () async {
+                  await provider.onTapFolder(folder.id);
+                  Navigator.pop(context);
+                },
+                enable: folderId != folder.id,
+              );
+            }));
   }
 }
