@@ -17,8 +17,13 @@ class ListItemFolder extends StatelessWidget {
     return ListTile(
       leading: FolderSmallIcon(
         enable: enable,
+        size: 45,
       ),
-      title: Text(title),
+      trailing: Icon(Icons.navigate_next),
+      title: Text(
+        title,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       enabled: enable,
       onTap: callback,
       onLongPress: longPressCallback,
