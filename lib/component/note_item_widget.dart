@@ -11,7 +11,7 @@ class NoteItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: 80,
       child: Card(
         margin: const EdgeInsets.all(8.0),
         elevation: 4.0,
@@ -20,6 +20,7 @@ class NoteItemWidget extends StatelessWidget {
             title: Text(
               text.split("\n").first,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              maxLines: 1,
             ),
             trailing: Icon(Icons.navigate_next),
             onTap: () {

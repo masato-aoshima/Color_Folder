@@ -19,7 +19,7 @@ class MoveOrDeleteDialog extends StatelessWidget {
           moveFunction();
         },
         child: Row(
-          children: [Expanded(child: Text('別のフォルダーに移動')), FolderSmallIcon()],
+          children: [Expanded(child: Text('別のフォルダーに移す')), FolderSmallIcon()],
         ),
       ),
       // 削除

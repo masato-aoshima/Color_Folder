@@ -5,9 +5,9 @@ import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/dialog/move_or_delete_dialog.dart';
 import 'package:sort_note/component/note_item_widget.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
-import 'package:sort_note/display/move_another_folder/move_another_folder_page.dart';
-import 'package:sort_note/display/note_add_edit/note_add_edit_page.dart';
 import 'package:sort_note/model/note.dart';
+import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
+import 'package:sort_note/screen/note_add_edit/note_add_edit_page.dart';
 
 import 'note_model.dart';
 
@@ -30,9 +30,8 @@ class NotePage extends HookWidget {
       appBar: AppBar(
           title: Text(
             folderName,
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          backgroundColor: Colors.yellow[600],
           iconTheme: IconThemeData(color: Colors.black)),
       body: getListViewWithEmptyMessage(context, notes, provider),
       floatingActionButton: FloatingActionButton(
@@ -77,7 +76,7 @@ class NotePage extends HookWidget {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           MoveAnotherFolderPage(
-                                              note.id, note.folderId),
+                                              note.id, note.folderId, null),
                                       fullscreenDialog: true));
                               Navigator.pop(context);
                             },

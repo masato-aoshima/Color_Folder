@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sort_note/display/note_add_edit/note_add_edit_model.dart';
+import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
+
+import 'note_add_edit_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
 final noteAddEditProvider = ChangeNotifierProvider((ref) => NoteAddEditModel());
@@ -32,15 +35,24 @@ class NoteAddEditPage extends HookWidget {
           appBar: AppBar(
             title: Text(
               noteId == null ? "新規メモ" : noteText.split("\n").first,
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            backgroundColor: Colors.white,
             iconTheme: IconThemeData(color: Colors.black),
             actions: [
               NoteAddEditPagePopupMenu(
-                moveCallback: () {
-                  // TODO
+                moveCallback: () async {
+                  if (provider.inputText == null ||
+                      provider.inputText.isEmpty) {
+                    showEmptyTextToast();
+                  } else {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MoveAnotherFolderPage(
+                                noteId, folderId, provider.inputText),
+                            fullscreenDialog: true));
+                    Navigator.pop(context);
+                  }
                 },
                 deleteCallback: () async {
                   if (noteId != null) {
@@ -64,6 +76,17 @@ class NoteAddEditPage extends HookWidget {
           )),
     );
   }
+
+  void showEmptyTextToast() {
+    Fluttertoast.showToast(
+        msg: "テキストがありません",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
 }
 
 class NoteAddEditPagePopupMenu extends StatelessWidget {
@@ -86,7 +109,7 @@ class NoteAddEditPagePopupMenu extends StatelessWidget {
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
         const PopupMenuItem<String>(
           value: "Move",
-          child: Text('別のフォルダーに移動'),
+          child: Text('別のフォルダーに移す'),
         ),
         const PopupMenuItem<String>(
           value: "Delete",

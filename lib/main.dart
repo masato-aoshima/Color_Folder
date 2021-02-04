@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/all.dart';
-import 'package:sort_note/display/folder_list/folder_page.dart';
+import 'package:sort_note/screen/folder_list/folder_page.dart';
 
 void main() {
   // 1. ProviderScopeで囲む
@@ -15,7 +15,17 @@ class MyApp extends StatelessWidget {
       title: '並び替え　メモ帳',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        primaryColor: Color(0xff1995AD),
+        scaffoldBackgroundColor: Color(0xffF1F1F2),
+        floatingActionButtonTheme:
+            FloatingActionButtonThemeData(backgroundColor: Color(0xff1995AD)),
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: <TargetPlatform, PageTransitionsBuilder>{
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
       ),
       home: FolderPage(),
     );
