@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
 
 import 'note_add_edit_model.dart';
@@ -11,11 +12,12 @@ import 'note_add_edit_model.dart';
 final noteAddEditProvider = ChangeNotifierProvider((ref) => NoteAddEditModel());
 
 class NoteAddEditPage extends HookWidget {
-  NoteAddEditPage(this.noteId, this.noteText, this.folderId);
+  NoteAddEditPage(this.noteId, this.noteText, this.folderId, this.folderName);
 
   final int noteId;
   final String noteText;
   final int folderId;
+  final String folderName;
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +35,17 @@ class NoteAddEditPage extends HookWidget {
       },
       child: Scaffold(
           appBar: AppBar(
-            title: Text(
-              noteId == null ? "新規メモ" : noteText.split("\n").first,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            titleSpacing: 0,
+            title: Row(children: [
+              FolderSmallIcon(),
+              SizedBox(
+                width: 6,
+              ),
+              Text(
+                folderName,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ]),
             iconTheme: IconThemeData(color: Colors.black),
             actions: [
               NoteAddEditPagePopupMenu(
