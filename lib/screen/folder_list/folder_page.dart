@@ -6,6 +6,7 @@ import 'package:sort_note/component/dialog/edit_or_delete_dialog.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
 import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
+import 'package:sort_note/screen/folder_edit/folder_edit_page.dart';
 import 'package:sort_note/screen/note_list/notes_page.dart';
 
 import 'folder_model.dart';
@@ -30,7 +31,15 @@ class FolderPage extends HookWidget {
             children: [
               Center(
                   child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FolderEditPage(),
+                      )).then((value) {
+                    provider.notifyNotesCount();
+                  });
+                },
                 child: Text(
                   '編集',
                   style: TextStyle(color: Colors.white, fontSize: 18),
