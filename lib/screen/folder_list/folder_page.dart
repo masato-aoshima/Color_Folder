@@ -42,10 +42,7 @@ class FolderPage extends HookWidget {
           //   provider.addFolders(Folder(title: folderName));
           // }
           await provider.getNotesCount();
-          provider.counts.forEach((element) {
-            print(element.folderId);
-            print(element.count);
-          });
+          print(provider.noteCounts);
         },
         child: Icon(Icons.add),
       ),

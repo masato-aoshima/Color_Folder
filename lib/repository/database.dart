@@ -1,7 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/model/note.dart';
-import 'package:sort_note/model/note_count_by_folder.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
@@ -126,10 +125,17 @@ class DBProvider {
   }
 
   // フォルダーごとのノートの数を取得
-  Future getNotesCountByFolder() async {
+  Future<Map<int, int>> getNotesCountByFolder() async {
     final db = await database;
+    // テーブル全体
     final List<Map<String, dynamic>> notesCount = await db.rawQuery(
         'SELECT folderId, COUNT(*) from notes GROUP BY folderId order by folderId asc');
-    return notesCount.map((map) => fromMapNoteCountByFolder(map)).toList();
+    Map<int, int> countMap = {};
+    notesCount.forEach((count) {
+      int folderId = count['folderId'];
+      int notesCount = count['COUNT(*)'];
+      countMap[folderId] = notesCount;
+    });
+    return countMap;
   }
 }
