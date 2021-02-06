@@ -5,9 +5,14 @@ import 'package:sort_note/util/color.dart';
 
 class ListItemFolder extends StatelessWidget {
   ListItemFolder(
-      {this.title, this.callback, this.longPressCallback, this.enable = true});
+      {this.title,
+      this.notesCount = 0,
+      this.callback,
+      this.longPressCallback,
+      this.enable = true});
 
   final String title;
+  final int notesCount;
   final Function() callback;
   final Function() longPressCallback;
   final bool enable;
@@ -19,7 +24,19 @@ class ListItemFolder extends StatelessWidget {
         enable: enable,
         size: 45,
       ),
-      trailing: Icon(Icons.navigate_next),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            notesCount.toString(),
+            style: TextStyle(fontSize: 17),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Icon(Icons.navigate_next),
+        ],
+      ),
       title: Text(
         title,
         style: TextStyle(fontWeight: FontWeight.bold),

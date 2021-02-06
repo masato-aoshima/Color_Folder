@@ -27,12 +27,13 @@ class FolderPage extends HookWidget {
         ),
       ),
       body: FutureBuilder(
-        future: provider.getFolders(),
+        future: Future.wait([provider.getFolders(), provider.getNotesCount()]),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          return getListViewWithEmptyMessage(context, snapshot.data, provider);
+          return getListViewWithEmptyMessage(
+              context, snapshot.data[0], snapshot.data[1], provider);
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -47,8 +48,8 @@ class FolderPage extends HookWidget {
     );
   }
 
-  Widget getListViewWithEmptyMessage(
-      BuildContext context, List<Folder> folders, FolderModel provider) {
+  Widget getListViewWithEmptyMessage(BuildContext context, List<Folder> folders,
+      Map<int, int> counts, FolderModel provider) {
     if (folders.length > 0) {
       return Container(
         padding: const EdgeInsets.all(12.0),
@@ -60,12 +61,15 @@ class FolderPage extends HookWidget {
               final folder = folders[index];
               return ListItemFolder(
                 title: folder.title,
+                notesCount: counts[folder.id] ?? 0,
                 callback: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => NotePage(folder.id, folder.title),
-                      ));
+                      )).then((value) {
+                    provider.notifyNotesCount();
+                  });
                 },
                 longPressCallback: () {
                   showDialog(

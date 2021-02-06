@@ -123,4 +123,19 @@ class DBProvider {
     await db.rawUpdate(
         'UPDATE notes SET folderId = ? WHERE id = ?', [newFolderId, noteId]);
   }
+
+  // フォルダーごとのノートの数を取得
+  Future<Map<int, int>> getNotesCountByFolder() async {
+    final db = await database;
+    // テーブル全体
+    final List<Map<String, dynamic>> notesCount = await db.rawQuery(
+        'SELECT folderId, COUNT(*) from notes GROUP BY folderId order by folderId asc');
+    Map<int, int> countMap = {};
+    notesCount.forEach((count) {
+      int folderId = count['folderId'];
+      int notesCount = count['COUNT(*)'];
+      countMap[folderId] = notesCount;
+    });
+    return countMap;
+  }
 }
