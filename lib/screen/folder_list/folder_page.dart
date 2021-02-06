@@ -67,7 +67,9 @@ class FolderPage extends HookWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => NotePage(folder.id, folder.title),
-                      ));
+                      )).then((value) {
+                    provider.notifyNotesCount();
+                  });
                 },
                 longPressCallback: () {
                   showDialog(

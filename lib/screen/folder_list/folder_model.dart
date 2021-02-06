@@ -38,4 +38,9 @@ class FolderModel extends ChangeNotifier {
     _noteCounts = await DBProvider.db.getNotesCountByFolder();
     return _noteCounts;
   }
+
+  void notifyNotesCount() async {
+    _noteCounts = await DBProvider.db.getNotesCountByFolder();
+    notifyListeners();
+  }
 }
