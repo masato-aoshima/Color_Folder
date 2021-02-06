@@ -44,7 +44,7 @@ class NotePage extends HookWidget {
                     NoteAddEditPage(null, null, folderId, folderName),
               ));
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.text_snippet_outlined),
       ),
     );
   }

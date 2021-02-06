@@ -43,7 +43,7 @@ class FolderPage extends HookWidget {
             provider.addFolders(Folder(title: folderName));
           }
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.folder_open_sharp),
       ),
     );
   }
