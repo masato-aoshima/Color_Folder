@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/dialog/edit_or_delete_dialog.dart';
-import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
+import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/screen/note_list/notes_page.dart';
 
@@ -25,6 +25,23 @@ class FolderPage extends HookWidget {
           'フォルダー',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        actions: [
+          Row(
+            children: [
+              Center(
+                  child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  '編集',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              )),
+              SizedBox(
+                width: 10,
+              )
+            ],
+          )
+        ],
       ),
       body: FutureBuilder(
         future: Future.wait([provider.getFolders(), provider.getNotesCount()]),
