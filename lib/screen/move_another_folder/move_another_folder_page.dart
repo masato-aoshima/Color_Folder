@@ -25,26 +25,32 @@ class MoveAnotherFolderPage extends HookWidget {
       ..noteText = noteText;
 
     provider.getFolders();
+    provider.getNotesCount();
 
     return Scaffold(
         appBar: AppBar(
           title: Text('移動先のフォルダーを選択',
               style: TextStyle(fontWeight: FontWeight.bold)),
         ),
-        body: ListView.separated(
-            itemCount: provider.folders.length,
-            separatorBuilder: (BuildContext context, int index) =>
-                Divider(color: Colors.grey),
-            itemBuilder: (BuildContext context, int index) {
-              final folder = provider.folders[index];
-              return ListItemFolder(
-                title: folder.title,
-                callback: () async {
-                  await provider.onTapFolder(folder.id);
-                  Navigator.pop(context);
-                },
-                enable: folderId != folder.id,
-              );
-            }));
+        body: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: ListView.separated(
+              itemCount: provider.folders.length,
+              separatorBuilder: (BuildContext context, int index) =>
+                  Divider(color: Colors.grey),
+              itemBuilder: (BuildContext context, int index) {
+                final folder = provider.folders[index];
+                final count = provider.noteCounts[folder.id];
+                return ListItemFolder(
+                  title: folder.title,
+                  notesCount: count ?? 0,
+                  callback: () async {
+                    await provider.onTapFolder(folder.id);
+                    Navigator.pop(context);
+                  },
+                  enable: folderId != folder.id,
+                );
+              }),
+        ));
   }
 }
