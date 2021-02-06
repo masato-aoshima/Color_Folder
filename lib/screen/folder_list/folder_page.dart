@@ -37,10 +37,15 @@ class FolderPage extends HookWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          String folderName = await showInputTextDialog(context, "");
-          if (folderName != null && folderName.isNotEmpty) {
-            provider.addFolders(Folder(title: folderName));
-          }
+          // String folderName = await showInputTextDialog(context, "");
+          // if (folderName != null && folderName.isNotEmpty) {
+          //   provider.addFolders(Folder(title: folderName));
+          // }
+          await provider.getNotesCount();
+          provider.counts.forEach((element) {
+            print(element.folderId);
+            print(element.count);
+          });
         },
         child: Icon(Icons.add),
       ),

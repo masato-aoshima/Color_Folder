@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sort_note/model/folder.dart';
+import 'package:sort_note/model/note_count_by_folder.dart';
 import 'package:sort_note/repository/database.dart';
 
 // 2. モデルクラスで、ChangeNotifierを継承する
 class FolderModel extends ChangeNotifier {
   var _folders = List<Folder>();
   List<Folder> get folders => _folders;
+
+  var _notesCount = List<NoteCountByFolder>();
+  List<NoteCountByFolder> get counts => _notesCount;
 
   Future getFolders() async {
     _folders = await DBProvider.db.getAllFolders();
@@ -29,5 +33,10 @@ class FolderModel extends ChangeNotifier {
     await DBProvider.db.updateFolder(folder);
     _folders = await DBProvider.db.getAllFolders();
     notifyListeners();
+  }
+
+  Future getNotesCount() async {
+    _notesCount = await DBProvider.db.getNotesCountByFolder();
+    return _notesCount;
   }
 }

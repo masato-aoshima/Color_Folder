@@ -9,6 +9,6 @@ class NoteCountByFolder {
 NoteCountByFolder fromMapNoteCountByFolder(Map<String, dynamic> map) {
   return NoteCountByFolder(
     folderId: map['folderId'],
-    count: map['count(*)'],
+    count: map['COUNT(*)'],
   );
 }
