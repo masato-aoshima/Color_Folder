@@ -34,7 +34,7 @@ class FolderModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getNotesCount() async {
+  Future<Map<int, int>> getNotesCount() async {
     _noteCounts = await DBProvider.db.getNotesCountByFolder();
     return _noteCounts;
   }

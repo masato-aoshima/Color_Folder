@@ -27,12 +27,13 @@ class FolderPage extends HookWidget {
         ),
       ),
       body: FutureBuilder(
-        future: provider.getFolders(),
+        future: Future.wait([provider.getFolders(), provider.getNotesCount()]),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          return getListViewWithEmptyMessage(context, snapshot.data, provider);
+          return getListViewWithEmptyMessage(
+              context, snapshot.data[0], snapshot.data[1], provider);
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -41,16 +42,14 @@ class FolderPage extends HookWidget {
           // if (folderName != null && folderName.isNotEmpty) {
           //   provider.addFolders(Folder(title: folderName));
           // }
-          await provider.getNotesCount();
-          print(provider.noteCounts);
         },
         child: Icon(Icons.add),
       ),
     );
   }
 
-  Widget getListViewWithEmptyMessage(
-      BuildContext context, List<Folder> folders, FolderModel provider) {
+  Widget getListViewWithEmptyMessage(BuildContext context, List<Folder> folders,
+      Map<int, int> counts, FolderModel provider) {
     if (folders.length > 0) {
       return Container(
         padding: const EdgeInsets.all(12.0),
