@@ -61,6 +61,7 @@ class FolderPage extends HookWidget {
               final folder = folders[index];
               return ListItemFolder(
                 title: folder.title,
+                notesCount: counts[folder.id] ?? 0,
                 callback: () {
                   Navigator.push(
                       context,
