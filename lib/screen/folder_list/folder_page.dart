@@ -122,7 +122,7 @@ class FolderPage extends HookWidget {
                             Navigator.pop(context);
                           },
                           deleteFunction: () {
-                            provider.deleteFolder(folder.id);
+                            provider.deleteFolder(folder.id, folder.priority);
                             Navigator.pop(context);
                           },
                         );

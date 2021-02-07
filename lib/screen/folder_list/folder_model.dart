@@ -22,8 +22,8 @@ class FolderModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteFolder(int id) async {
-    await DBProvider.db.deleteFolder(id.toString());
+  void deleteFolder(int id, int priority) async {
+    await DBProvider.db.deleteFolder(id.toString(), priority);
     _folders = await DBProvider.db.getAllFolders();
     notifyListeners();
   }

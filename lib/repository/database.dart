@@ -74,12 +74,16 @@ class DBProvider {
         'UPDATE folders SET title = ? WHERE id = ?', [folder.title, folder.id]);
   }
 
-  /// フォルダーを一件削除 // TODO priority以上の奴を全部下げるのとセットにしてtransaction
-  Future deleteFolder(String id) async {
+  /// フォルダーを一件削除
+  Future deleteFolder(String id, int priority) async {
     final db = await database;
-    await db.delete(_folderTableName, where: "id = ?", whereArgs: [id]);
-    await db.delete(_noteTableName,
-        where: "folderId = ?", whereArgs: [id]); //TODO Database Inspector でデバッグ
+    await db.transaction((txn) async {
+      await txn.delete(_folderTableName, where: "id = ?", whereArgs: [id]);
+      await txn.delete(_noteTableName, where: "folderId = ?", whereArgs: [id]);
+      await txn.rawQuery(
+          'UPDATE folders SET priority = priority - 1 WHERE priority > ?',
+          [priority]);
+    });
   }
 
   /**
