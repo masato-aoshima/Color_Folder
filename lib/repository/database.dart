@@ -54,7 +54,8 @@ class DBProvider {
   /// 全てのフォルダーを取得
   Future<List<Folder>> getAllFolders() async {
     final db = await database;
-    final List<Map<String, dynamic>> folders = await db.query(_folderTableName);
+    final List<Map<String, dynamic>> folders =
+        await db.query(_folderTableName, orderBy: "priority ASC");
     return folders
         .map((folder) => Folder(
             id: folder['id'],
