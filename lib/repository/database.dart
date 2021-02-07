@@ -87,6 +87,57 @@ class DBProvider {
   }
 
   /**
+   * フォルダー並び替え用
+   */
+
+  /// 範囲内のpriority を + 1 する
+  Future incrementPriorityInRange(int from, int to) async {
+    final db = await database;
+    await db.rawQuery(
+        'UPDATE folders SET priority = priority + 1 WHERE priority >= ? AND priority <= ?',
+        [from, to]);
+  }
+
+  /// 範囲内のpriority を - 1 する
+  Future decrementPriorityInRange(int from, int to) async {
+    final db = await database;
+    await db.rawQuery(
+        'UPDATE folders SET priority = priority - 1 WHERE priority >= ? AND priority <= ?',
+        [from, to]);
+  }
+
+  /// 指定のidのpriorityを更新する
+  Future updatePriority(int id, int priority) async {
+    final db = await database;
+    await db.rawUpdate(
+        'UPDATE folders SET priority = ? WHERE id = ?', [id, priority]);
+  }
+
+  /// ドラッグ & ドロップで位置を変えたとき
+  Future onDragAndDrop(int id, int from, int to) async {
+    final db = await database;
+    if (from < to) {
+      from = from + 1;
+      db.transaction((txn) async {
+        await txn.rawQuery(
+            'UPDATE folders SET priority = priority - 1 WHERE priority >= ? AND priority <= ?',
+            [from, to]);
+        await txn.rawUpdate(
+            'UPDATE folders SET priority = ? WHERE id = ?', [to, id]);
+      });
+    } else {
+      to = to - 1;
+      db.transaction((txn) async {
+        await txn.rawQuery(
+            'UPDATE folders SET priority = priority + 1 WHERE priority >= ? AND priority <= ?',
+            [from, to]);
+        await txn.rawUpdate(
+            'UPDATE folders SET priority = ? WHERE id = ?', [to, id]);
+      });
+    }
+  }
+
+  /**
    * ノート テーブル用関数
    */
 

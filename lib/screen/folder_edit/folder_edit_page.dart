@@ -15,28 +15,35 @@ class FolderEditPage extends HookWidget {
     // 4. 観察する変数を useProvider を使って宣言
     final provider = useProvider(folderProvider)..getFolders();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '編集',
-          style: TextStyle(fontWeight: FontWeight.bold),
+    return WillPopScope(
+      onWillPop: () {
+        provider.clearFolder();
+        Navigator.of(context).pop();
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            '編集',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
-        child: ReorderableListView(
-          onReorder: (int oldIndex, int newIndex) {
-            provider.onReorder(oldIndex, newIndex);
-          },
-          children: (provider.folders).map((folder) {
-            return Container(
-              key: Key(folder.id.toString()),
-              child: ListItemFolderEdit(
-                title: folder.title,
-                priority: folder.priority, //TODO 後で消す
-              ),
-            );
-          }).toList(),
+        body: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+          child: ReorderableListView(
+            onReorder: (int oldIndex, int newIndex) {
+              provider.onReorder(oldIndex, newIndex);
+            },
+            children: (provider.folders).map((folder) {
+              return Container(
+                key: Key(folder.id.toString()),
+                child: ListItemFolderEdit(
+                  title: folder.title,
+                  priority: folder.priority, //TODO 後で消す
+                ),
+              );
+            }).toList(),
+          ),
         ),
       ),
     );
