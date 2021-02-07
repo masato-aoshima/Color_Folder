@@ -13,7 +13,7 @@ class FolderEditPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // 4. 観察する変数を useProvider を使って宣言
-    final provider = useProvider(folderProvider);
+    final provider = useProvider(folderProvider)..getFolders();
 
     return Scaffold(
       appBar: AppBar(
@@ -22,31 +22,22 @@ class FolderEditPage extends HookWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: FutureBuilder(
-        future: provider.getFolders(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          provider.setFolders(snapshot.data); // データをフィールドにセット
-          return Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
-            child: ReorderableListView(
-              onReorder: (int oldIndex, int newIndex) {
-                provider.onReorder(oldIndex, newIndex);
-              },
-              children: (provider.folders).map((folder) {
-                return Container(
-                  key: Key(folder.id.toString()),
-                  child: ListItemFolderEdit(
-                    title: folder.title,
-                    priority: folder.priority, //TODO 後で消す
-                  ),
-                );
-              }).toList(),
-            ),
-          );
-        },
+      body: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+        child: ReorderableListView(
+          onReorder: (int oldIndex, int newIndex) {
+            provider.onReorder(oldIndex, newIndex);
+          },
+          children: (provider.folders).map((folder) {
+            return Container(
+              key: Key(folder.id.toString()),
+              child: ListItemFolderEdit(
+                title: folder.title,
+                priority: folder.priority, //TODO 後で消す
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

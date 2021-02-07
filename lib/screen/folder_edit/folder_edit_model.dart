@@ -12,14 +12,9 @@ class FolderEditModel extends ChangeNotifier {
 
   Future getFolders() async {
     if (_folders == null) {
-      return await DBProvider.db.getAllFolders();
-    } else {
-      return _folders;
+      _folders = await DBProvider.db.getAllFolders();
     }
-  }
-
-  void setFolders(List<Folder> folders) {
-    _folders = folders;
+    notifyListeners();
   }
 
   void addFolders(Folder folder) async {
