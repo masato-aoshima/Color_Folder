@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
-import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/component/list_item/list_item_folder_edit.dart';
+import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/screen/folder_edit/folder_edit_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
@@ -23,24 +23,24 @@ class FolderEditPage extends HookWidget {
         ),
       ),
       body: FutureBuilder(
-        future: Future.wait([provider.getFolders(), provider.getNotesCount()]),
+        future: provider.getFolders(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
-            child: ListView.separated(
-                itemCount: snapshot.data[0].length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    Divider(color: Colors.grey),
-                itemBuilder: (BuildContext context, int index) {
-                  final folder = (snapshot.data[0])[index];
-                  return ListItemFolderEdit(
+            child: ReorderableListView(
+              onReorder: (int oldIndex, int newIndex) {},
+              children: (snapshot.data as List<Folder>).map((folder) {
+                return Container(
+                  key: Key(folder.id.toString()),
+                  child: ListItemFolderEdit(
                     title: folder.title,
-                    notesCount: (snapshot.data[1])[folder.id] ?? 0,
-                  );
-                }),
+                  ),
+                );
+              }).toList(),
+            ),
           );
         },
       ),
