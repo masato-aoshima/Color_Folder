@@ -35,10 +35,11 @@ class FolderPage extends HookWidget {
                 onPressed: () {
                   if (provider.folders.length > 0) {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FolderEditPage(),
-                        )).then((value) {
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FolderEditPage(),
+                                fullscreenDialog: true))
+                        .then((value) {
                       provider.notifyNotesCount();
                     });
                   } else {
