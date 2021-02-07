@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/list_item/list_item_folder_edit.dart';
-import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/screen/folder_edit/folder_edit_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
@@ -44,7 +43,6 @@ class FolderEditPage extends HookWidget {
                 key: Key(folder.id.toString()),
                 child: ListItemFolderEdit(
                   title: folder.title,
-                  priority: folder.priority, //TODO 後で消す
                 ),
               );
             }).toList(),

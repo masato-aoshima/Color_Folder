@@ -7,7 +7,7 @@ class ListItemFolderEdit extends StatefulWidget {
 
   final String title;
   final Function() callback;
-  final int priority;
+  final int priority; // TODO デバッグ用
 
   @override
   _ListItemFolderEditState createState() => _ListItemFolderEditState();
@@ -40,8 +40,6 @@ class _ListItemFolderEditState extends State<ListItemFolderEdit> {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 後で消す
-          Text(widget.priority.toString()),
           Text(
             '⋮',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
