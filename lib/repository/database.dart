@@ -126,11 +126,12 @@ class DBProvider {
             'UPDATE folders SET priority = ? WHERE id = ?', [to, id]);
       });
     } else {
-      to = to - 1;
+      final rangeFrom = to;
+      final rangeTo = from - 1;
       db.transaction((txn) async {
         await txn.rawQuery(
             'UPDATE folders SET priority = priority + 1 WHERE priority >= ? AND priority <= ?',
-            [from, to]);
+            [rangeFrom, rangeTo]);
         await txn.rawUpdate(
             'UPDATE folders SET priority = ? WHERE id = ?', [to, id]);
       });
