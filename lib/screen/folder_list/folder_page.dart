@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/dialog/edit_or_delete_dialog.dart';
-import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
+import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
+import 'package:sort_note/screen/folder_edit/folder_edit_page.dart';
 import 'package:sort_note/screen/note_list/notes_page.dart';
 
 import 'folder_model.dart';
@@ -25,6 +27,36 @@ class FolderPage extends HookWidget {
           'フォルダー',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        actions: [
+          Row(
+            children: [
+              Center(
+                  child: TextButton(
+                onPressed: () {
+                  if (provider.folders.length > 0) {
+                    Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FolderEditPage(),
+                                fullscreenDialog: true))
+                        .then((value) {
+                      provider.notifyNotesCount();
+                    });
+                  } else {
+                    showEmptyFolderToast();
+                  }
+                },
+                child: Text(
+                  '編集',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              )),
+              SizedBox(
+                width: 10,
+              )
+            ],
+          )
+        ],
       ),
       body: FutureBuilder(
         future: Future.wait([provider.getFolders(), provider.getNotesCount()]),
@@ -119,5 +151,16 @@ class FolderPage extends HookWidget {
         builder: (BuildContext context) {
           return dialog;
         });
+  }
+
+  void showEmptyFolderToast() {
+    Fluttertoast.showToast(
+        msg: "フォルダーがありません",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }
