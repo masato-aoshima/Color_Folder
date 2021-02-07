@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 
 class ListItemFolderEdit extends StatefulWidget {
-  ListItemFolderEdit({this.title, this.notesCount = 0, this.callback});
+  ListItemFolderEdit({this.title, this.callback, this.priority});
 
   final String title;
-  final int notesCount;
   final Function() callback;
+  final int priority;
 
   @override
   _ListItemFolderEditState createState() => _ListItemFolderEditState();
@@ -40,6 +40,8 @@ class _ListItemFolderEditState extends State<ListItemFolderEdit> {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // 後で消す
+          Text(widget.priority.toString()),
           Text(
             '⋮',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),

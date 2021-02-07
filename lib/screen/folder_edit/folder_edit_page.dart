@@ -37,6 +37,7 @@ class FolderEditPage extends HookWidget {
                   key: Key(folder.id.toString()),
                   child: ListItemFolderEdit(
                     title: folder.title,
+                    priority: folder.priority, //TODO 後で消す
                   ),
                 );
               }).toList(),
