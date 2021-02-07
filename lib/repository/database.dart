@@ -47,14 +47,18 @@ class DBProvider {
   Future insertFolder(Folder folder) async {
     final db = await database;
     // db.insert の戻り値として、最後に挿入された行のIDを返す (今回は受け取らない)
-    await db.insert(_folderTableName, folder.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.transaction((txn) async {
+      await txn.rawQuery('UPDATE folders SET priority = priority + 1');
+      await txn.insert(_folderTableName, folder.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    });
   }
 
   /// 全てのフォルダーを取得
   Future<List<Folder>> getAllFolders() async {
     final db = await database;
-    final List<Map<String, dynamic>> folders = await db.query(_folderTableName);
+    final List<Map<String, dynamic>> folders =
+        await db.query(_folderTableName, orderBy: "priority ASC");
     return folders
         .map((folder) => Folder(
             id: folder['id'],
@@ -66,16 +70,72 @@ class DBProvider {
   /// フォルダーを一件更新
   Future updateFolder(Folder folder) async {
     final db = await database;
-    await db.update(_folderTableName, folder.toMap(),
-        where: "id = ?", whereArgs: [folder.id]);
+    await db.rawUpdate(
+        'UPDATE folders SET title = ? WHERE id = ?', [folder.title, folder.id]);
   }
 
   /// フォルダーを一件削除
-  Future deleteFolder(String id) async {
+  Future deleteFolder(String id, int priority) async {
     final db = await database;
-    await db.delete(_folderTableName, where: "id = ?", whereArgs: [id]);
-    await db.delete(_noteTableName,
-        where: "folderId = ?", whereArgs: [id]); //TODO Database Inspector でデバッグ
+    await db.transaction((txn) async {
+      await txn.delete(_folderTableName, where: "id = ?", whereArgs: [id]);
+      await txn.delete(_noteTableName, where: "folderId = ?", whereArgs: [id]);
+      await txn.rawQuery(
+          'UPDATE folders SET priority = priority - 1 WHERE priority > ?',
+          [priority]);
+    });
+  }
+
+  /**
+   * フォルダー並び替え用
+   */
+
+  /// 範囲内のpriority を + 1 する
+  Future incrementPriorityInRange(int from, int to) async {
+    final db = await database;
+    await db.rawQuery(
+        'UPDATE folders SET priority = priority + 1 WHERE priority >= ? AND priority <= ?',
+        [from, to]);
+  }
+
+  /// 範囲内のpriority を - 1 する
+  Future decrementPriorityInRange(int from, int to) async {
+    final db = await database;
+    await db.rawQuery(
+        'UPDATE folders SET priority = priority - 1 WHERE priority >= ? AND priority <= ?',
+        [from, to]);
+  }
+
+  /// 指定のidのpriorityを更新する
+  Future updatePriority(int id, int priority) async {
+    final db = await database;
+    await db.rawUpdate(
+        'UPDATE folders SET priority = ? WHERE id = ?', [id, priority]);
+  }
+
+  /// ドラッグ & ドロップで位置を変えたとき
+  Future onDragAndDrop(int id, int from, int to) async {
+    final db = await database;
+    if (from < to) {
+      from = from + 1;
+      db.transaction((txn) async {
+        await txn.rawQuery(
+            'UPDATE folders SET priority = priority - 1 WHERE priority >= ? AND priority <= ?',
+            [from, to]);
+        await txn.rawUpdate(
+            'UPDATE folders SET priority = ? WHERE id = ?', [to, id]);
+      });
+    } else {
+      final rangeFrom = to;
+      final rangeTo = from - 1;
+      db.transaction((txn) async {
+        await txn.rawQuery(
+            'UPDATE folders SET priority = priority + 1 WHERE priority >= ? AND priority <= ?',
+            [rangeFrom, rangeTo]);
+        await txn.rawUpdate(
+            'UPDATE folders SET priority = ? WHERE id = ?', [to, id]);
+      });
+    }
   }
 
   /**

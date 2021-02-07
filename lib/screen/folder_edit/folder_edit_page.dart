@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
-import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/component/list_item/list_item_folder_edit.dart';
+import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/screen/folder_edit/folder_edit_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
@@ -15,34 +15,41 @@ class FolderEditPage extends HookWidget {
     // 4. 観察する変数を useProvider を使って宣言
     final provider = useProvider(folderProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '編集',
-          style: TextStyle(fontWeight: FontWeight.bold),
+    // build完了直後に呼び出されるらしい
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      provider.getFolders();
+    });
+
+    return WillPopScope(
+      onWillPop: () {
+        provider.clearFolder();
+        Navigator.of(context).pop();
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            '編集',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
-      body: FutureBuilder(
-        future: Future.wait([provider.getFolders(), provider.getNotesCount()]),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          return Container(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
-            child: ListView.separated(
-                itemCount: snapshot.data[0].length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    Divider(color: Colors.grey),
-                itemBuilder: (BuildContext context, int index) {
-                  final folder = (snapshot.data[0])[index];
-                  return ListItemFolderEdit(
-                    title: folder.title,
-                    notesCount: (snapshot.data[1])[folder.id] ?? 0,
-                  );
-                }),
-          );
-        },
+        body: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+          child: ReorderableListView(
+            onReorder: (int oldIndex, int newIndex) {
+              provider.onReorder(oldIndex, newIndex);
+            },
+            children: (provider.folders).map((folder) {
+              return Container(
+                key: Key(folder.id.toString()),
+                child: ListItemFolderEdit(
+                  title: folder.title,
+                  priority: folder.priority, //TODO 後で消す
+                ),
+              );
+            }).toList(),
+          ),
+        ),
       ),
     );
   }
