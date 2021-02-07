@@ -4,15 +4,22 @@ import 'package:sort_note/repository/database.dart';
 
 // 2. モデルクラスで、ChangeNotifierを継承する
 class FolderEditModel extends ChangeNotifier {
-  var _folders = List<Folder>();
+  var _folders;
   List<Folder> get folders => _folders;
 
   var _noteCounts = Map<int, int>();
   Map<int, int> get noteCounts => _noteCounts;
 
   Future getFolders() async {
-    _folders = await DBProvider.db.getAllFolders();
-    return _folders;
+    if (_folders == null) {
+      return await DBProvider.db.getAllFolders();
+    } else {
+      return _folders;
+    }
+  }
+
+  void setFolders(List<Folder> folders) {
+    _folders = folders;
   }
 
   void addFolders(Folder folder) async {
@@ -40,6 +47,16 @@ class FolderEditModel extends ChangeNotifier {
 
   void notifyNotesCount() async {
     _noteCounts = await DBProvider.db.getNotesCountByFolder();
+    notifyListeners();
+  }
+
+  void onReorder(int oldIndex, int newIndex) async {
+    if (newIndex > folders.length) newIndex = folders.length;
+    if (oldIndex < newIndex) newIndex -= 1;
+
+    final item = _folders[oldIndex];
+    _folders.removeAt(oldIndex);
+    _folders.insert(newIndex, item);
     notifyListeners();
   }
 }

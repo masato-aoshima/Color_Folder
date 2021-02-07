@@ -28,11 +28,14 @@ class FolderEditPage extends HookWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
+          provider.setFolders(snapshot.data); // データをフィールドにセット
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
             child: ReorderableListView(
-              onReorder: (int oldIndex, int newIndex) {},
-              children: (snapshot.data as List<Folder>).map((folder) {
+              onReorder: (int oldIndex, int newIndex) {
+                provider.onReorder(oldIndex, newIndex);
+              },
+              children: (provider.folders).map((folder) {
                 return Container(
                   key: Key(folder.id.toString()),
                   child: ListItemFolderEdit(
