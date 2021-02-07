@@ -43,7 +43,7 @@ class DBProvider {
    * フォルダーテーブル用　関数
    */
 
-  /// フォルダーを一件追加 TODO priority をアップデートするクエリを追加して、transactionにする
+  /// フォルダーを一件追加
   Future insertFolder(Folder folder) async {
     final db = await database;
     // db.insert の戻り値として、最後に挿入された行のIDを返す (今回は受け取らない)
@@ -67,11 +67,11 @@ class DBProvider {
         .toList();
   }
 
-  /// フォルダーを一件更新 // TODO 更新の際、priorityが問題ないか確認する
+  /// フォルダーを一件更新
   Future updateFolder(Folder folder) async {
     final db = await database;
-    await db.update(_folderTableName, folder.toMap(),
-        where: "id = ?", whereArgs: [folder.id]);
+    await db.rawUpdate(
+        'UPDATE folders SET title = ? WHERE id = ?', [folder.title, folder.id]);
   }
 
   /// フォルダーを一件削除 // TODO priority以上の奴を全部下げるのとセットにしてtransaction
