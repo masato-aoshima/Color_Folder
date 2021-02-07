@@ -13,7 +13,12 @@ class FolderEditPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // 4. 観察する変数を useProvider を使って宣言
-    final provider = useProvider(folderProvider)..getFolders();
+    final provider = useProvider(folderProvider);
+
+    // build完了直後に呼び出されるらしい
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      provider.getFolders();
+    });
 
     return WillPopScope(
       onWillPop: () {
