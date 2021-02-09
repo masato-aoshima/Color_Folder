@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sort_note/util/color.dart';
 
 class FolderSmallIcon extends StatelessWidget {
-  FolderSmallIcon({this.enable = true, this.size = 30, this.color = 'ffc107'});
+  FolderSmallIcon(
+      {this.enable = true, this.size = 30, this.color = 'ffffc107'});
 
   final bool enable;
   final double size;
