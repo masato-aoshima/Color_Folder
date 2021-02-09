@@ -29,6 +29,7 @@ class DBProvider {
       await db.execute("CREATE TABLE folders("
           "id INTEGER PRIMARY KEY AUTOINCREMENT, "
           "title TEXT, "
+          "color TEXT,"
           "priority INTEGER)");
       await db.execute("CREATE TABLE notes("
           "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -63,11 +64,12 @@ class DBProvider {
         .map((folder) => Folder(
             id: folder['id'],
             title: folder['title'],
+            color: folder['color'],
             priority: folder['priority']))
         .toList();
   }
 
-  /// フォルダーを一件更新
+  /// フォルダーのタイトルを一件更新
   Future updateFolder(Folder folder) async {
     final db = await database;
     await db.rawUpdate(
