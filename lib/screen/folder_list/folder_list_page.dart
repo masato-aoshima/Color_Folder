@@ -70,11 +70,14 @@ class FolderPage extends HookWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          String folderName = await showInputTextDialog(context, "");
-          if (folderName != null && folderName.isNotEmpty) {
-            provider.addFolders(Folder(title: folderName));
-          }
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FolderDetailPage(
+                  color: Color(0xffffc107),
+                ),
+              ));
         },
         child: Icon(Icons.folder_open_sharp),
       ),
