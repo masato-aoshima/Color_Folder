@@ -9,20 +9,25 @@ class ListItemFolder extends StatelessWidget {
       this.notesCount = 0,
       this.callback,
       this.longPressCallback,
-      this.enable = true});
+      this.enable = true,
+      this.heroId});
 
   final String title;
   final int notesCount;
   final Function() callback;
   final Function() longPressCallback;
   final bool enable;
+  final String heroId;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: FolderSmallIcon(
-        enable: enable,
-        size: 45,
+      leading: Hero(
+        tag: 'folderSmallIcon$heroId',
+        child: FolderSmallIcon(
+          enable: enable,
+          size: 45,
+        ),
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,

@@ -7,6 +7,7 @@ import 'package:sort_note/component/dialog/edit_or_delete_dialog.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
 import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
+import 'package:sort_note/screen/folder_detail/folder_detail_page.dart';
 import 'package:sort_note/screen/folder_edit_list/folder_edit_list_page.dart';
 import 'package:sort_note/screen/note_list/notes_page.dart';
 
@@ -104,30 +105,16 @@ class FolderPage extends HookWidget {
                   });
                 },
                 longPressCallback: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return EditOrDeleteDialog(
-                          title: folder.title,
-                          editFunction: () async {
-                            final newFolderName = await showInputTextDialog(
-                                context, folder.title);
-                            if (newFolderName != null &&
-                                newFolderName.isNotEmpty) {
-                              final newFolder =
-                                  Folder(id: folder.id, title: newFolderName);
-                              provider.upDateFolderName(
-                                  newFolder); // TODO priority が 0に戻る
-                            }
-                            Navigator.pop(context);
-                          },
-                          deleteFunction: () {
-                            provider.deleteFolder(folder.id, folder.priority);
-                            Navigator.pop(context);
-                          },
-                        );
-                      });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FolderDetailPage(
+                          heroId: folder.id.toString(),
+                          color: Colors.yellow,
+                        ),
+                      ));
                 },
+                heroId: folder.id.toString(),
               );
             }),
       );
