@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 
 class ListItemFolderEdit extends StatefulWidget {
-  ListItemFolderEdit({this.title, this.callback, this.priority});
+  ListItemFolderEdit({this.title, this.callback, this.priority, this.tagId});
 
   final String title;
   final Function() callback;
   final int priority; // TODO デバッグ用
+  final String tagId;
 
   @override
   _ListItemFolderEditState createState() => _ListItemFolderEditState();
@@ -32,8 +33,11 @@ class _ListItemFolderEditState extends State<ListItemFolderEdit> {
           VerticalDivider(
             color: Colors.grey,
           ),
-          FolderSmallIcon(
-            size: 45,
+          Hero(
+            tag: 'folderSmallIcon${widget.tagId}',
+            child: FolderSmallIcon(
+              size: 45,
+            ),
           ),
         ],
       ),

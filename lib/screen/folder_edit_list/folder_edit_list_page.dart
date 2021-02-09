@@ -49,9 +49,12 @@ class FolderEditPage extends HookWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => FolderDetailPage(),
-                            fullscreenDialog: true));
+                          builder: (context) => FolderDetailPage(
+                            heroId: folder.id.toString(),
+                          ),
+                        ));
                   },
+                  tagId: folder.id.toString(),
                 ),
               );
             }).toList(),
