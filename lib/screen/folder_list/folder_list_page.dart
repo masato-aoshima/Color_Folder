@@ -115,6 +115,7 @@ class FolderPage extends HookWidget {
                       ));
                 },
                 heroId: folder.id.toString(),
+                color: folder.color,
               );
             }),
       );

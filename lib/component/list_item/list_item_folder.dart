@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
-import 'package:sort_note/util/color.dart';
 
 class ListItemFolder extends StatelessWidget {
   ListItemFolder(
       {this.title,
       this.notesCount = 0,
+      this.color,
       this.callback,
       this.longPressCallback,
       this.enable = true,
@@ -14,6 +14,7 @@ class ListItemFolder extends StatelessWidget {
 
   final String title;
   final int notesCount;
+  final String color;
   final Function() callback;
   final Function() longPressCallback;
   final bool enable;

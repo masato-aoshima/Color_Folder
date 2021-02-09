@@ -4,7 +4,7 @@ class Folder {
   final String color;
   final int priority;
 
-  Folder({this.id, this.title, this.color, this.priority = 0});
+  Folder({this.id, this.title, this.color = '0xffffc107', this.priority = 0});
 
   // SQLiteのテーブルにinsertするために、Map型に変換
   Map<String, dynamic> toMap() {
