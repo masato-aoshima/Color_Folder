@@ -7,7 +7,7 @@ import 'package:sort_note/component/dialog/edit_or_delete_dialog.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
 import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
-import 'package:sort_note/screen/folder_edit_list/folder_edit_page.dart';
+import 'package:sort_note/screen/folder_edit_list/folder_edit_list_page.dart';
 import 'package:sort_note/screen/note_list/notes_page.dart';
 
 import 'folder_list_model.dart';
