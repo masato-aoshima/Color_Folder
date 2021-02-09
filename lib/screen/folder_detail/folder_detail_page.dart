@@ -1,3 +1,4 @@
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -9,12 +10,14 @@ import 'folder_detail_model.dart';
 final folderProvider = ChangeNotifierProvider((ref) => FolderDetailModel());
 
 class FolderDetailPage extends HookWidget {
-  FolderDetailPage({this.heroId});
+  FolderDetailPage({this.heroId, this.color});
 
   final String heroId;
+  final Color color;
+
   @override
   Widget build(BuildContext context) {
-    final provider = useProvider(folderProvider);
+    final provider = useProvider(folderProvider)..color = color;
 
     return Scaffold(
       appBar: AppBar(
@@ -26,11 +29,36 @@ class FolderDetailPage extends HookWidget {
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
         child: Center(
-            child: Hero(
+            child: Column(
+          children: [
+            Hero(
                 tag: 'folderSmallIcon$heroId',
                 child: FolderSmallIcon(
                   size: 200,
-                ))),
+                )),
+            ColorPicker(
+              pickersEnabled: {
+                ColorPickerType.both: false,
+                ColorPickerType.primary: true,
+                ColorPickerType.accent: false,
+                ColorPickerType.bw: false,
+                ColorPickerType.custom: false,
+                ColorPickerType.wheel: false
+              },
+              enableShadesSelection: false,
+              hasBorder: true,
+              padding: EdgeInsets.all(20),
+              color: provider.color,
+              onColorChanged: (Color color) {
+                provider.selectColor(color);
+              },
+              heading: Text(
+                'フォルダの色を変更できます',
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            ),
+          ],
+        )),
       ),
     );
   }

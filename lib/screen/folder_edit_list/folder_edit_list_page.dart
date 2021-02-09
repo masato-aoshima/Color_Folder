@@ -51,6 +51,7 @@ class FolderEditPage extends HookWidget {
                         MaterialPageRoute(
                           builder: (context) => FolderDetailPage(
                             heroId: folder.id.toString(),
+                            color: Colors.yellow,
                           ),
                         ));
                   },
