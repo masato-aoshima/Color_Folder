@@ -23,12 +23,6 @@ class FolderEditModel extends ChangeNotifier {
     _folders = List<Folder>();
   }
 
-  void addFolders(Folder folder) async {
-    await DBProvider.db.insertFolder(folder);
-    _folders = await DBProvider.db.getAllFolders();
-    notifyListeners();
-  }
-
   void deleteFolder(int id, int priority) async {
     await DBProvider.db.deleteFolder(id.toString(), priority);
     _folders = await DBProvider.db.getAllFolders();

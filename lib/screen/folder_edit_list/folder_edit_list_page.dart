@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/list_item/list_item_folder_edit.dart';
+import 'package:sort_note/screen/folder_detail/folder_detail_page.dart';
 
-import 'folder_edit_model.dart';
+import 'folder_edit_list_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
 final folderProvider = ChangeNotifierProvider((ref) => FolderEditModel());
@@ -44,6 +45,17 @@ class FolderEditPage extends HookWidget {
                 key: Key(folder.id.toString()),
                 child: ListItemFolderEdit(
                   title: folder.title,
+                  callback: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FolderDetailPage(
+                            heroId: folder.id.toString(),
+                            color: Colors.yellow,
+                          ),
+                        ));
+                  },
+                  tagId: folder.id.toString(),
                 ),
               );
             }).toList(),
