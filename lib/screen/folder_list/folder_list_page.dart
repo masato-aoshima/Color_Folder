@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/all.dart';
-import 'package:sort_note/component/dialog/edit_or_delete_dialog.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
 import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
