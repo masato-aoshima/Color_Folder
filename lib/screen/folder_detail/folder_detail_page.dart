@@ -22,7 +22,7 @@ class FolderDetailPage extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'フォルダ詳細',
+          heroId == null ? '新規作成' : 'フォルダ詳細',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),

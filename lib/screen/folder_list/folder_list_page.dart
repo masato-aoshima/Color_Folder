@@ -74,10 +74,10 @@ class FolderPage extends HookWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => FolderDetailPage(
-                  color: Color(0xffffc107),
-                ),
-              ));
+                  builder: (context) => FolderDetailPage(
+                        color: Color(0xffffc107),
+                      ),
+                  fullscreenDialog: true));
         },
         child: Icon(Icons.folder_open_sharp),
       ),
