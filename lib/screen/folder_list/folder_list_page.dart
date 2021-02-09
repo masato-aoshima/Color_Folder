@@ -10,7 +10,7 @@ import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/screen/folder_edit_list/folder_edit_page.dart';
 import 'package:sort_note/screen/note_list/notes_page.dart';
 
-import 'folder_model.dart';
+import 'folder_list_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
 final folderProvider = ChangeNotifierProvider((ref) => FolderModel());
