@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
+import 'package:sort_note/util/color.dart';
 
 import 'folder_detail_model.dart';
 
@@ -50,6 +51,8 @@ class FolderDetailPage extends HookWidget {
               padding: EdgeInsets.all(20),
               color: provider.color,
               onColorChanged: (Color color) {
+                // TODO アイテムの保存
+                print(colorToString(color));
                 provider.selectColor(color);
               },
               heading: Text(

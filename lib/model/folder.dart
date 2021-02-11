@@ -1,17 +1,25 @@
+import 'dart:ui';
+
+import 'package:sort_note/util/color.dart';
+
 class Folder {
   final int id;
   final String title;
-  final String color;
+  final Color color;
   final int priority;
 
-  Folder({this.id, this.title, this.color = 'ffffc107', this.priority = 0});
+  Folder(
+      {this.id,
+      this.title,
+      this.color = defaultFolderColor,
+      this.priority = 0});
 
   // SQLiteのテーブルにinsertするために、Map型に変換
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'title': title,
-      'color': color,
+      'color': colorToString(color),
       'priority': priority,
     };
   }
@@ -21,7 +29,7 @@ class Folder {
     return Folder(
         id: map['id'],
         title: map['title'],
-        color: map['color'],
+        color: stringToColor(map['color']),
         priority: map['priority']);
   }
 }

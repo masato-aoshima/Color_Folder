@@ -18,3 +18,18 @@ class FolderGradientMask extends StatelessWidget {
     );
   }
 }
+
+const defaultFolderColor = Color(0xffffc107);
+
+/// String -> Color への変換
+/// @hexString : 6桁の16進数文字列
+Color stringToColor(String hexString) {
+  return Color(int.parse("0xff$hexString"));
+}
+
+/// Color -> 6桁の16進数への変換
+/// 例：Color(0xffcddc39) -> cddc39　へ
+String colorToString(Color color) {
+  final rawColorString = color.toString();
+  return rawColorString.substring(10, 16);
+}

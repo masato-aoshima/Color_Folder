@@ -60,13 +60,9 @@ class DBProvider {
     final db = await database;
     final List<Map<String, dynamic>> folders =
         await db.query(_folderTableName, orderBy: "priority ASC");
-    return folders
-        .map((folder) => Folder(
-            id: folder['id'],
-            title: folder['title'],
-            color: folder['color'],
-            priority: folder['priority']))
-        .toList();
+    return folders.map((folder) {
+      Folder().fromMap(folder);
+    }).toList();
   }
 
   /// フォルダーのタイトルを一件更新
