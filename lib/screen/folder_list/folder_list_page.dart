@@ -95,7 +95,7 @@ class FolderPage extends HookWidget {
             itemBuilder: (BuildContext context, int index) {
               final folder = folders[index];
               return ListItemFolder(
-                title: folder.title,
+                folder: folder,
                 notesCount: counts[folder.id] ?? 0,
                 callback: () {
                   Navigator.push(
@@ -116,8 +116,6 @@ class FolderPage extends HookWidget {
                         ),
                       ));
                 },
-                heroId: folder.id.toString(),
-                color: folder.color,
               );
             }),
       );

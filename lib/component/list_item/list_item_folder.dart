@@ -1,31 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
+import 'package:sort_note/model/folder.dart';
 
 class ListItemFolder extends StatelessWidget {
-  ListItemFolder(
-      {this.title,
-      this.notesCount = 0,
-      this.color,
-      this.callback,
-      this.longPressCallback,
-      this.enable = true,
-      this.heroId});
+  ListItemFolder({
+    this.folder,
+    this.notesCount = 0,
+    this.callback,
+    this.longPressCallback,
+    this.enable = true,
+  });
 
-  final String title;
+  final Folder folder;
   final int notesCount;
-  final String color;
   final Function() callback;
   final Function() longPressCallback;
   final bool enable;
-  final String heroId;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: Hero(
-        tag: 'folderSmallIcon$heroId',
+        tag: 'folderSmallIcon${folder.id}',
         child: FolderSmallIcon(
+          color: folder.color,
           enable: enable,
           size: 45,
         ),
@@ -44,7 +43,7 @@ class ListItemFolder extends StatelessWidget {
         ],
       ),
       title: Text(
-        title,
+        folder.title,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       enabled: enable,
