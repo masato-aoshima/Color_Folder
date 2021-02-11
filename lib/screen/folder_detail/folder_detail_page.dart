@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
+import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/util/color.dart';
 
 import 'folder_detail_model.dart';
@@ -11,19 +12,20 @@ import 'folder_detail_model.dart';
 final folderProvider = ChangeNotifierProvider((ref) => FolderDetailModel());
 
 class FolderDetailPage extends HookWidget {
-  FolderDetailPage({this.heroId, this.color});
+  FolderDetailPage({this.folder});
 
-  final String heroId;
-  final Color color;
+  final Folder folder;
 
   @override
   Widget build(BuildContext context) {
-    final provider = useProvider(folderProvider)..color = color;
+    final provider = useProvider(folderProvider)
+      ..folder = folder
+      ..color = folder == null ? defaultFolderColor : folder.color;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          heroId == null ? '新規作成' : 'フォルダ詳細',
+          folder == null ? '新規作成' : 'フォルダ詳細',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -33,7 +35,7 @@ class FolderDetailPage extends HookWidget {
             child: Column(
           children: [
             Hero(
-                tag: 'folderSmallIcon$heroId',
+                tag: folder == null ? '' : 'folderSmallIcon${folder.id}',
                 child: FolderSmallIcon(
                   size: 200,
                 )),

@@ -3,6 +3,7 @@ import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/repository/database.dart';
 
 class FolderDetailModel extends ChangeNotifier {
+  Folder folder;
   Color color;
 
   void selectColor(Color color) {

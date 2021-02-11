@@ -4,9 +4,7 @@ import 'package:sort_note/util/color.dart';
 
 class FolderSmallIcon extends StatelessWidget {
   FolderSmallIcon(
-      {this.enable = true,
-      this.size = 30,
-      this.color = const Color(0xffa12c12)});
+      {this.enable = true, this.size = 30, this.color = defaultFolderColor});
 
   final bool enable;
   final double size;
