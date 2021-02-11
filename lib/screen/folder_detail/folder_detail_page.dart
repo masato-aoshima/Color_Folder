@@ -18,9 +18,7 @@ class FolderDetailPage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = useProvider(folderProvider)
-      ..folder = folder
-      ..color = folder == null ? defaultFolderColor : folder.color;
+    final provider = useProvider(folderProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -37,6 +35,7 @@ class FolderDetailPage extends HookWidget {
             Hero(
                 tag: folder == null ? '' : 'folderSmallIcon${folder.id}',
                 child: FolderSmallIcon(
+                  color: provider.color,
                   size: 200,
                 )),
             ColorPicker(

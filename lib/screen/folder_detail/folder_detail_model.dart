@@ -1,13 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/repository/database.dart';
+import 'package:sort_note/util/color.dart';
 
 class FolderDetailModel extends ChangeNotifier {
   Folder folder;
-  Color color;
+
+  Color _color;
+
+  Color get color {
+    if (_color != null) {
+      return _color;
+    }
+    if (folder != null) {
+      return folder.color;
+    }
+    return defaultFolderColor;
+  }
 
   void selectColor(Color color) {
-    this.color = color;
+    this._color = color;
     notifyListeners();
   }
 
