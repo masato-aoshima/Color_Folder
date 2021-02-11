@@ -77,11 +77,12 @@ class FolderDetailPage extends HookWidget {
                 '保存',
                 style: TextStyle(color: Colors.white),
               ),
-              onPressed: () {
+              onPressed: () async {
                 if (provider.inputText == null || provider.inputText.isEmpty) {
                   showEmptyTextToast();
                 } else {
-                  provider.onTapSave();
+                  await provider.onTapSave();
+                  Navigator.pop(context);
                 }
               },
               color: Color(0xff1995AD),

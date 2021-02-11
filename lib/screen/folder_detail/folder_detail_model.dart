@@ -7,6 +7,7 @@ class FolderDetailModel extends ChangeNotifier {
   Folder _folder;
 
   Color _color;
+
   Color get color {
     if (_color != null) {
       return _color;
@@ -45,7 +46,14 @@ class FolderDetailModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onTapSave() {
-    print('保存ボタンが押されました');
+  Future onTapSave() async {
+    // 新規作成
+    if (_folder == null) {
+      final newFolder = Folder(
+        title: inputText,
+        color: color,
+      );
+      await DBProvider.db.insertFolder(newFolder);
+    }
   }
 }
