@@ -42,7 +42,7 @@ class MoveAnotherFolderPage extends HookWidget {
                 final folder = provider.folders[index];
                 final count = provider.noteCounts[folder.id];
                 return ListItemFolder(
-                  title: folder.title,
+                  folder: folder,
                   notesCount: count ?? 0,
                   callback: () async {
                     await provider.onTapFolder(folder.id);

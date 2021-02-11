@@ -1,13 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/repository/database.dart';
+import 'package:sort_note/util/color.dart';
 
 class FolderDetailModel extends ChangeNotifier {
-  Color color;
+  Folder _folder;
+
+  Color _color;
+
+  Color get color {
+    if (_color != null) {
+      return _color;
+    }
+    if (_folder != null) {
+      return _folder.color;
+    }
+    return defaultFolderColor;
+  }
+
+  String inputText;
+
+  void setFolder(Folder folder) {
+    if (folder != null) {
+      this._folder = folder;
+      this.inputText = folder.title;
+    }
+  }
 
   void selectColor(Color color) {
-    this.color = color;
+    this._color = color;
     notifyListeners();
+  }
+
+  void changeText(String text) {
+    inputText = text;
   }
 
   void deleteFolder(int id, int priority) async {
@@ -18,5 +44,22 @@ class FolderDetailModel extends ChangeNotifier {
   void upDateFolderName(Folder folder) async {
     await DBProvider.db.updateFolder(folder);
     notifyListeners();
+  }
+
+  Future onTapSave() async {
+    // 新規作成
+    if (_folder == null) {
+      final newFolder = Folder(
+        title: inputText,
+        color: color,
+      );
+      await DBProvider.db.insertFolder(newFolder);
+    }
+  }
+
+  void clear() {
+    _folder = null;
+    _color = null;
+    inputText = null;
   }
 }

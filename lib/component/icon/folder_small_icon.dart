@@ -4,18 +4,18 @@ import 'package:sort_note/util/color.dart';
 
 class FolderSmallIcon extends StatelessWidget {
   FolderSmallIcon(
-      {this.enable = true, this.size = 30, this.color = 'ffffc107'});
+      {this.enable = true, this.size = 30, this.color = defaultFolderColor});
 
   final bool enable;
   final double size;
-  final String color;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return FolderGradientMask(
       child: Icon(
         Icons.folder_sharp,
-        color: enable ? Color(int.parse(color, radix: 16)) : Colors.grey,
+        color: enable ? color : Colors.grey,
         size: size,
       ),
     );

@@ -71,12 +71,13 @@ class FolderPage extends HookWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => FolderDetailPage(
-                        color: Color(0xffffc107),
-                      ),
-                  fullscreenDialog: true));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FolderDetailPage(),
+                      fullscreenDialog: true))
+              .then((value) {
+            provider.getFoldersNotify();
+          });
         },
         child: Icon(Icons.folder_open_sharp),
       ),
@@ -95,7 +96,7 @@ class FolderPage extends HookWidget {
             itemBuilder: (BuildContext context, int index) {
               final folder = folders[index];
               return ListItemFolder(
-                title: folder.title,
+                folder: folder,
                 notesCount: counts[folder.id] ?? 0,
                 callback: () {
                   Navigator.push(
@@ -111,13 +112,12 @@ class FolderPage extends HookWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => FolderDetailPage(
-                          heroId: folder.id.toString(),
-                          color: Colors.yellow,
+                          folder: folder,
                         ),
-                      ));
+                      )).then((value) {
+                    provider.getFoldersNotify();
+                  });
                 },
-                heroId: folder.id.toString(),
-                color: folder.color,
               );
             }),
       );
