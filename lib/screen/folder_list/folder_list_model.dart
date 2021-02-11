@@ -15,6 +15,11 @@ class FolderModel extends ChangeNotifier {
     return _folders;
   }
 
+  Future getFoldersNotify() async {
+    _folders = await DBProvider.db.getAllFolders();
+    notifyListeners();
+  }
+
   void addFolders(Folder folder) async {
     await DBProvider.db.insertFolder(folder);
     _folders = await DBProvider.db

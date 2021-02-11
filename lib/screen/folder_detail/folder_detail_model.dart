@@ -56,4 +56,10 @@ class FolderDetailModel extends ChangeNotifier {
       await DBProvider.db.insertFolder(newFolder);
     }
   }
+
+  void clear() {
+    _folder = null;
+    _color = null;
+    inputText = null;
+  }
 }

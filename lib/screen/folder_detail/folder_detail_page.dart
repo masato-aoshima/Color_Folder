@@ -22,73 +22,83 @@ class FolderDetailPage extends HookWidget {
     final provider = useProvider(folderProvider)..setFolder(folder);
     final myController = TextEditingController(text: provider.inputText);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          folder == null ? '新規作成' : 'フォルダ詳細',
-          style: TextStyle(fontWeight: FontWeight.bold),
+    return WillPopScope(
+      onWillPop: () {
+        provider.clear();
+        Navigator.of(context).pop();
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            folder == null ? '新規作成' : 'フォルダ詳細',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
-        child: Center(
-            child: Column(
-          children: [
-            Hero(
-                tag: folder == null ? '' : 'folderSmallIcon${folder.id}',
-                child: FolderSmallIcon(
-                  color: provider.color,
-                  size: 200,
-                )),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-              child: TextFormField(
-                controller: myController,
-                textAlign: TextAlign.center,
-                onChanged: provider.changeText,
-                maxLines: 1,
-                style: TextStyle(fontSize: 20),
+        body: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+          child: Center(
+              child: Column(
+            children: [
+              Hero(
+                  tag: folder == null ? '' : 'folderSmallIcon${folder.id}',
+                  child: FolderSmallIcon(
+                    color: provider.color,
+                    size: 200,
+                  )),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                child: TextFormField(
+                  controller: myController,
+                  textAlign: TextAlign.center,
+                  onChanged: provider.changeText,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 20),
+                ),
               ),
-            ),
-            ColorPicker(
-              pickersEnabled: {
-                ColorPickerType.both: false,
-                ColorPickerType.primary: true,
-                ColorPickerType.accent: false,
-                ColorPickerType.bw: false,
-                ColorPickerType.custom: false,
-                ColorPickerType.wheel: false
-              },
-              enableShadesSelection: false,
-              hasBorder: true,
-              padding: EdgeInsets.all(20),
-              color: provider.color,
-              onColorChanged: (Color color) {
-                print(colorToString(color));
-                provider.selectColor(color);
-              },
-              heading: Text(
-                'フォルダの色を変更できます',
-                style: Theme.of(context).textTheme.headline5,
+              ColorPicker(
+                pickersEnabled: {
+                  ColorPickerType.both: false,
+                  ColorPickerType.primary: true,
+                  ColorPickerType.accent: false,
+                  ColorPickerType.bw: false,
+                  ColorPickerType.custom: false,
+                  ColorPickerType.wheel: false
+                },
+                enableShadesSelection: false,
+                hasBorder: true,
+                padding: EdgeInsets.all(20),
+                color: provider.color,
+                onColorChanged: (Color color) {
+                  print(colorToString(color));
+                  provider.selectColor(color);
+                },
+                heading: Text(
+                  'フォルダの色を変更できます',
+                  style: Theme.of(context).textTheme.headline5,
+                ),
               ),
-            ),
-            RaisedButton(
-              child: const Text(
-                '保存',
-                style: TextStyle(color: Colors.white),
+              RaisedButton(
+                child: const Text(
+                  '保存',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () async {
+                  if (provider.inputText == null ||
+                      provider.inputText.isEmpty) {
+                    showEmptyTextToast();
+                  } else {
+                    await provider.onTapSave();
+                    provider.clear();
+                    Navigator.pop(context);
+                  }
+                },
+                color: Color(0xff1995AD),
               ),
-              onPressed: () async {
-                if (provider.inputText == null || provider.inputText.isEmpty) {
-                  showEmptyTextToast();
-                } else {
-                  await provider.onTapSave();
-                  Navigator.pop(context);
-                }
-              },
-              color: Color(0xff1995AD),
-            ),
-          ],
-        )),
+            ],
+          )),
+        ),
       ),
     );
   }

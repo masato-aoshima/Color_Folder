@@ -71,10 +71,13 @@ class FolderPage extends HookWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => FolderDetailPage(),
-                  fullscreenDialog: true));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FolderDetailPage(),
+                      fullscreenDialog: true))
+              .then((value) {
+            provider.getFoldersNotify();
+          });
         },
         child: Icon(Icons.folder_open_sharp),
       ),
@@ -111,7 +114,9 @@ class FolderPage extends HookWidget {
                         builder: (context) => FolderDetailPage(
                           folder: folder,
                         ),
-                      ));
+                      )).then((value) {
+                    provider.getFoldersNotify();
+                  });
                 },
               );
             }),
