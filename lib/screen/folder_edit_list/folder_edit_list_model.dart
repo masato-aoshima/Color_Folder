@@ -50,6 +50,7 @@ class FolderEditModel extends ChangeNotifier {
     deleteFolders.forEach((folder) {
       DBProvider.db.deleteFolder(folder.id.toString(), folder.priority);
     });
+    checkedFolderIds.clear();
   }
 
   void upDateFolderName(Folder folder) async {
