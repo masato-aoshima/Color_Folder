@@ -23,7 +23,9 @@ class FolderDetailModel extends ChangeNotifier {
   void setFolder(Folder folder) {
     if (folder != null) {
       this._folder = folder;
-      this.inputText = folder.title;
+      if (this.inputText == null) {
+        this.inputText = folder.title;
+      }
     }
   }
 
