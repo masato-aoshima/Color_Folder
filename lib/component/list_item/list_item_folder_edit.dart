@@ -25,46 +25,49 @@ class _ListItemFolderEditState extends State<ListItemFolderEdit> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Checkbox(value: _isCheck, onChanged: _handleCheckbox),
-          VerticalDivider(
-            color: Colors.grey,
-          ),
-          Hero(
-            tag: 'folderSmallIcon${widget.tagId}',
-            child: FolderSmallIcon(
-              size: 45,
+    return Container(
+      height: 74,
+      child: ListTile(
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Checkbox(value: _isCheck, onChanged: _handleCheckbox),
+            VerticalDivider(
+              color: Colors.grey,
             ),
-          ),
-        ],
+            Hero(
+              tag: 'folderSmallIcon${widget.tagId}',
+              child: FolderSmallIcon(
+                size: 45,
+              ),
+            ),
+          ],
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '⋮',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+            ),
+            SizedBox(
+              width: 6,
+            ),
+            VerticalDivider(
+              color: Colors.grey,
+            ),
+            Icon(
+              Icons.dehaze,
+              size: 35,
+            ),
+          ],
+        ),
+        title: Text(
+          widget.title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        onTap: widget.callback,
       ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            '⋮',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-          ),
-          SizedBox(
-            width: 6,
-          ),
-          VerticalDivider(
-            color: Colors.grey,
-          ),
-          Icon(
-            Icons.dehaze,
-            size: 35,
-          ),
-        ],
-      ),
-      title: Text(
-        widget.title,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      onTap: widget.callback,
     );
   }
 }
