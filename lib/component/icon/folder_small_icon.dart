@@ -15,7 +15,7 @@ class FolderSmallIcon extends StatelessWidget {
     return FolderGradientMask(
       child: Icon(
         Icons.folder_sharp,
-        color: enable ? color : Colors.grey,
+        color: color,
         size: size,
       ),
     );
