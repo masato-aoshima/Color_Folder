@@ -35,43 +35,46 @@ class FolderDetailPage extends HookWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           actions: [
-            IconButton(
-                icon: Icon(
-                  Icons.delete_forever,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (_) {
-                        return AlertDialog(
-                          title: Text('フォルダーを削除しますか？'),
-                          content: Text(
-                              'このフォルダーと、フォルダー内のすべてのノートが削除されます。この操作は取り消せません。'),
-                          actions: [
-                            // ボタン領域
-                            FlatButton(
-                              child: Text(
-                                "キャンセル",
+            Visibility(
+              visible: folder != null,
+              child: IconButton(
+                  icon: Icon(
+                    Icons.delete_forever,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                            title: Text('フォルダーを削除しますか？'),
+                            content: Text(
+                                'このフォルダーと、フォルダー内のすべてのノートが削除されます。この操作は取り消せません。'),
+                            actions: [
+                              // ボタン領域
+                              FlatButton(
+                                child: Text(
+                                  "キャンセル",
+                                ),
+                                onPressed: () => Navigator.pop(context),
                               ),
-                              onPressed: () => Navigator.pop(context),
-                            ),
-                            FlatButton(
-                              child: Text(
-                                "削除",
-                                style: TextStyle(color: Colors.red),
+                              FlatButton(
+                                child: Text(
+                                  "削除",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                                onPressed: () async {
+                                  await provider.deleteFolder(folder);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                },
                               ),
-                              onPressed: () async {
-                                await provider.deleteFolder(folder);
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
-                        );
-                      });
-                })
+                            ],
+                          );
+                        });
+                  }),
+            )
           ],
         ),
         body: Container(
