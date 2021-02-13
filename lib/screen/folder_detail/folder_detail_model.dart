@@ -43,11 +43,6 @@ class FolderDetailModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void upDateFolderName(Folder folder) async {
-    await DBProvider.db.updateFolderTitle(folder);
-    notifyListeners();
-  }
-
   Future onTapSave() async {
     // 新規作成
     if (_folder == null) {

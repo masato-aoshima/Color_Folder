@@ -44,6 +44,14 @@ class DBProvider {
    * フォルダーテーブル用　関数
    */
 
+  /// 全てのフォルダーを取得
+  Future<List<Folder>> getAllFolders() async {
+    final db = await database;
+    final List<Map<String, dynamic>> folders =
+        await db.query(_folderTableName, orderBy: "priority ASC");
+    return folders.map((folder) => Folder().fromMap(folder)).toList();
+  }
+
   /// フォルダーを一件追加
   Future insertFolder(Folder folder) async {
     final db = await database;
@@ -55,26 +63,11 @@ class DBProvider {
     });
   }
 
-  /// 全てのフォルダーを取得
-  Future<List<Folder>> getAllFolders() async {
-    final db = await database;
-    final List<Map<String, dynamic>> folders =
-        await db.query(_folderTableName, orderBy: "priority ASC");
-    return folders.map((folder) => Folder().fromMap(folder)).toList();
-  }
-
   // フォルダーを更新
   Future updateFolder(Folder folder) async {
     final db = await database;
     await db.update(_folderTableName, folder.toMap(),
         where: "id = ?", whereArgs: [folder.id]);
-  }
-
-  /// フォルダーのタイトルを一件更新
-  Future updateFolderTitle(Folder folder) async {
-    final db = await database;
-    await db.rawUpdate(
-        'UPDATE folders SET title = ? WHERE id = ?', [folder.title, folder.id]);
   }
 
   /// フォルダーを一件削除
@@ -145,26 +138,20 @@ class DBProvider {
    * ノート テーブル用関数
    */
 
+  /// そのフォルダ内の全てのノートを取得
+  Future<List<Note>> getNotesInFolder(int folderId) async {
+    final db = await database;
+    final List<Map<String, dynamic>> notes = await db
+        .query(_noteTableName, where: 'folderId = ?', whereArgs: [folderId]);
+    return notes.map((note) => Note().fromMap(note)).toList();
+  }
+
   /// ノートを一件追加
   Future insertNote(Note note) async {
     final db = await database;
     // db.insert の戻り値として、最後に挿入された行のIDを返す (今回は受け取らない)
     await db.insert(_noteTableName, note.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
-  }
-
-  /// そのフォルダ内の全てのノートを取得
-  Future<List<Note>> getNotesInFolder(int folderId) async {
-    final db = await database;
-    final List<Map<String, dynamic>> notes = await db
-        .query(_noteTableName, where: 'folderId = ?', whereArgs: [folderId]);
-    return notes
-        .map((note) => Note(
-            id: note['id'],
-            text: note['text'],
-            priority: note['priority'],
-            folderId: note['folderId']))
-        .toList();
   }
 
   /// ノートを一件更新
@@ -180,7 +167,7 @@ class DBProvider {
     await db.delete(_noteTableName, where: "id = ?", whereArgs: [id]);
   }
 
-  // ノートの所属するフォルダーを変更
+  // ノートの所属するフォルダーを変更 TODO 使わないようにする
   Future moveAnotherFolder(int noteId, int newFolderId) async {
     final db = await database;
     await db.rawUpdate(

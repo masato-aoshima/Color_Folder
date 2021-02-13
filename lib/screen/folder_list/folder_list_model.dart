@@ -33,12 +33,6 @@ class FolderModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void upDateFolderName(Folder folder) async {
-    await DBProvider.db.updateFolderTitle(folder);
-    _folders = await DBProvider.db.getAllFolders();
-    notifyListeners();
-  }
-
   Future<Map<int, int>> getNotesCount() async {
     _noteCounts = await DBProvider.db.getNotesCountByFolder();
     return _noteCounts;

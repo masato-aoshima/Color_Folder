@@ -29,13 +29,11 @@ class MoveAnotherFolderModel extends ChangeNotifier {
     if (noteText != null) {
       // 新規追加
       if (noteId == null) {
-        final newNote =
-            Note(id: null, text: noteText, priority: 0, folderId: newFolderId);
+        final newNote = Note(id: null, text: noteText, folderId: newFolderId);
         await DBProvider.db.insertNote(newNote);
       } else {
         // 編集
-        final newNote = Note(
-            id: noteId, text: noteText, priority: 0, folderId: newFolderId);
+        final newNote = Note(id: noteId, text: noteText, folderId: newFolderId);
         await DBProvider.db.updateNote(newNote);
       }
     }
