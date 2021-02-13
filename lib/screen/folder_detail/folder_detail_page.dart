@@ -42,7 +42,6 @@ class FolderDetailPage extends HookWidget {
                   size: 30,
                 ),
                 onPressed: () {
-                  // TODO フォルダ削除_確認ダイアログを表示
                   showDialog(
                       context: context,
                       builder: (_) {
