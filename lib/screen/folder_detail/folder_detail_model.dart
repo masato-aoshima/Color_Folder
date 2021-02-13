@@ -42,7 +42,7 @@ class FolderDetailModel extends ChangeNotifier {
   }
 
   void upDateFolderName(Folder folder) async {
-    await DBProvider.db.updateFolder(folder);
+    await DBProvider.db.updateFolderTitle(folder);
     notifyListeners();
   }
 
@@ -54,6 +54,15 @@ class FolderDetailModel extends ChangeNotifier {
         color: color,
       );
       await DBProvider.db.insertFolder(newFolder);
+    }
+    // 更新
+    if (_folder != null) {
+      final updateFolder = Folder(
+          id: _folder.id,
+          title: inputText,
+          color: color,
+          priority: _folder.priority);
+      await DBProvider.db.updateFolder(updateFolder);
     }
   }
 

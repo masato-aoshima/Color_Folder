@@ -63,8 +63,15 @@ class DBProvider {
     return folders.map((folder) => Folder().fromMap(folder)).toList();
   }
 
-  /// フォルダーのタイトルを一件更新
+  // フォルダーを更新
   Future updateFolder(Folder folder) async {
+    final db = await database;
+    await db.update(_folderTableName, folder.toMap(),
+        where: "id = ?", whereArgs: [folder.id]);
+  }
+
+  /// フォルダーのタイトルを一件更新
+  Future updateFolderTitle(Folder folder) async {
     final db = await database;
     await db.rawUpdate(
         'UPDATE folders SET title = ? WHERE id = ?', [folder.title, folder.id]);
