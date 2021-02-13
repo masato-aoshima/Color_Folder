@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/model/note.dart';
 import 'package:sort_note/repository/database.dart';
 
 // 2. モデルクラスで、ChangeNotifierを継承する
 class NoteAddEditModel extends ChangeNotifier {
-  int noteId;
+  Note note;
+  Folder folder;
   String inputText;
-  int folderId;
 
   void changeText(String text) {
     inputText = text;
@@ -26,22 +27,22 @@ class NoteAddEditModel extends ChangeNotifier {
 
   void onPagePop() async {
     // 新規追加
-    if (noteId == null) {
+    if (note == null) {
       if (inputText == null || inputText.isEmpty) return;
-      final newNote = Note(text: inputText, folderId: folderId);
+      final newNote = Note(text: inputText, folderId: folder.id);
       await addNote(newNote);
     }
 
     // 更新・削除
-    if (noteId != null) {
+    if (note != null) {
       if (inputText.isNotEmpty) {
         // 更新
-        final newNote = Note(id: noteId, text: inputText, folderId: folderId);
+        final newNote = Note(id: note.id, text: inputText, folderId: folder.id);
         await upDateNote(newNote);
       }
       if (inputText.isEmpty) {
         // 削除
-        await deleteNote(noteId);
+        await deleteNote(note.id);
       }
     }
   }

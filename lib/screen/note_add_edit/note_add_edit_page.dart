@@ -4,6 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
+import 'package:sort_note/model/folder.dart';
+import 'package:sort_note/model/note.dart';
 import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
 
 import 'note_add_edit_model.dart';
@@ -12,19 +14,17 @@ import 'note_add_edit_model.dart';
 final noteAddEditProvider = ChangeNotifierProvider((ref) => NoteAddEditModel());
 
 class NoteAddEditPage extends HookWidget {
-  NoteAddEditPage(this.noteId, this.noteText, this.folderId, this.folderName);
+  NoteAddEditPage(this.note, this.folder);
 
-  final int noteId;
-  final String noteText;
-  final int folderId;
-  final String folderName;
+  final Note note;
+  final Folder folder;
 
   @override
   Widget build(BuildContext context) {
     final provider = useProvider(noteAddEditProvider)
-      ..noteId = noteId
-      ..inputText = noteText
-      ..folderId = folderId;
+      ..note = note
+      ..folder = folder
+      ..inputText = note.text;
     final myController = TextEditingController(text: provider.inputText);
 
     return WillPopScope(
@@ -42,7 +42,7 @@ class NoteAddEditPage extends HookWidget {
                 width: 6,
               ),
               Text(
-                folderName,
+                folder.title,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ]),
@@ -58,14 +58,14 @@ class NoteAddEditPage extends HookWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => MoveAnotherFolderPage(
-                                noteId, folderId, provider.inputText),
+                                note.id, folder.id, provider.inputText),
                             fullscreenDialog: true));
                     Navigator.pop(context);
                   }
                 },
                 deleteCallback: () async {
-                  if (noteId != null) {
-                    await provider.deleteNote(noteId);
+                  if (note != null) {
+                    await provider.deleteNote(note.id);
                   }
                   Navigator.pop(context); // TODO ここではonWillPopは呼ばれない　らしい(調べる)
                 },
@@ -79,7 +79,7 @@ class NoteAddEditPage extends HookWidget {
               onChanged: provider.changeText,
               maxLines: null,
               expands: true,
-              autofocus: noteId == null,
+              autofocus: note == null,
               style: TextStyle(fontSize: 20),
             ),
           )),

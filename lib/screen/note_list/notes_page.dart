@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/dialog/move_or_delete_dialog.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
 import 'package:sort_note/component/list_item/list_item_note.dart';
+import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/model/note.dart';
 import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
 import 'package:sort_note/screen/note_add_edit/note_add_edit_page.dart';
@@ -15,10 +16,9 @@ import 'note_model.dart';
 final noteProvider = ChangeNotifierProvider((ref) => NoteModel());
 
 class NotePage extends HookWidget {
-  NotePage(this.folderId, this.folderName);
+  NotePage(this.folder);
 
-  final String folderName;
-  final int folderId;
+  final Folder folder;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +28,12 @@ class NotePage extends HookWidget {
     return Scaffold(
       appBar: AppBar(
           title: Text(
-            folderName,
+            folder.title,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           iconTheme: IconThemeData(color: Colors.black)),
       body: FutureBuilder(
-        future: provider.getNotes(folderId),
+        future: provider.getNotes(folder.id),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -47,10 +47,9 @@ class NotePage extends HookWidget {
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    NoteAddEditPage(null, null, folderId, folderName),
+                builder: (context) => NoteAddEditPage(null, folder),
               )).then((value) {
-            provider.getNotesNotify(folderId);
+            provider.getNotesNotify(folder.id);
           });
           ;
         },
@@ -77,10 +76,9 @@ class NotePage extends HookWidget {
                 await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NoteAddEditPage(
-                          note.id, note.text, folderId, folderName),
+                      builder: (context) => NoteAddEditPage(note, folder),
                     )).then((value) {
-                  provider.getNotesNotify(folderId);
+                  provider.getNotesNotify(folder.id);
                 });
               },
               onLongPressCallback: () {
@@ -98,7 +96,7 @@ class NotePage extends HookWidget {
                                               note.id, note.folderId, null),
                                       fullscreenDialog: true))
                               .then((value) {
-                            provider.getNotesNotify(folderId);
+                            provider.getNotesNotify(folder.id);
                           });
                           Navigator.pop(context);
                         },

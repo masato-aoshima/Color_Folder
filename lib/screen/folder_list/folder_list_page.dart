@@ -101,7 +101,7 @@ class FolderPage extends HookWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotePage(folder.id, folder.title),
+                        builder: (context) => NotePage(folder),
                       )).then((value) {
                     provider.notifyNotesCount();
                   });
