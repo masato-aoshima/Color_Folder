@@ -19,6 +19,11 @@ class FolderEditModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future getFoldersNotify() async {
+    _folders = await DBProvider.db.getAllFolders();
+    notifyListeners();
+  }
+
   void clearFolder() {
     _folders = List<Folder>();
   }
@@ -30,7 +35,7 @@ class FolderEditModel extends ChangeNotifier {
   }
 
   void upDateFolderName(Folder folder) async {
-    await DBProvider.db.updateFolder(folder);
+    await DBProvider.db.updateFolderTitle(folder);
     _folders = await DBProvider.db.getAllFolders();
     notifyListeners();
   }

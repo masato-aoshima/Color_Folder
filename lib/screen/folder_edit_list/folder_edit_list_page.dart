@@ -44,16 +44,17 @@ class FolderEditPage extends HookWidget {
               return Container(
                 key: Key(folder.id.toString()),
                 child: ListItemFolderEdit(
-                  title: folder.title,
+                  folder: folder,
                   callback: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
                               FolderDetailPage(folder: folder),
-                        ));
+                        )).then((value) {
+                      provider.getFoldersNotify();
+                    });
                   },
-                  tagId: folder.id.toString(),
                 ),
               );
             }).toList(),

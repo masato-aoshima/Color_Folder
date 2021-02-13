@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
+import 'package:sort_note/model/folder.dart';
 
 class ListItemFolderEdit extends StatefulWidget {
-  ListItemFolderEdit({this.title, this.callback, this.priority, this.tagId});
+  ListItemFolderEdit({this.folder, this.callback});
 
-  final String title;
+  final Folder folder;
   final Function() callback;
-  final int priority; // TODO デバッグ用
-  final String tagId;
 
   @override
   _ListItemFolderEditState createState() => _ListItemFolderEditState();
@@ -25,46 +24,50 @@ class _ListItemFolderEditState extends State<ListItemFolderEdit> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Checkbox(value: _isCheck, onChanged: _handleCheckbox),
-          VerticalDivider(
-            color: Colors.grey,
-          ),
-          Hero(
-            tag: 'folderSmallIcon${widget.tagId}',
-            child: FolderSmallIcon(
-              size: 45,
+    return Container(
+      height: 74,
+      child: ListTile(
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Checkbox(value: _isCheck, onChanged: _handleCheckbox),
+            VerticalDivider(
+              color: Colors.grey,
             ),
-          ),
-        ],
+            Hero(
+              tag: 'folderSmallIcon${widget.folder.id}',
+              child: FolderSmallIcon(
+                size: 45,
+                color: widget.folder.color,
+              ),
+            ),
+          ],
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '⋮',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+            ),
+            SizedBox(
+              width: 6,
+            ),
+            VerticalDivider(
+              color: Colors.grey,
+            ),
+            Icon(
+              Icons.dehaze,
+              size: 35,
+            ),
+          ],
+        ),
+        title: Text(
+          widget.folder.title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        onTap: widget.callback,
       ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            '⋮',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-          ),
-          SizedBox(
-            width: 6,
-          ),
-          VerticalDivider(
-            color: Colors.grey,
-          ),
-          Icon(
-            Icons.dehaze,
-            size: 35,
-          ),
-        ],
-      ),
-      title: Text(
-        widget.title,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      onTap: widget.callback,
     );
   }
 }
