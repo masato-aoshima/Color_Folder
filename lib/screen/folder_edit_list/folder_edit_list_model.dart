@@ -19,6 +19,11 @@ class FolderEditModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future getFoldersNotify() async {
+    _folders = await DBProvider.db.getAllFolders();
+    notifyListeners();
+  }
+
   void clearFolder() {
     _folders = List<Folder>();
   }

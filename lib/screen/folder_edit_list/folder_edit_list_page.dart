@@ -51,7 +51,9 @@ class FolderEditPage extends HookWidget {
                         MaterialPageRoute(
                           builder: (context) =>
                               FolderDetailPage(folder: folder),
-                        ));
+                        )).then((value) {
+                      provider.getFoldersNotify();
+                    });
                   },
                 ),
               );
