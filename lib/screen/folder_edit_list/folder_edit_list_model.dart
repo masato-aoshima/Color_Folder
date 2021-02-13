@@ -31,10 +31,18 @@ class FolderEditModel extends ChangeNotifier {
     checkedFolderIds.clear();
   }
 
-  void deleteFolder(int id, int priority) async {
+  Future deleteFolder(int id, int priority) async {
     await DBProvider.db.deleteFolder(id.toString(), priority);
     _folders = await DBProvider.db.getAllFolders();
     notifyListeners();
+  }
+
+  Future deleteFolders() async {
+    final deleteFolders = checkedFolderIds
+        .map((id) => folders.firstWhere((folder) => id == folder.id));
+    deleteFolders.forEach((folder) async {
+      await DBProvider.db.deleteFolder(folder.id.toString(), folder.priority);
+    });
   }
 
   void upDateFolderName(Folder folder) async {

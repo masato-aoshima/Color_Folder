@@ -42,7 +42,12 @@ class FolderEditPage extends HookWidget {
                       color: Colors.white,
                       size: 30,
                     ),
-                    onPressed: null))
+                    onPressed: () async {
+                      // TODO DatabaseInspectorで確認
+                      await provider.deleteFolders();
+                      await provider.getFoldersNotify();
+                      Navigator.pop(context);
+                    }))
           ],
         ),
         body: Container(
