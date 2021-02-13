@@ -38,8 +38,8 @@ class FolderDetailModel extends ChangeNotifier {
     inputText = text;
   }
 
-  void deleteFolder(int id, int priority) async {
-    await DBProvider.db.deleteFolder(id.toString(), priority);
+  Future deleteFolder(Folder folder) async {
+    await DBProvider.db.deleteFolder(folder.id.toString(), folder.priority);
     notifyListeners();
   }
 

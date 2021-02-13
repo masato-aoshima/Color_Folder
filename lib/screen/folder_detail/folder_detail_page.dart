@@ -31,9 +31,49 @@ class FolderDetailPage extends HookWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            folder == null ? '新規作成' : 'フォルダ詳細',
+            folder == null ? '新規作成' : 'フォルダー編集',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
+          actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.delete_forever,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                onPressed: () {
+                  // TODO フォルダ削除_確認ダイアログを表示
+                  showDialog(
+                      context: context,
+                      builder: (_) {
+                        return AlertDialog(
+                          title: Text('フォルダーを削除しますか？'),
+                          content: Text(
+                              'このフォルダーと、フォルダー内のすべてのノートが削除されます。この操作は取り消せません。'),
+                          actions: [
+                            // ボタン領域
+                            FlatButton(
+                              child: Text(
+                                "キャンセル",
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                            ),
+                            FlatButton(
+                              child: Text(
+                                "削除",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              onPressed: () async {
+                                await provider.deleteFolder(folder);
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      });
+                })
+          ],
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/all.dart';
-import 'package:sort_note/component/dialog/text_input_dialog.dart';
 import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/screen/folder_detail/folder_detail_page.dart';
@@ -132,15 +131,6 @@ class FolderPage extends HookWidget {
         ),
       );
     }
-  }
-
-  Future<String> showInputTextDialog(BuildContext context, String text) {
-    final dialog = TextInputDialog(text);
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return dialog;
-        });
   }
 
   void showEmptyFolderToast() {
