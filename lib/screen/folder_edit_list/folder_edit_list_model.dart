@@ -47,8 +47,8 @@ class FolderEditModel extends ChangeNotifier {
   Future deleteFolders() async {
     final deleteFolders = checkedFolderIds
         .map((id) => folders.firstWhere((folder) => id == folder.id));
-    deleteFolders.forEach((folder) async {
-      await DBProvider.db.deleteFolder(folder.id.toString(), folder.priority);
+    deleteFolders.forEach((folder) {
+      DBProvider.db.deleteFolder(folder.id.toString(), folder.priority);
     });
   }
 
