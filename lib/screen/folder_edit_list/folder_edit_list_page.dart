@@ -43,10 +43,36 @@ class FolderEditPage extends HookWidget {
                       size: 30,
                     ),
                     onPressed: () async {
-                      // TODO DatabaseInspectorで確認
-                      await provider.deleteFolders();
-                      await provider.getFoldersNotify();
-                      Navigator.pop(context);
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              title: Text(
+                                  '${provider.checkedFolderIds.length}件のフォルダーを削除しますか？'),
+                              content: Text(
+                                  '選択したフォルダーと、フォルダー内のすべてのノートが削除されます。この操作は取り消せません。'),
+                              actions: [
+                                // ボタン領域
+                                FlatButton(
+                                  child: Text(
+                                    "キャンセル",
+                                  ),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                                FlatButton(
+                                  child: Text(
+                                    "削除",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  onPressed: () async {
+                                    await provider.deleteFolders();
+                                    await provider.getFoldersNotify();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
                     }))
           ],
         ),
