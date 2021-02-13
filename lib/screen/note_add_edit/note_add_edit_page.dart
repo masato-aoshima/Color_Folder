@@ -24,7 +24,7 @@ class NoteAddEditPage extends HookWidget {
     final provider = useProvider(noteAddEditProvider)
       ..note = note
       ..folder = folder
-      ..inputText = note.text;
+      ..inputText = note == null ? '' : note.text;
     final myController = TextEditingController(text: provider.inputText);
 
     return WillPopScope(
@@ -35,14 +35,17 @@ class NoteAddEditPage extends HookWidget {
       },
       child: Scaffold(
           appBar: AppBar(
+            backgroundColor: folder.color,
             titleSpacing: 0,
             title: Row(children: [
-              FolderSmallIcon(),
+              FolderSmallIcon(
+                color: folder.color,
+              ),
               SizedBox(
                 width: 6,
               ),
               Text(
-                folder.title,
+                '',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ]),

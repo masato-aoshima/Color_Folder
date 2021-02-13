@@ -31,6 +31,7 @@ class NotePage extends HookWidget {
             folder.title,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
+          backgroundColor: folder.color,
           iconTheme: IconThemeData(color: Colors.black)),
       body: FutureBuilder(
         future: provider.getNotes(folder.id),
