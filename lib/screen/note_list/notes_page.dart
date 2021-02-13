@@ -54,6 +54,7 @@ class NotePage extends HookWidget {
           });
           ;
         },
+        backgroundColor: folder.color,
         child: Icon(Icons.text_snippet_outlined),
       ),
     );

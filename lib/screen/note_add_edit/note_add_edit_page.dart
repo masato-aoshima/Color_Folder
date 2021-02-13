@@ -45,7 +45,7 @@ class NoteAddEditPage extends HookWidget {
                 width: 6,
               ),
               Text(
-                '',
+                folder.title,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ]),
