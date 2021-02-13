@@ -4,6 +4,8 @@ import 'package:sort_note/repository/database.dart';
 
 // 2. モデルクラスで、ChangeNotifierを継承する
 class FolderEditModel extends ChangeNotifier {
+  var isInitializeComplete = false;
+
   var _folders = List<Folder>();
 
   List<Folder> get folders => _folders;
@@ -15,6 +17,10 @@ class FolderEditModel extends ChangeNotifier {
   Set<int> checkedFolderIds = Set<int>();
 
   Future getFolders() async {
+    if (isInitializeComplete) {
+      return;
+    }
+    isInitializeComplete = true;
     if (_folders.length == 0) {
       _folders = await DBProvider.db.getAllFolders();
     }
@@ -29,6 +35,7 @@ class FolderEditModel extends ChangeNotifier {
   void clear() {
     _folders = List<Folder>();
     checkedFolderIds.clear();
+    isInitializeComplete = false;
   }
 
   Future deleteFolder(int id, int priority) async {
