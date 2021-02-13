@@ -57,11 +57,15 @@ class NoteAddEditPage extends HookWidget {
                       provider.inputText.isEmpty) {
                     showEmptyTextToast();
                   } else {
+                    final newNote = Note(
+                        id: note == null ? null : note.id,
+                        text: provider.inputText,
+                        folderId: folder.id);
                     await Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MoveAnotherFolderPage(
-                                note.id, folder.id, provider.inputText),
+                            builder: (context) =>
+                                MoveAnotherFolderPage(newNote),
                             fullscreenDialog: true));
                     Navigator.pop(context);
                   }
