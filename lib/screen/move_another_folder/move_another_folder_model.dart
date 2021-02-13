@@ -14,9 +14,9 @@ class MoveAnotherFolderModel extends ChangeNotifier {
   int noteId;
   String noteText;
 
-  void getFolders() async {
+  Future getFolders() async {
     _folders = await DBProvider.db.getAllFolders();
-    notifyListeners(); // liveDataみたいな使い方はどうやるの
+    return _folders;
   }
 
   Future onTapFolder(int newFolderId) async {

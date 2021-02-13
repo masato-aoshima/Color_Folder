@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/list_item/list_item_folder.dart';
+import 'package:sort_note/model/folder.dart';
 
 import 'move_another_folder_model.dart';
 
@@ -24,33 +25,41 @@ class MoveAnotherFolderPage extends HookWidget {
       ..noteId = noteId
       ..noteText = noteText;
 
-    provider.getFolders();
-    provider.getNotesCount();
-
     return Scaffold(
-        appBar: AppBar(
-          title: Text('移動先のフォルダーを選択',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: ListView.separated(
-              itemCount: provider.folders.length,
-              separatorBuilder: (BuildContext context, int index) =>
-                  Divider(color: Colors.grey),
-              itemBuilder: (BuildContext context, int index) {
-                final folder = provider.folders[index];
-                final count = provider.noteCounts[folder.id];
-                return ListItemFolder(
-                  folder: folder,
-                  notesCount: count ?? 0,
-                  callback: () async {
-                    await provider.onTapFolder(folder.id);
-                    Navigator.pop(context);
-                  },
-                  enable: folderId != folder.id,
-                );
-              }),
-        ));
+      appBar: AppBar(
+        title:
+            Text('移動先のフォルダーを選択', style: TextStyle(fontWeight: FontWeight.bold)),
+      ),
+      body: FutureBuilder(
+        future: Future.wait([provider.getFolders(), provider.getNotesCount()]),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          final folders = snapshot.data[0];
+          final noteCounts = snapshot.data[1];
+          return Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: ListView.separated(
+                itemCount: folders.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(color: Colors.grey),
+                itemBuilder: (BuildContext context, int index) {
+                  final folder = folders[index];
+                  final count = noteCounts[folder.id];
+                  return ListItemFolder(
+                    folder: folder,
+                    notesCount: count ?? 0,
+                    callback: () async {
+                      await provider.onTapFolder(folder.id);
+                      Navigator.pop(context);
+                    },
+                    enable: folderId != folder.id,
+                  );
+                }),
+          );
+        },
+      ),
+    );
   }
 }

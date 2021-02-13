@@ -34,7 +34,8 @@ class ListItemFolder extends StatelessWidget {
         children: [
           Text(
             notesCount.toString(),
-            style: TextStyle(fontSize: 17),
+            style: TextStyle(
+                fontSize: 17, color: enable ? Colors.black : Colors.grey),
           ),
           SizedBox(
             width: 10,

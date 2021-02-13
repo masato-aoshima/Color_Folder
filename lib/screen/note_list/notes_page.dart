@@ -23,8 +23,7 @@ class NotePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     // 4. 観察する変数を useProvider を使って宣言
-    final provider = useProvider(noteProvider)..getNotes(folderId);
-    final notes = provider.notes;
+    final provider = useProvider(noteProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -33,7 +32,15 @@ class NotePage extends HookWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           iconTheme: IconThemeData(color: Colors.black)),
-      body: getListViewWithEmptyMessage(context, notes, provider),
+      body: FutureBuilder(
+        future: provider.getNotes(folderId),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          return getListViewWithEmptyMessage(context, snapshot.data, provider);
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // メモ追加ページに移動
@@ -42,7 +49,10 @@ class NotePage extends HookWidget {
               MaterialPageRoute(
                 builder: (context) =>
                     NoteAddEditPage(null, null, folderId, folderName),
-              ));
+              )).then((value) {
+            provider.getNotesNotify(folderId);
+          });
+          ;
         },
         child: Icon(Icons.text_snippet_outlined),
       ),
@@ -69,7 +79,9 @@ class NotePage extends HookWidget {
                     MaterialPageRoute(
                       builder: (context) => NoteAddEditPage(
                           note.id, note.text, folderId, folderName),
-                    ));
+                    )).then((value) {
+                  provider.getNotesNotify(folderId);
+                });
               },
               onLongPressCallback: () {
                 showDialog(
@@ -79,11 +91,15 @@ class NotePage extends HookWidget {
                         noteText: note.text,
                         moveFunction: () async {
                           await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MoveAnotherFolderPage(
-                                      note.id, note.folderId, null),
-                                  fullscreenDialog: true));
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          MoveAnotherFolderPage(
+                                              note.id, note.folderId, null),
+                                      fullscreenDialog: true))
+                              .then((value) {
+                            provider.getNotesNotify(folderId);
+                          });
                           Navigator.pop(context);
                         },
                         deleteFunction: () async {

@@ -8,7 +8,12 @@ class NoteModel extends ChangeNotifier {
 
   List<Note> get notes => _notes;
 
-  void getNotes(int folderId) async {
+  Future getNotes(int folderId) async {
+    _notes = await DBProvider.db.getNotesInFolder(folderId);
+    return _notes;
+  }
+
+  Future getNotesNotify(int folderId) async {
     _notes = await DBProvider.db.getNotesInFolder(folderId);
     notifyListeners();
   }
