@@ -44,7 +44,7 @@ class FolderEditPage extends HookWidget {
               return Container(
                 key: Key(folder.id.toString()),
                 child: ListItemFolderEdit(
-                  title: folder.title,
+                  folder: folder,
                   callback: () {
                     Navigator.push(
                         context,
@@ -53,7 +53,6 @@ class FolderEditPage extends HookWidget {
                               FolderDetailPage(folder: folder),
                         ));
                   },
-                  tagId: folder.id.toString(),
                 ),
               );
             }).toList(),

@@ -1,14 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
+import 'package:sort_note/model/folder.dart';
 
 class ListItemFolderEdit extends StatefulWidget {
-  ListItemFolderEdit({this.title, this.callback, this.priority, this.tagId});
+  ListItemFolderEdit({this.folder, this.callback});
 
-  final String title;
+  final Folder folder;
   final Function() callback;
-  final int priority; // TODO デバッグ用
-  final String tagId;
 
   @override
   _ListItemFolderEditState createState() => _ListItemFolderEditState();
@@ -36,9 +35,10 @@ class _ListItemFolderEditState extends State<ListItemFolderEdit> {
               color: Colors.grey,
             ),
             Hero(
-              tag: 'folderSmallIcon${widget.tagId}',
+              tag: 'folderSmallIcon${widget.folder.id}',
               child: FolderSmallIcon(
                 size: 45,
+                color: widget.folder.color,
               ),
             ),
           ],
@@ -63,7 +63,7 @@ class _ListItemFolderEditState extends State<ListItemFolderEdit> {
           ],
         ),
         title: Text(
-          widget.title,
+          widget.folder.title,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         onTap: widget.callback,
