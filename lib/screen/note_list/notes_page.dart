@@ -86,6 +86,7 @@ class NotePage extends HookWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return MoveOrDeleteDialog(
+                        folder: folder,
                         noteText: note.text,
                         moveFunction: () async {
                           await Navigator.push(
