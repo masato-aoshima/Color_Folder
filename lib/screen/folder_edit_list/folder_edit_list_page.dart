@@ -23,7 +23,7 @@ class FolderEditPage extends HookWidget {
 
     return WillPopScope(
       onWillPop: () {
-        provider.clearFolder();
+        provider.clear();
         Navigator.of(context).pop();
         return Future.value(false);
       },
@@ -33,6 +33,48 @@ class FolderEditPage extends HookWidget {
             '編集',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
+          actions: [
+            Visibility(
+                visible: provider.checkedFolderIds.length > 0,
+                child: IconButton(
+                    icon: Icon(
+                      Icons.delete_forever,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: () async {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              title: Text(
+                                  '${provider.checkedFolderIds.length}件のフォルダーを削除しますか？'),
+                              content: Text(
+                                  '選択したフォルダーと、フォルダー内のすべてのノートが削除されます。この操作は取り消せません。'),
+                              actions: [
+                                // ボタン領域
+                                FlatButton(
+                                  child: Text(
+                                    "キャンセル",
+                                  ),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                                FlatButton(
+                                  child: Text(
+                                    "削除",
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                  onPressed: () async {
+                                    await provider.deleteFolders();
+                                    await provider.getFoldersNotify();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    }))
+          ],
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
@@ -45,7 +87,7 @@ class FolderEditPage extends HookWidget {
                 key: Key(folder.id.toString()),
                 child: ListItemFolderEdit(
                   folder: folder,
-                  callback: () {
+                  onTapCallback: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -54,6 +96,9 @@ class FolderEditPage extends HookWidget {
                         )).then((value) {
                       provider.getFoldersNotify();
                     });
+                  },
+                  checkedCallback: (isCheck) {
+                    provider.onItemCheck(folder.id, isCheck);
                   },
                 ),
               );
