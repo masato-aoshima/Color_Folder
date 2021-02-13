@@ -23,7 +23,7 @@ class FolderEditPage extends HookWidget {
 
     return WillPopScope(
       onWillPop: () {
-        provider.clearFolder();
+        provider.clear();
         Navigator.of(context).pop();
         return Future.value(false);
       },
@@ -33,6 +33,17 @@ class FolderEditPage extends HookWidget {
             '編集',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
+          actions: [
+            Visibility(
+                visible: provider.checkedFolderIds.length > 0,
+                child: IconButton(
+                    icon: Icon(
+                      Icons.delete_forever,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    onPressed: null))
+          ],
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
@@ -45,7 +56,7 @@ class FolderEditPage extends HookWidget {
                 key: Key(folder.id.toString()),
                 child: ListItemFolderEdit(
                   folder: folder,
-                  callback: () {
+                  onTapCallback: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -54,6 +65,9 @@ class FolderEditPage extends HookWidget {
                         )).then((value) {
                       provider.getFoldersNotify();
                     });
+                  },
+                  checkedCallback: (isCheck) {
+                    provider.onItemCheck(folder.id, isCheck);
                   },
                 ),
               );

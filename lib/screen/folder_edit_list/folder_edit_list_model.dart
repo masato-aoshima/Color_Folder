@@ -12,6 +12,8 @@ class FolderEditModel extends ChangeNotifier {
 
   Map<int, int> get noteCounts => _noteCounts;
 
+  Set<int> checkedFolderIds = Set<int>();
+
   Future getFolders() async {
     if (_folders.length == 0) {
       _folders = await DBProvider.db.getAllFolders();
@@ -24,8 +26,9 @@ class FolderEditModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearFolder() {
+  void clear() {
     _folders = List<Folder>();
+    checkedFolderIds.clear();
   }
 
   void deleteFolder(int id, int priority) async {
@@ -55,11 +58,20 @@ class FolderEditModel extends ChangeNotifier {
     if (oldIndex < newIndex) newIndex -= 1;
 
     final item = _folders[oldIndex]; // 移動するアイテム
-    final id = (item as Folder).id;
+    final id = (item).id;
     // データベースの更新処理 (フォルダ全体を渡して１件ずつ更新？)
     await DBProvider.db.onDragAndDrop(id, oldIndex, newIndex);
     _folders.removeAt(oldIndex);
     _folders.insert(newIndex, item);
+    notifyListeners();
+  }
+
+  void onItemCheck(int folderId, bool isCheck) {
+    if (isCheck) {
+      checkedFolderIds.add(folderId);
+    } else {
+      checkedFolderIds.remove(folderId);
+    }
     notifyListeners();
   }
 }
