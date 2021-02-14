@@ -5,14 +5,13 @@ import 'package:sort_note/repository/database.dart';
 
 // 2. モデルクラスで、ChangeNotifierを継承する
 class MoveAnotherFolderModel extends ChangeNotifier {
+  Note note;
+
   var _folders = List<Folder>();
   List<Folder> get folders => _folders;
 
   var _noteCounts = Map<int, int>();
   Map<int, int> get noteCounts => _noteCounts;
-
-  int noteId;
-  String noteText;
 
   Future getFolders() async {
     _folders = await DBProvider.db.getAllFolders();
@@ -20,22 +19,31 @@ class MoveAnotherFolderModel extends ChangeNotifier {
   }
 
   Future onTapFolder(int newFolderId) async {
+    final nowDateTime = DateTime.now().toString();
     // ノート一覧からの遷移
-    if (noteText == null) {
-      await DBProvider.db.moveAnotherFolder(noteId, newFolderId);
+    if (note.text == null) {
+      await DBProvider.db.moveAnotherFolder(note.id, newFolderId);
     }
 
     // ノート追加編集ページからの遷移
-    if (noteText != null) {
+    if (note.text != null) {
       // 新規追加
-      if (noteId == null) {
-        final newNote =
-            Note(id: null, text: noteText, priority: 0, folderId: newFolderId);
+      if (note.id == null) {
+        final newNote = Note(
+            id: null,
+            text: note.text,
+            createdAt: nowDateTime,
+            updatedAt: nowDateTime,
+            folderId: newFolderId);
         await DBProvider.db.insertNote(newNote);
       } else {
         // 編集
         final newNote = Note(
-            id: noteId, text: noteText, priority: 0, folderId: newFolderId);
+            id: note.id,
+            text: note.text,
+            createdAt: note.createdAt,
+            updatedAt: nowDateTime,
+            folderId: newFolderId);
         await DBProvider.db.updateNote(newNote);
       }
     }

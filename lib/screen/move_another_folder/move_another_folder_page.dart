@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
+import 'package:sort_note/model/note.dart';
 
 import 'move_another_folder_model.dart';
 
@@ -12,18 +13,14 @@ final folderProvider =
     ChangeNotifierProvider((ref) => MoveAnotherFolderModel());
 
 class MoveAnotherFolderPage extends HookWidget {
-  MoveAnotherFolderPage(this.noteId, this.folderId, this.noteText);
+  MoveAnotherFolderPage(this.note);
 
-  final int noteId;
-  final int folderId;
-  final String noteText;
+  final Note note;
 
   @override
   Widget build(BuildContext context) {
     // 4. 観察する変数を useProvider を使って宣言
-    final provider = useProvider(folderProvider)
-      ..noteId = noteId
-      ..noteText = noteText;
+    final provider = useProvider(folderProvider)..note = note;
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +51,7 @@ class MoveAnotherFolderPage extends HookWidget {
                       await provider.onTapFolder(folder.id);
                       Navigator.pop(context);
                     },
-                    enable: folderId != folder.id,
+                    enable: note.folderId != folder.id,
                   );
                 }),
           );

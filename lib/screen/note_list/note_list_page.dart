@@ -10,13 +10,13 @@ import 'package:sort_note/model/note.dart';
 import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
 import 'package:sort_note/screen/note_add_edit/note_add_edit_page.dart';
 
-import 'note_model.dart';
+import 'note_list_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
-final noteProvider = ChangeNotifierProvider((ref) => NoteModel());
+final noteProvider = ChangeNotifierProvider((ref) => NoteListModel());
 
-class NotePage extends HookWidget {
-  NotePage(this.folder);
+class NoteListPage extends HookWidget {
+  NoteListPage(this.folder);
 
   final Folder folder;
 
@@ -27,12 +27,21 @@ class NotePage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            folder.title,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: folder.color,
-          iconTheme: IconThemeData(color: Colors.black)),
+        title: Text(
+          folder.title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: folder.color,
+        iconTheme: IconThemeData(color: Colors.black),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.timer),
+            onPressed: () {
+              print(DateTime.now().toString());
+            },
+          )
+        ],
+      ),
       body: FutureBuilder(
         future: provider.getNotes(folder.id),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -61,7 +70,7 @@ class NotePage extends HookWidget {
   }
 
   Widget getListViewWithEmptyMessage(
-      BuildContext context, List<Note> notes, NoteModel provider) {
+      BuildContext context, List<Note> notes, NoteListModel provider) {
     if (notes.length > 0) {
       return Container(
         padding: const EdgeInsets.all(12.0),
@@ -72,7 +81,7 @@ class NotePage extends HookWidget {
           itemBuilder: (BuildContext context, int index) {
             final note = notes[index];
             return ListItemNote(
-              text: note.text,
+              note: note,
               onTapCallback: () async {
                 // メモ編集ページに移動
                 await Navigator.push(
@@ -95,8 +104,7 @@ class NotePage extends HookWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          MoveAnotherFolderPage(
-                                              note.id, note.folderId, null),
+                                          MoveAnotherFolderPage(note),
                                       fullscreenDialog: true))
                               .then((value) {
                             provider.getNotesNotify(folder.id);

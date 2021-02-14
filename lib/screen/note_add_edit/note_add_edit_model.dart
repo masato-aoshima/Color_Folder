@@ -26,10 +26,15 @@ class NoteAddEditModel extends ChangeNotifier {
   }
 
   void onPagePop() async {
+    final nowDateTime = DateTime.now().toString();
     // 新規追加
     if (note == null) {
       if (inputText == null || inputText.isEmpty) return;
-      final newNote = Note(text: inputText, folderId: folder.id);
+      final newNote = Note(
+          text: inputText,
+          createdAt: nowDateTime,
+          updatedAt: nowDateTime,
+          folderId: folder.id);
       await addNote(newNote);
     }
 
@@ -37,7 +42,12 @@ class NoteAddEditModel extends ChangeNotifier {
     if (note != null) {
       if (inputText.isNotEmpty) {
         // 更新
-        final newNote = Note(id: note.id, text: inputText, folderId: folder.id);
+        final newNote = Note(
+            id: note.id,
+            text: inputText,
+            createdAt: note.createdAt,
+            updatedAt: nowDateTime,
+            folderId: folder.id);
         await upDateNote(newNote);
       }
       if (inputText.isEmpty) {
