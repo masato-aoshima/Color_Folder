@@ -8,10 +8,132 @@ class OrderOfNotesDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dialog = SimpleDialog(
-      title: Text('ノートの並び順'),
       children: [
         SimpleDialogOption(
-          child: Text('テキスト昇順'),
+          child: Row(
+            children: [
+              Visibility(
+                visible: true,
+                child: Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.blue,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Text(
+                '本文の昇順',
+                style: TextStyle(fontSize: 18),
+              )),
+            ],
+          ),
+        ),
+        SimpleDialogOption(
+          child: Row(
+            children: [
+              Visibility(
+                visible: true,
+                child: Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.blue,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Text(
+                '本文の降順',
+                style: TextStyle(fontSize: 18),
+              )),
+            ],
+          ),
+        ),
+        SimpleDialogOption(
+          child: Row(
+            children: [
+              Visibility(
+                visible: true,
+                child: Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.blue,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Text(
+                '作成日の新しい順',
+                style: TextStyle(fontSize: 18),
+              )),
+            ],
+          ),
+        ),
+        SimpleDialogOption(
+          child: Row(
+            children: [
+              Visibility(
+                visible: true,
+                child: Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.blue,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Text(
+                '作成日の古い順',
+                style: TextStyle(fontSize: 18),
+              )),
+            ],
+          ),
+        ),
+        SimpleDialogOption(
+          child: Row(
+            children: [
+              Visibility(
+                visible: true,
+                child: Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.blue,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Text(
+                '変更日の新しい順',
+                style: TextStyle(fontSize: 18),
+              )),
+            ],
+          ),
+        ),
+        SimpleDialogOption(
+          child: Row(
+            children: [
+              Visibility(
+                visible: true,
+                child: Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.blue,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                  child: Text(
+                '変更日の古い順',
+                style: TextStyle(fontSize: 18),
+              )),
+            ],
+          ),
         )
       ],
     );
