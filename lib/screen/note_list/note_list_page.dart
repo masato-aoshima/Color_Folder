@@ -104,10 +104,39 @@ class NoteListPage extends HookWidget {
                           });
                           Navigator.pop(context);
                         },
-                        deleteFunction: () async {
-                          await provider.deleteNote(
-                              note.id, note.folderId); //TODO ここで残りが0件だとワーニングが出る
+                        deleteFunction: () {
                           Navigator.pop(context);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text(
+                                      '${note.text.split("\n").first}を削除しますか？'),
+                                  content: Text('この操作は取り消せません。'),
+                                  actions: [
+                                    // ボタン領域
+                                    FlatButton(
+                                      child: Text(
+                                        "キャンセル",
+                                      ),
+                                      onPressed: () async =>
+                                          Navigator.pop(context),
+                                    ),
+                                    FlatButton(
+                                      child: Text(
+                                        "削除",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                      onPressed: () async {
+                                        await provider.deleteNote(
+                                            note.id, folder.id);
+                                        Navigator.pop(
+                                            context); // TODO ここが0件だとwarningが出ている
+                                      },
+                                    ),
+                                  ],
+                                );
+                              });
                         },
                       );
                     });
