@@ -186,13 +186,26 @@ class NoteListPagePopupMenu extends StatelessWidget {
         }
       },
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
-          value: "SortOrder",
-          child: Text('並び順を変更'),
-        ),
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: "MultiSelect",
-          child: Text('ノートを選択'),
+          child: Row(
+            children: [
+              Expanded(child: Text('ノートを選択')),
+              Icon(
+                Icons.check_circle_outline,
+                color: Colors.blue,
+              )
+            ],
+          ),
+        ),
+        PopupMenuItem<String>(
+          value: "SortOrder",
+          child: Row(
+            children: [
+              Expanded(child: Text('並び順を変更')),
+              Icon(Icons.compare_arrows)
+            ],
+          ),
         ),
       ],
     );
