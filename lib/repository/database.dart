@@ -142,8 +142,8 @@ class DBProvider {
   /// そのフォルダ内の全てのノートを取得
   Future<List<Note>> getNotesInFolder(int folderId) async {
     final db = await database;
-    final List<Map<String, dynamic>> notes = await db
-        .query(_noteTableName, where: 'folderId = ?', whereArgs: [folderId]);
+    final List<Map<String, dynamic>> notes = await db.query(_noteTableName,
+        where: 'folderId = ?', whereArgs: [folderId], orderBy: 'text ASC');
     return notes.map((note) => Note().fromMap(note)).toList();
   }
 
