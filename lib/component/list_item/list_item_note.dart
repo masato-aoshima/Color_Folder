@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sort_note/model/note.dart';
+import 'package:sort_note/util/date.dart';
 
 class ListItemNote extends StatelessWidget {
   ListItemNote({this.note, this.onTapCallback, this.onLongPressCallback});
@@ -17,7 +18,7 @@ class ListItemNote extends StatelessWidget {
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         maxLines: 1,
       ),
-      subtitle: Text('変更日：${note.updatedAt}'),
+      subtitle: Text('変更日：${getJapaneseDate(note.updatedAt)}'),
       trailing: Icon(Icons.navigate_next),
       onTap: () {
         onTapCallback();
