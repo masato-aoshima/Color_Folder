@@ -17,6 +17,7 @@ class ListItemNote extends StatelessWidget {
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         maxLines: 1,
       ),
+      subtitle: Text('変更日：${note.updatedAt}'),
       trailing: Icon(Icons.navigate_next),
       onTap: () {
         onTapCallback();
