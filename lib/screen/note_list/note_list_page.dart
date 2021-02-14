@@ -33,14 +33,7 @@ class NoteListPage extends HookWidget {
         ),
         backgroundColor: folder.color,
         iconTheme: IconThemeData(color: Colors.black),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.timer),
-            onPressed: () {
-              print(DateTime.now().toString());
-            },
-          )
-        ],
+        actions: [NoteListPagePopupMenu()],
       ),
       body: FutureBuilder(
         future: provider.getNotes(folder.id),
@@ -111,10 +104,39 @@ class NoteListPage extends HookWidget {
                           });
                           Navigator.pop(context);
                         },
-                        deleteFunction: () async {
-                          await provider.deleteNote(
-                              note.id, note.folderId); //TODO ここで残りが0件だとワーニングが出る
+                        deleteFunction: () {
                           Navigator.pop(context);
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text(
+                                      '${note.text.split("\n").first}を削除しますか？'),
+                                  content: Text('この操作は取り消せません。'),
+                                  actions: [
+                                    // ボタン領域
+                                    FlatButton(
+                                      child: Text(
+                                        "キャンセル",
+                                      ),
+                                      onPressed: () async =>
+                                          Navigator.pop(context),
+                                    ),
+                                    FlatButton(
+                                      child: Text(
+                                        "削除",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                      onPressed: () async {
+                                        await provider.deleteNote(
+                                            note.id, folder.id);
+                                        Navigator.pop(
+                                            context); // TODO ここが0件だとwarningが出ている
+                                      },
+                                    ),
+                                  ],
+                                );
+                              });
                         },
                       );
                     });
@@ -144,4 +166,35 @@ Future<String> showInputTextDialog(BuildContext context, String text) {
       builder: (BuildContext context) {
         return dialog;
       });
+}
+
+class NoteListPagePopupMenu extends StatelessWidget {
+  NoteListPagePopupMenu({this.sortCallback, this.selectCallback});
+
+  final Function sortCallback;
+  final Function selectCallback;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<String>(
+      onSelected: (value) {
+        if (value == "SortOrder") {
+          sortCallback();
+        }
+        if (value == "MultiSelect") {
+          selectCallback();
+        }
+      },
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+        const PopupMenuItem<String>(
+          value: "SortOrder",
+          child: Text('並び順を変更'),
+        ),
+        const PopupMenuItem<String>(
+          value: "MultiSelect",
+          child: Text('ノートを選択'),
+        ),
+      ],
+    );
+  }
 }
