@@ -27,12 +27,21 @@ class NotePage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            folder.title,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: folder.color,
-          iconTheme: IconThemeData(color: Colors.black)),
+        title: Text(
+          folder.title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: folder.color,
+        iconTheme: IconThemeData(color: Colors.black),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.timer),
+            onPressed: () {
+              print(DateTime.now().toString());
+            },
+          )
+        ],
+      ),
       body: FutureBuilder(
         future: provider.getNotes(folder.id),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {

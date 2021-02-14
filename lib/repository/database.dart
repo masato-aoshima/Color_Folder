@@ -34,7 +34,8 @@ class DBProvider {
       await db.execute("CREATE TABLE notes("
           "id INTEGER PRIMARY KEY AUTOINCREMENT, "
           "text TEXT, "
-          "priority INTEGER, "
+          "createdAt TEXT, "
+          "updatedAt TEXT, "
           "folderId INTEGER, "
           "FOREIGN KEY(folderId) REFERENCES folders(id))");
     }, version: 1);
