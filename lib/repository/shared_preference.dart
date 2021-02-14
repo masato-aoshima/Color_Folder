@@ -19,3 +19,7 @@ Future<String> getOrderOfNotesSetting() async {
       .getString(SharedPreferencesKey.keyOrderOfNotes, orderOfNotesList[0]);
   return value;
 }
+
+void saveOrderOfNotesSetting(String setting) {
+  Settings().save(SharedPreferencesKey.keyOrderOfNotes, setting);
+}
