@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/dialog/move_or_delete_dialog.dart';
+import 'package:sort_note/component/dialog/order_of_notes_dialog.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
 import 'package:sort_note/component/list_item/list_item_note.dart';
 import 'package:sort_note/model/folder.dart';
@@ -33,7 +34,17 @@ class NoteListPage extends HookWidget {
         ),
         backgroundColor: folder.color,
         iconTheme: IconThemeData(color: Colors.black),
-        actions: [NoteListPagePopupMenu()],
+        actions: [
+          NoteListPagePopupMenu(
+            sortCallback: () {
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return OrderOfNotesDialog();
+                  });
+            },
+          )
+        ],
       ),
       body: FutureBuilder(
         future: provider.getNotes(folder.id),

@@ -1,9 +1,9 @@
 // ノートの並び順
-enum OrderOfNotes {
-  TEXT_ASC,
-  TEXT_DESC,
-  CREATED_AT_ASC,
-  CREATED_AT_DESC,
-  UPDATED_AT_ASC,
-  UPDATED_AT_DESC
-}
+List<String> orderOfNotes = [
+  'text ASC',
+  'text DESC',
+  'createdAt DESC',
+  'createdAt ASC',
+  'updatedAt DESC',
+  'updatedAt ASC',
+];
