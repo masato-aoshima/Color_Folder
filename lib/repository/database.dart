@@ -168,7 +168,7 @@ class DBProvider {
     await db.delete(_noteTableName, where: "id = ?", whereArgs: [id]);
   }
 
-  // ノートの所属するフォルダーを変更 TODO 使わないようにする
+  // ノートの所属するフォルダーを変更
   Future moveAnotherFolder(int noteId, int newFolderId) async {
     final db = await database;
     await db.rawUpdate(

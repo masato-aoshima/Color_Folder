@@ -19,6 +19,7 @@ class MoveAnotherFolderModel extends ChangeNotifier {
   }
 
   Future onTapFolder(int newFolderId) async {
+    final nowDateTime = DateTime.now().toString();
     // ノート一覧からの遷移
     if (note.text == null) {
       await DBProvider.db.moveAnotherFolder(note.id, newFolderId);
@@ -28,12 +29,21 @@ class MoveAnotherFolderModel extends ChangeNotifier {
     if (note.text != null) {
       // 新規追加
       if (note.id == null) {
-        final newNote = Note(id: null, text: note.text, folderId: newFolderId);
+        final newNote = Note(
+            id: null,
+            text: note.text,
+            createdAt: nowDateTime,
+            updatedAt: nowDateTime,
+            folderId: newFolderId);
         await DBProvider.db.insertNote(newNote);
       } else {
         // 編集
-        final newNote =
-            Note(id: note.id, text: note.text, folderId: newFolderId);
+        final newNote = Note(
+            id: note.id,
+            text: note.text,
+            createdAt: note.createdAt,
+            updatedAt: nowDateTime,
+            folderId: newFolderId);
         await DBProvider.db.updateNote(newNote);
       }
     }
