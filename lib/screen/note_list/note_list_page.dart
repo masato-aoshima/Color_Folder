@@ -37,11 +37,9 @@ class NoteListPage extends HookWidget {
         actions: [
           NoteListPagePopupMenu(
             sortCallback: () {
-              showDialog(
-                  context: context,
-                  builder: (_) {
-                    return OrderOfNotesDialog();
-                  });
+              showOrderOfNotesDialog(context, () {
+                Navigator.pop(context);
+              });
             },
           )
         ],
