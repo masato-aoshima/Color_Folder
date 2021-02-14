@@ -81,7 +81,7 @@ class NoteListPage extends HookWidget {
           itemBuilder: (BuildContext context, int index) {
             final note = notes[index];
             return ListItemNote(
-              text: note.text,
+              note: note,
               onTapCallback: () async {
                 // メモ編集ページに移動
                 await Navigator.push(
