@@ -3,7 +3,7 @@ import 'package:sort_note/model/note.dart';
 import 'package:sort_note/repository/database.dart';
 
 // 2. モデルクラスで、ChangeNotifierを継承する
-class NoteModel extends ChangeNotifier {
+class NoteListModel extends ChangeNotifier {
   var _notes = List<Note>();
 
   List<Note> get notes => _notes;

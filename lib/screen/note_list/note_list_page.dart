@@ -10,13 +10,13 @@ import 'package:sort_note/model/note.dart';
 import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
 import 'package:sort_note/screen/note_add_edit/note_add_edit_page.dart';
 
-import 'note_model.dart';
+import 'note_list_model.dart';
 
 // 3. Providerモデルクラスをグローバル定数に宣言
-final noteProvider = ChangeNotifierProvider((ref) => NoteModel());
+final noteProvider = ChangeNotifierProvider((ref) => NoteListModel());
 
-class NotePage extends HookWidget {
-  NotePage(this.folder);
+class NoteListPage extends HookWidget {
+  NoteListPage(this.folder);
 
   final Folder folder;
 
@@ -70,7 +70,7 @@ class NotePage extends HookWidget {
   }
 
   Widget getListViewWithEmptyMessage(
-      BuildContext context, List<Note> notes, NoteModel provider) {
+      BuildContext context, List<Note> notes, NoteListModel provider) {
     if (notes.length > 0) {
       return Container(
         padding: const EdgeInsets.all(12.0),

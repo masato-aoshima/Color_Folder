@@ -7,7 +7,7 @@ import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/screen/folder_detail/folder_detail_page.dart';
 import 'package:sort_note/screen/folder_edit_list/folder_edit_list_page.dart';
-import 'package:sort_note/screen/note_list/notes_page.dart';
+import 'package:sort_note/screen/note_list/note_list_page.dart';
 
 import 'folder_list_model.dart';
 
@@ -101,7 +101,7 @@ class FolderPage extends HookWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NotePage(folder),
+                        builder: (context) => NoteListPage(folder),
                       )).then((value) {
                     provider.notifyNotesCount();
                   });
