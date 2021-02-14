@@ -39,7 +39,11 @@ class NoteListPage extends HookWidget {
             sortCallback: () {
               showOrderOfNotesDialog(context, () {
                 Navigator.pop(context);
+                provider.getNotesNotify(folder.id);
               });
+            },
+            selectCallback: () {
+              print('「ノートを選択」ボタンが押されました！'); // TODO
             },
           )
         ],

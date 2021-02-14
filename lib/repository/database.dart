@@ -1,6 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/model/note.dart';
+import 'package:sort_note/repository/shared_preference.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
@@ -141,9 +142,10 @@ class DBProvider {
 
   /// そのフォルダ内の全てのノートを取得
   Future<List<Note>> getNotesInFolder(int folderId) async {
+    final orderBySetting = await getOrderOfNotesSetting();
     final db = await database;
     final List<Map<String, dynamic>> notes = await db.query(_noteTableName,
-        where: 'folderId = ?', whereArgs: [folderId], orderBy: 'text ASC');
+        where: 'folderId = ?', whereArgs: [folderId], orderBy: orderBySetting);
     return notes.map((note) => Note().fromMap(note)).toList();
   }
 
