@@ -123,13 +123,32 @@ class NoteAddEditPagePopupMenu extends StatelessWidget {
         }
       },
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: "Move",
-          child: Text('別のフォルダーに移す'),
+          child: Row(
+            children: [
+              Expanded(child: Text('別のフォルダーに移す')),
+              FolderSmallIcon(
+                size: 25,
+              ),
+            ],
+          ),
         ),
-        const PopupMenuItem<String>(
+        PopupMenuItem<String>(
           value: "Delete",
-          child: Text('削除'),
+          child: Row(
+            children: [
+              Expanded(
+                  child: Text(
+                'ノートを削除',
+                style: TextStyle(color: Colors.red),
+              )),
+              Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+            ],
+          ),
         ),
       ],
     );
