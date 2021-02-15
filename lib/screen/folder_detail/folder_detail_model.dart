@@ -40,7 +40,7 @@ class FolderDetailModel extends ChangeNotifier {
 
   Future deleteFolder(Folder folder) async {
     await DBProvider.db.deleteFolder(folder.id.toString(), folder.priority);
-    notifyListeners();
+    clear();
   }
 
   Future onTapSave() async {
