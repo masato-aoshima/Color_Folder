@@ -42,13 +42,15 @@ class NoteAddEditModel extends ChangeNotifier {
     if (note != null) {
       if (inputText.isNotEmpty) {
         // 更新
-        final newNote = Note(
-            id: note.id,
-            text: inputText,
-            createdAt: note.createdAt,
-            updatedAt: nowDateTime,
-            folderId: folder.id);
-        await upDateNote(newNote);
+        if (note.text != inputText) {
+          final newNote = Note(
+              id: note.id,
+              text: inputText,
+              createdAt: note.createdAt,
+              updatedAt: nowDateTime,
+              folderId: folder.id);
+          await upDateNote(newNote);
+        }
       }
       if (inputText.isEmpty) {
         // 削除
