@@ -79,76 +79,79 @@ class FolderDetailPage extends HookWidget {
           ),
           body: OrientationBuilder(
             builder: (context, orientation) {
+              var orientation = MediaQuery.of(context).orientation;
               if (orientation == Orientation.portrait) {
-                return Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
-                  child: Center(
-                      child: Column(
-                    children: [
-                      Hero(
-                          tag: folder == null
-                              ? ''
-                              : 'folderSmallIcon${folder.id}',
-                          child: FolderSmallIcon(
-                            color: provider.color,
-                            size: 200,
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 20),
-                        child: TextFormField(
-                          controller: myController,
-                          textAlign: TextAlign.center,
-                          onChanged: provider.changeText,
-                          maxLines: 1,
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(maxWidth: 400.0),
-                        child: ColorPicker(
-                          pickersEnabled: {
-                            ColorPickerType.both: false,
-                            ColorPickerType.primary: true,
-                            ColorPickerType.accent: false,
-                            ColorPickerType.bw: false,
-                            ColorPickerType.custom: false,
-                            ColorPickerType.wheel: false
-                          },
-                          enableShadesSelection: false,
-                          hasBorder: true,
-                          padding: EdgeInsets.all(20),
-                          color: provider.color,
-                          onColorChanged: (Color color) {
-                            print(colorToString(color));
-                            provider.selectColor(color);
-                          },
-                          heading: Text(
-                            'フォルダの色を変更できます',
-                            style: Theme.of(context).textTheme.headline5,
+                return SingleChildScrollView(
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+                    child: Center(
+                        child: Column(
+                      children: [
+                        Hero(
+                            tag: folder == null
+                                ? ''
+                                : 'folderSmallIcon${folder.id}',
+                            child: FolderSmallIcon(
+                              color: provider.color,
+                              size: 200,
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 20),
+                          child: TextFormField(
+                            controller: myController,
+                            textAlign: TextAlign.center,
+                            onChanged: provider.changeText,
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 20),
                           ),
                         ),
-                      ),
-                      RaisedButton(
-                        child: const Text(
-                          '保存',
-                          style: TextStyle(color: Colors.white),
+                        ConstrainedBox(
+                          constraints: BoxConstraints(maxWidth: 400.0),
+                          child: ColorPicker(
+                            pickersEnabled: {
+                              ColorPickerType.both: false,
+                              ColorPickerType.primary: true,
+                              ColorPickerType.accent: false,
+                              ColorPickerType.bw: false,
+                              ColorPickerType.custom: false,
+                              ColorPickerType.wheel: false
+                            },
+                            enableShadesSelection: false,
+                            hasBorder: true,
+                            padding: EdgeInsets.all(20),
+                            color: provider.color,
+                            onColorChanged: (Color color) {
+                              print(colorToString(color));
+                              provider.selectColor(color);
+                            },
+                            heading: Text(
+                              'フォルダの色を変更できます',
+                              style: Theme.of(context).textTheme.headline5,
+                            ),
+                          ),
                         ),
-                        onPressed: () async {
-                          if (provider.inputText == null ||
-                              provider.inputText.isEmpty) {
-                            showEmptyTextToast();
-                          } else {
-                            await provider.onTapSave();
-                            provider.clear();
-                            Navigator.pop(context);
-                          }
-                        },
-                        color: Color(0xff1995AD),
-                      ),
-                    ],
-                  )),
+                        RaisedButton(
+                          child: const Text(
+                            '保存',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () async {
+                            if (provider.inputText == null ||
+                                provider.inputText.isEmpty) {
+                              showEmptyTextToast();
+                            } else {
+                              await provider.onTapSave();
+                              provider.clear();
+                              Navigator.pop(context);
+                            }
+                          },
+                          color: Color(0xff1995AD),
+                        ),
+                      ],
+                    )),
+                  ),
                 );
               } else {
                 // 横画面
