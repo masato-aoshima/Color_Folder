@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -26,6 +27,13 @@ class NoteAddEditPage extends HookWidget {
       ..folder = folder
       ..inputText = note == null ? '' : note.text;
     final myController = TextEditingController(text: provider.inputText);
+
+    SystemChannels.lifecycle.setMessageHandler((msg) {
+      if (msg == 'AppLifecycleState.paused') {
+        provider.onPause();
+      }
+      return null;
+    });
 
     return WillPopScope(
       onWillPop: () {
