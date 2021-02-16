@@ -59,8 +59,13 @@ class DBProvider {
     final db = await database;
     // db.insert の戻り値として、最後に挿入された行のIDを返す (今回は受け取らない)
     await db.transaction((txn) async {
-      await txn.rawQuery('UPDATE folders SET priority = priority + 1');
-      await txn.insert(_folderTableName, folder.toMap(),
+      final List<Map<String, dynamic>> priorityList =
+          await txn.rawQuery('SELECT MAX(priority) FROM folders');
+      final maxPriority = priorityList.first['MAX(priority)'];
+      final newPriority = maxPriority == null ? 0 : maxPriority + 1;
+      final newFolder = Folder(
+          title: folder.title, color: folder.color, priority: newPriority);
+      await txn.insert(_folderTableName, newFolder.toMap(),
           conflictAlgorithm: ConflictAlgorithm.replace);
     });
   }
@@ -82,6 +87,12 @@ class DBProvider {
           'UPDATE folders SET priority = priority - 1 WHERE priority > ?',
           [priority]);
     });
+  }
+
+  /// テーブル内で一番大きいpriorityを取得する
+  Future getMaxPriority() async {
+    final db = await database;
+    return db.rawQuery('SELECT MAX priority FROM folders');
   }
 
   /**

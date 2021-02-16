@@ -42,17 +42,51 @@ class NoteAddEditModel extends ChangeNotifier {
     if (note != null) {
       if (inputText.isNotEmpty) {
         // 更新
-        final newNote = Note(
-            id: note.id,
-            text: inputText,
-            createdAt: note.createdAt,
-            updatedAt: nowDateTime,
-            folderId: folder.id);
-        await upDateNote(newNote);
+        if (note.text != inputText) {
+          final newNote = Note(
+              id: note.id,
+              text: inputText,
+              createdAt: note.createdAt,
+              updatedAt: nowDateTime,
+              folderId: folder.id);
+          await upDateNote(newNote);
+        }
       }
       if (inputText.isEmpty) {
         // 削除
         await deleteNote(note.id);
+      }
+    }
+  }
+
+  void onPause() async {
+    final nowDateTime = DateTime.now().toString();
+    // 新規追加
+    if (note == null) {
+      if (inputText == null || inputText.isEmpty) return;
+      final newNote = Note(
+          text: inputText,
+          createdAt: nowDateTime,
+          updatedAt: nowDateTime,
+          folderId: folder.id);
+      note = newNote;
+      await addNote(newNote);
+    }
+
+    // 更新・削除
+    if (note != null) {
+      if (inputText.isNotEmpty) {
+        // 更新
+        if (note.text != inputText) {
+          final newNote = Note(
+              id: note.id,
+              text: inputText,
+              createdAt: note.createdAt,
+              updatedAt: nowDateTime,
+              folderId: folder.id);
+          note = newNote;
+          await upDateNote(newNote);
+        }
       }
     }
   }
