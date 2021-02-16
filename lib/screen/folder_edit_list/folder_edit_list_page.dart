@@ -35,46 +35,50 @@ class FolderEditPage extends HookWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           actions: [
-            Visibility(
-                visible: provider.checkedFolderIds.length > 0,
-                child: IconButton(
-                    icon: Icon(
-                      Icons.delete_forever,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                    onPressed: () async {
-                      showDialog(
-                          context: context,
-                          builder: (_) {
-                            return AlertDialog(
-                              title: Text(
-                                  '${provider.checkedFolderIds.length}件のフォルダーを削除しますか？'),
-                              content: Text(
-                                  '選択したフォルダーと、フォルダー内のすべてのノートが削除されます。この操作は取り消せません。'),
-                              actions: [
-                                // ボタン領域
-                                FlatButton(
-                                  child: Text(
-                                    "キャンセル",
-                                  ),
-                                  onPressed: () => Navigator.pop(context),
-                                ),
-                                FlatButton(
-                                  child: Text(
-                                    "削除",
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                  onPressed: () async {
-                                    await provider.deleteFolders();
-                                    await provider.getFoldersNotify();
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            );
-                          });
-                    }))
+            AnimatedOpacity(
+              opacity: provider.checkedFolderIds.length > 0 ? 1 : 0.3,
+              duration: const Duration(milliseconds: 200),
+              child: IconButton(
+                  icon: Icon(
+                    Icons.delete_forever,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: provider.checkedFolderIds.length > 0
+                      ? () async {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return AlertDialog(
+                                  title: Text(
+                                      '${provider.checkedFolderIds.length}件のフォルダーを削除しますか？'),
+                                  content: Text(
+                                      '選択したフォルダーと、フォルダー内のすべてのノートが削除されます。この操作は取り消せません。'),
+                                  actions: [
+                                    // ボタン領域
+                                    FlatButton(
+                                      child: Text(
+                                        "キャンセル",
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                    FlatButton(
+                                      child: Text(
+                                        "削除",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                      onPressed: () async {
+                                        await provider.deleteFolders();
+                                        await provider.getFoldersNotify();
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                );
+                              });
+                        }
+                      : null),
+            )
           ],
         ),
         body: Container(
