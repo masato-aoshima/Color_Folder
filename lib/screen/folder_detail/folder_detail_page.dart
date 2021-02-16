@@ -105,26 +105,29 @@ class FolderDetailPage extends HookWidget {
                           style: TextStyle(fontSize: 20),
                         ),
                       ),
-                      ColorPicker(
-                        pickersEnabled: {
-                          ColorPickerType.both: false,
-                          ColorPickerType.primary: true,
-                          ColorPickerType.accent: false,
-                          ColorPickerType.bw: false,
-                          ColorPickerType.custom: false,
-                          ColorPickerType.wheel: false
-                        },
-                        enableShadesSelection: false,
-                        hasBorder: true,
-                        padding: EdgeInsets.all(20),
-                        color: provider.color,
-                        onColorChanged: (Color color) {
-                          print(colorToString(color));
-                          provider.selectColor(color);
-                        },
-                        heading: Text(
-                          'フォルダの色を変更できます',
-                          style: Theme.of(context).textTheme.headline5,
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 400.0),
+                        child: ColorPicker(
+                          pickersEnabled: {
+                            ColorPickerType.both: false,
+                            ColorPickerType.primary: true,
+                            ColorPickerType.accent: false,
+                            ColorPickerType.bw: false,
+                            ColorPickerType.custom: false,
+                            ColorPickerType.wheel: false
+                          },
+                          enableShadesSelection: false,
+                          hasBorder: true,
+                          padding: EdgeInsets.all(20),
+                          color: provider.color,
+                          onColorChanged: (Color color) {
+                            print(colorToString(color));
+                            provider.selectColor(color);
+                          },
+                          heading: Text(
+                            'フォルダの色を変更できます',
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
                         ),
                       ),
                       RaisedButton(
@@ -149,10 +152,13 @@ class FolderDetailPage extends HookWidget {
                 );
               } else {
                 // 横画面
-                return Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
-                    child: Row(
+                return Column(
+                  children: [
+                    Spacer(
+                      flex: 1,
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Flexible(
                           flex: 1,
@@ -183,26 +189,32 @@ class FolderDetailPage extends HookWidget {
                           flex: 1,
                           child: Column(
                             children: [
-                              ColorPicker(
-                                pickersEnabled: {
-                                  ColorPickerType.both: false,
-                                  ColorPickerType.primary: true,
-                                  ColorPickerType.accent: false,
-                                  ColorPickerType.bw: false,
-                                  ColorPickerType.custom: false,
-                                  ColorPickerType.wheel: false
-                                },
-                                enableShadesSelection: false,
-                                hasBorder: true,
-                                padding: EdgeInsets.all(20),
-                                color: provider.color,
-                                onColorChanged: (Color color) {
-                                  print(colorToString(color));
-                                  provider.selectColor(color);
-                                },
-                                heading: Text(
-                                  'フォルダの色を変更できます',
-                                  style: Theme.of(context).textTheme.headline5,
+                              Center(
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(maxWidth: 400.0),
+                                  child: ColorPicker(
+                                    pickersEnabled: {
+                                      ColorPickerType.both: false,
+                                      ColorPickerType.primary: true,
+                                      ColorPickerType.accent: false,
+                                      ColorPickerType.bw: false,
+                                      ColorPickerType.custom: false,
+                                      ColorPickerType.wheel: false
+                                    },
+                                    enableShadesSelection: false,
+                                    hasBorder: true,
+                                    padding: EdgeInsets.all(20),
+                                    color: provider.color,
+                                    onColorChanged: (Color color) {
+                                      print(colorToString(color));
+                                      provider.selectColor(color);
+                                    },
+                                    heading: Text(
+                                      'フォルダの色を変更できます',
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
+                                    ),
+                                  ),
                                 ),
                               ),
                               RaisedButton(
@@ -226,7 +238,12 @@ class FolderDetailPage extends HookWidget {
                           ),
                         )
                       ],
-                    ));
+                    ),
+                    Spacer(
+                      flex: 2,
+                    ),
+                  ],
+                );
               }
             },
           )),
