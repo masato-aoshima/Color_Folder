@@ -14,8 +14,8 @@ import 'package:sort_note/screen/note_select_list/note_select_list_model.dart';
 
 final noteProvider = ChangeNotifierProvider((ref) => NoteSelectListModel());
 
-class NoteListPage extends HookWidget {
-  NoteListPage(this.folder);
+class NoteSelectListPage extends HookWidget {
+  NoteSelectListPage(this.folder);
 
   final Folder folder;
 
