@@ -73,7 +73,7 @@ class FolderEditModel extends ChangeNotifier {
     await DBProvider.db.onDragAndDrop(id, oldIndex, newIndex);
     _folders.removeAt(oldIndex);
     _folders.insert(newIndex, item);
-    getFoldersNotify();
+    notifyListeners();
   }
 
   void onItemCheck(int folderId, bool isCheck) {
