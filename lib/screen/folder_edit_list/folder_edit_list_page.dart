@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/list_item/list_item_folder_edit.dart';
+import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/screen/folder_detail/folder_detail_page.dart';
 
 import 'folder_edit_list_model.dart';
@@ -82,30 +83,43 @@ class FolderEditPage extends HookWidget {
             onReorder: (int oldIndex, int newIndex) {
               provider.onReorder(oldIndex, newIndex);
             },
-            children: (provider.folders).map((folder) {
-              return Container(
-                key: Key(folder.id.toString()),
-                child: ListItemFolderEdit(
-                  folder: folder,
-                  onTapCallback: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              FolderDetailPage(folder: folder),
-                        )).then((value) {
-                      provider.getFoldersNotify();
-                    });
-                  },
-                  checkedCallback: (isCheck) {
-                    provider.onItemCheck(folder.id, isCheck);
-                  },
-                ),
-              );
-            }).toList(),
+            children: getList(context, provider),
           ),
         ),
       ),
     );
+  }
+
+  List<Widget> getList(BuildContext context, FolderEditModel provider) {
+    List<Folder> folders = provider.folders;
+    List<Widget> listItems = List<Widget>();
+
+    folders.asMap().forEach((int index, Folder folder) {
+      listItems.add(Container(
+        key: Key(folder.id.toString()),
+        child: ListItemFolderEdit(
+          folder: folder,
+          onTapCallback: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FolderDetailPage(
+                    folder: Folder(
+                        id: folder.id,
+                        title: folder.title,
+                        color: folder.color,
+                        priority: index),
+                  ),
+                )).then((value) {
+              provider.getFoldersNotify();
+            });
+          },
+          checkedCallback: (isCheck) {
+            provider.onItemCheck(folder.id, isCheck);
+          },
+        ),
+      ));
+    });
+    return listItems;
   }
 }
