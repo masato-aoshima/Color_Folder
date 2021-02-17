@@ -18,24 +18,31 @@ class NoteSelectListPage extends HookWidget {
   Widget build(BuildContext context) {
     final provider = useProvider(noteProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'ノート選択',
-          style: TextStyle(fontWeight: FontWeight.bold),
+    return WillPopScope(
+      onWillPop: () {
+        provider.clear();
+        Navigator.of(context).pop();
+        return Future.value(false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'ノート選択',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: folder.color,
+          iconTheme: IconThemeData(color: Colors.black),
+          actions: [],
         ),
-        backgroundColor: folder.color,
-        iconTheme: IconThemeData(color: Colors.black),
-        actions: [],
-      ),
-      body: FutureBuilder(
-        future: provider.getNotes(folder.id),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          return getNoteSelectListView(context, snapshot.data, provider);
-        },
+        body: FutureBuilder(
+          future: provider.getNotes(folder.id),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return getNoteSelectListView(context, snapshot.data, provider);
+          },
+        ),
       ),
     );
   }
@@ -53,7 +60,7 @@ class NoteSelectListPage extends HookWidget {
           return ListItemNoteChecked(
             note: note,
             onChecked: (isChecked) {
-              print(isChecked.toString());
+              provider.onItemCheck(note.id, isChecked);
             },
           );
         },
