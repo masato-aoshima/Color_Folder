@@ -50,6 +50,11 @@ class MoveAnotherFolderModel extends ChangeNotifier {
     }
   }
 
+  Future onTapFolderMultiNote() async {
+    print('複数のノートを移動します');
+    print('${noteList.length}');
+  }
+
   Future<Map<int, int>> getNotesCount() async {
     _noteCounts = await DBProvider.db.getNotesCountByFolder();
     return _noteCounts;
