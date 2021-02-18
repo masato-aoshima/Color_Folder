@@ -188,6 +188,14 @@ class DBProvider {
         'UPDATE notes SET folderId = ? WHERE id = ?', [newFolderId, noteId]);
   }
 
+  // 複数のノートの、所属するフォルダーを一度に変更
+  Future moveAnotherFolderMulti(List<int> noteIds, int newFolderId) async {
+    final db = await database;
+    await db.rawUpdate(
+        'UPDATE notes SET folderId = ? WHERE id IN (${noteIds.join(', ')})',
+        [newFolderId]);
+  }
+
   // フォルダーごとのノートの数を取得
   Future<Map<int, int>> getNotesCountByFolder() async {
     final db = await database;

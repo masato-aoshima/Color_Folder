@@ -54,7 +54,8 @@ class MoveAnotherFolderPage extends HookWidget {
                       if (note != null) {
                         await provider.onTapFolder(folder.id);
                       } else {
-                        await provider.onTapFolderMultiNote(); // 複数のノートの移動
+                        await provider
+                            .onTapFolderMultiNote(folder.id); // 複数のノートの移動
                       }
                       Navigator.pop(context);
                     },
