@@ -43,6 +43,12 @@ class NoteSelectListPage extends HookWidget {
                       color: Colors.white,
                       size: 35,
                     ),
+                    onPressed: provider.checkedNoteIds.length > 0
+                        ? () {
+                            // 削除
+                            print('削除アイコンをタップ');
+                          }
+                        : null,
                   )),
               SizedBox(
                 width: 10,
@@ -56,6 +62,12 @@ class NoteSelectListPage extends HookWidget {
                       color: Colors.white,
                       size: 35,
                     ),
+                    onPressed: provider.checkedNoteIds.length > 0
+                        ? () {
+                            // フォルダ移動
+                            print('フォルダーをタップ');
+                          }
+                        : null,
                   )),
               SizedBox(
                 width: 10,
