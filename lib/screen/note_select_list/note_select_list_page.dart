@@ -19,6 +19,11 @@ class NoteSelectListPage extends HookWidget {
   Widget build(BuildContext context) {
     final provider = useProvider(noteProvider);
 
+    // build完了直後に呼び出されるらしい
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      provider.getNotes(folder.id);
+    });
+
     return WillPopScope(
       onWillPop: () {
         provider.clear();
@@ -80,19 +85,7 @@ class NoteSelectListPage extends HookWidget {
               )
             ],
           ),
-          body: provider.notes.length == 0
-              ? FutureBuilder(
-                  future: provider.getNotes(folder.id),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                    return getNoteSelectListView(
-                        context, snapshot.data, provider);
-                  },
-                )
-              : getNoteSelectListView(context, provider.notes, provider)),
+          body: getNoteSelectListView(context, provider.notes, provider)),
     );
   }
 
