@@ -25,25 +25,56 @@ class NoteSelectListPage extends HookWidget {
         return Future.value(false);
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'ノート選択',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          appBar: AppBar(
+            title: Text(
+              'ノート選択',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            backgroundColor: folder.color,
+            iconTheme: IconThemeData(color: Colors.black),
+            centerTitle: true,
+            actions: [
+              AnimatedOpacity(
+                  opacity: provider.checkedNoteIds.length > 0 ? 1 : 0.3,
+                  duration: const Duration(milliseconds: 200),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.delete_forever,
+                      color: Colors.white,
+                      size: 35,
+                    ),
+                  )),
+              SizedBox(
+                width: 10,
+              ),
+              AnimatedOpacity(
+                  opacity: provider.checkedNoteIds.length > 0 ? 1 : 0.3,
+                  duration: const Duration(milliseconds: 200),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.folder_open_rounded,
+                      color: Colors.white,
+                      size: 35,
+                    ),
+                  )),
+              SizedBox(
+                width: 10,
+              )
+            ],
           ),
-          backgroundColor: folder.color,
-          iconTheme: IconThemeData(color: Colors.black),
-          actions: [],
-        ),
-        body: FutureBuilder(
-          future: provider.getNotes(folder.id),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
-            return getNoteSelectListView(context, snapshot.data, provider);
-          },
-        ),
-      ),
+          body: provider.notes.length == 0
+              ? FutureBuilder(
+                  future: provider.getNotes(folder.id),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    return getNoteSelectListView(
+                        context, snapshot.data, provider);
+                  },
+                )
+              : getNoteSelectListView(context, provider.notes, provider)),
     );
   }
 

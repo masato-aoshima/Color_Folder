@@ -3,7 +3,6 @@ import 'package:sort_note/model/note.dart';
 import 'package:sort_note/repository/database.dart';
 
 class NoteSelectListModel extends ChangeNotifier {
-  var isInitializeComplete = false;
   var _notes = List<Note>();
 
   List<Note> get notes => _notes;
@@ -11,10 +10,6 @@ class NoteSelectListModel extends ChangeNotifier {
   Set<int> checkedNoteIds = Set<int>();
 
   Future getNotes(int folderId) async {
-    if (isInitializeComplete) {
-      return;
-    }
-    isInitializeComplete = true;
     if (_notes.length == 0) {
       _notes = await DBProvider.db.getNotesInFolder(folderId);
     }
@@ -38,12 +33,11 @@ class NoteSelectListModel extends ChangeNotifier {
     } else {
       checkedNoteIds.remove(noteId);
     }
-    notifyListeners(); // AppBarのactionのvisibleを切り替えるため
+    notifyListeners();
   }
 
   void clear() {
     _notes = List<Note>();
     checkedNoteIds.clear();
-    isInitializeComplete = false;
   }
 }
