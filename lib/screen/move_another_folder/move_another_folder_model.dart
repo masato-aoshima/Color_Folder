@@ -6,6 +6,7 @@ import 'package:sort_note/repository/database.dart';
 // 2. モデルクラスで、ChangeNotifierを継承する
 class MoveAnotherFolderModel extends ChangeNotifier {
   Note note;
+  List<Note> noteList;
 
   var _folders = List<Folder>();
   List<Folder> get folders => _folders;

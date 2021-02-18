@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/list_item/list_item_note_checked.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/model/note.dart';
+import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
 import 'package:sort_note/screen/note_select_list/note_select_list_model.dart';
 
 final noteProvider = ChangeNotifierProvider((ref) => NoteSelectListModel());
@@ -65,7 +66,12 @@ class NoteSelectListPage extends HookWidget {
                     onPressed: provider.checkedNoteIds.length > 0
                         ? () {
                             // フォルダ移動
-                            print('フォルダーをタップ');
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MoveAnotherFolderPage(
+                                        null, provider.getCheckedNoteList()),
+                                    fullscreenDialog: true));
                           }
                         : null,
                   )),

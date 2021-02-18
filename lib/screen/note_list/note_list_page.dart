@@ -117,7 +117,7 @@ class NoteListPage extends HookWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          MoveAnotherFolderPage(note),
+                                          MoveAnotherFolderPage(note, null),
                                       fullscreenDialog: true))
                               .then((value) {
                             provider.getNotesNotify(folder.id);

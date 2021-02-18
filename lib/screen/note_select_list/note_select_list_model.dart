@@ -36,6 +36,15 @@ class NoteSelectListModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<Note> getCheckedNoteList() {
+    List<Note> noteList = List<Note>();
+    checkedNoteIds.forEach((noteId) {
+      final note = notes.firstWhere((note) => note.id == noteId);
+      noteList.add(note);
+    });
+    return noteList;
+  }
+
   void clear() {
     _notes = List<Note>();
     checkedNoteIds.clear();
