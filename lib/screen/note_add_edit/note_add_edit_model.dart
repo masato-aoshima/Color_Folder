@@ -13,8 +13,20 @@ class NoteAddEditModel extends ChangeNotifier {
     inputText = text;
   }
 
-  Future addNote(Note note) async {
-    await DBProvider.db.insertNote(note);
+  Future addNoteWhenOnPagePop(Note newNote) async {
+    await DBProvider.db.insertNote(newNote);
+  }
+
+  Future addNoteWhenOnPause(Note newNote) async {
+    final newId = await DBProvider.db.insertNote(newNote);
+    if (note.id == null) {
+      note = Note(
+          id: newId,
+          text: note.text,
+          createdAt: note.createdAt,
+          updatedAt: note.updatedAt,
+          folderId: note.folderId);
+    }
   }
 
   Future deleteNote(int id) async {
@@ -35,7 +47,7 @@ class NoteAddEditModel extends ChangeNotifier {
           createdAt: nowDateTime,
           updatedAt: nowDateTime,
           folderId: folder.id);
-      await addNote(newNote);
+      await addNoteWhenOnPagePop(newNote);
     }
 
     // 更新・削除
@@ -70,7 +82,7 @@ class NoteAddEditModel extends ChangeNotifier {
           updatedAt: nowDateTime,
           folderId: folder.id);
       note = newNote;
-      await addNote(newNote);
+      await addNoteWhenOnPause(newNote);
     }
 
     // 更新・削除

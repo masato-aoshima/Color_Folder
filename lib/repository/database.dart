@@ -161,10 +161,10 @@ class DBProvider {
   }
 
   /// ノートを一件追加
-  Future insertNote(Note note) async {
+  Future<int> insertNote(Note note) async {
     final db = await database;
-    // db.insert の戻り値として、最後に挿入された行のIDを返す (今回は受け取らない)
-    await db.insert(_noteTableName, note.toMap(),
+    // db.insert の戻り値として、最後に挿入された行のIDを返す
+    return await db.insert(_noteTableName, note.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
