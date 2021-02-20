@@ -47,6 +47,10 @@ Color stringToColor(String hexString) {
   return Color(int.parse("0xff$hexString"));
 }
 
+Color rawStringToColor(String string) {
+  return Color(int.parse(string));
+}
+
 /// Color -> 6桁の16進数への変換
 /// 例：Color(0xffcddc39) -> cddc39　へ
 String colorToString(Color color) {

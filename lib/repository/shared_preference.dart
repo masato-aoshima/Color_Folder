@@ -3,6 +3,8 @@ import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 class SharedPreferencesKey {
   // ノートの並び順
   static const keyOrderOfNotes = 'order_of_notes';
+  // アプリのテーマカラー
+  static const keyThemeColor = 'theme_color';
 }
 
 List<String> orderOfNotesList = [
