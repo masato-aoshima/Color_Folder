@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
+import 'package:sort_note/util/color.dart';
 
 class SharedPreferencesKey {
   // ノートの並び順
@@ -26,8 +29,7 @@ void saveOrderOfNotesSetting(String setting) {
   Settings().save(SharedPreferencesKey.keyOrderOfNotes, setting);
 }
 
-Future<String> getThemeColor() async {
-  final value = await Settings()
-      .getString(SharedPreferencesKey.keyThemeColor, '0xff1995AD');
-  return value;
+Future<String> getThemeColorString() {
+  return Settings().getString(
+      SharedPreferencesKey.keyThemeColor, '0xff1995AD'); // デフォルトのテーマカラーをここで決める
 }

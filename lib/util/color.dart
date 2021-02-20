@@ -13,6 +13,7 @@ Color getScaffoldColor(BuildContext context) {
   return Theme.of(context).scaffoldBackgroundColor;
 }
 
+// TODO システムで判定しているところとズレる (すべての画面で使う)
 // 与えられたカラーに対して、白か黒のうち、見やすい方の色を返す
 Color getWhiteOrBlack(Color color) {
   return color.computeLuminance() > 0.6 ? Colors.black : Colors.white;

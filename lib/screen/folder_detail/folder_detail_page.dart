@@ -1,3 +1,4 @@
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/util/color.dart';
 
+import '../../main.dart';
 import 'folder_detail_model.dart';
 
 final folderProvider = ChangeNotifierProvider((ref) => FolderDetailModel());
@@ -124,6 +126,9 @@ class FolderDetailPage extends HookWidget {
                             onColorChanged: (Color color) {
                               print(colorToString(color));
                               provider.selectColor(color);
+                              DynamicTheme.of(context).setThemeData(
+                                  brightThemeData(
+                                      Brightness.light, color)); // 消す
                             },
                             heading: Text(
                               'フォルダの色を変更できます',
