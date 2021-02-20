@@ -21,7 +21,8 @@ class NoteSelectListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getNotesNotify(int folderId) async {
+  Future getNotesNotify() async {
+    final folderId = notes.first.folderId;
     _notes = await DBProvider.db.getNotesInFolder(folderId);
     notifyListeners();
   }
