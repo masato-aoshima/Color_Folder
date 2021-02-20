@@ -47,6 +47,7 @@ Color stringToColor(String hexString) {
   return Color(int.parse("0xff$hexString"));
 }
 
+/// 0fxx 付きのColor文字列をColorに変換する
 Color rawStringToColor(String string) {
   return Color(int.parse(string));
 }

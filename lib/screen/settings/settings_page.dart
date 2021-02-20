@@ -40,10 +40,8 @@ class SettingsPage extends HookWidget {
                   settingKey: SharedPreferencesKey.keyThemeColor,
                   defaultValue: '0xff1995AD',
                   childBuilder: (BuildContext context, String value) {
-                    return Text(
-                      value,
-                      style: TextStyle(color: rawStringToColor(value)),
-                    );
+                    print(value);
+                    return Container();
                   })
             ],
           ),

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: '並び替え　メモ帳',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        primaryColor: Color(0xff1995AD), // TODO テーマ設定で選んだ色に設定し直す
+        primaryColor: Color(0xff1995AD),
         scaffoldBackgroundColor: Color(0xffF1F1F2),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
             backgroundColor: Color(0xff1995AD), // TODO

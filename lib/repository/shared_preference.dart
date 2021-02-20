@@ -25,3 +25,9 @@ Future<String> getOrderOfNotesSetting() async {
 void saveOrderOfNotesSetting(String setting) {
   Settings().save(SharedPreferencesKey.keyOrderOfNotes, setting);
 }
+
+Future<String> getThemeColor() async {
+  final value = await Settings()
+      .getString(SharedPreferencesKey.keyThemeColor, '0xff1995AD');
+  return value;
+}
