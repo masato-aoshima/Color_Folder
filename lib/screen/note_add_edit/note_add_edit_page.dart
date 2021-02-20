@@ -73,7 +73,7 @@ class NoteAddEditPage extends HookWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                MoveAnotherFolderPage(newNote),
+                                MoveAnotherFolderPage(newNote, null),
                             fullscreenDialog: true));
                     Navigator.pop(context);
                   }

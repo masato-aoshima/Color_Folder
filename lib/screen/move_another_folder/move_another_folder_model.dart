@@ -6,6 +6,7 @@ import 'package:sort_note/repository/database.dart';
 // 2. モデルクラスで、ChangeNotifierを継承する
 class MoveAnotherFolderModel extends ChangeNotifier {
   Note note;
+  List<Note> noteList;
 
   var _folders = List<Folder>();
   List<Folder> get folders => _folders;
@@ -47,6 +48,11 @@ class MoveAnotherFolderModel extends ChangeNotifier {
         await DBProvider.db.updateNote(newNote);
       }
     }
+  }
+
+  Future onTapFolderMultiNote(int newFolderId) async {
+    await DBProvider.db.moveAnotherFolderMulti(
+        noteList.map((note) => note.id).toList(), newFolderId);
   }
 
   Future<Map<int, int>> getNotesCount() async {

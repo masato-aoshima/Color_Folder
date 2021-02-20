@@ -155,97 +155,95 @@ class FolderDetailPage extends HookWidget {
                 );
               } else {
                 // 横画面
-                return Column(
-                  children: [
-                    Spacer(
-                      flex: 1,
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Flexible(
-                          flex: 1,
-                          child: Column(
-                            children: [
-                              Hero(
-                                  tag: folder == null
-                                      ? ''
-                                      : 'folderSmallIcon${folder.id}',
-                                  child: FolderSmallIcon(
-                                    color: provider.color,
-                                    size: 200,
-                                  )),
-                              Container(
-                                width: double.infinity,
-                                child: TextFormField(
-                                  controller: myController,
-                                  textAlign: TextAlign.center,
-                                  onChanged: provider.changeText,
-                                  maxLines: 1,
-                                  style: TextStyle(fontSize: 20),
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Flexible(
+                            flex: 1,
+                            child: Column(
+                              children: [
+                                Hero(
+                                    tag: folder == null
+                                        ? ''
+                                        : 'folderSmallIcon${folder.id}',
+                                    child: FolderSmallIcon(
+                                      color: provider.color,
+                                      size: 200,
+                                    )),
+                                Container(
+                                  width: double.infinity,
+                                  child: TextFormField(
+                                    controller: myController,
+                                    textAlign: TextAlign.center,
+                                    onChanged: provider.changeText,
+                                    maxLines: 1,
+                                    style: TextStyle(fontSize: 20),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Flexible(
-                          flex: 1,
-                          child: Column(
-                            children: [
-                              Center(
-                                child: ConstrainedBox(
-                                  constraints: BoxConstraints(maxWidth: 400.0),
-                                  child: ColorPicker(
-                                    pickersEnabled: {
-                                      ColorPickerType.both: false,
-                                      ColorPickerType.primary: true,
-                                      ColorPickerType.accent: false,
-                                      ColorPickerType.bw: false,
-                                      ColorPickerType.custom: false,
-                                      ColorPickerType.wheel: false
-                                    },
-                                    enableShadesSelection: false,
-                                    hasBorder: true,
-                                    padding: EdgeInsets.all(20),
-                                    color: provider.color,
-                                    onColorChanged: (Color color) {
-                                      print(colorToString(color));
-                                      provider.selectColor(color);
-                                    },
-                                    heading: Text(
-                                      'フォルダの色を変更できます',
-                                      style:
-                                          Theme.of(context).textTheme.headline5,
+                          Flexible(
+                            flex: 1,
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: ConstrainedBox(
+                                    constraints:
+                                        BoxConstraints(maxWidth: 400.0),
+                                    child: ColorPicker(
+                                      pickersEnabled: {
+                                        ColorPickerType.both: false,
+                                        ColorPickerType.primary: true,
+                                        ColorPickerType.accent: false,
+                                        ColorPickerType.bw: false,
+                                        ColorPickerType.custom: false,
+                                        ColorPickerType.wheel: false
+                                      },
+                                      enableShadesSelection: false,
+                                      hasBorder: true,
+                                      padding: EdgeInsets.all(20),
+                                      color: provider.color,
+                                      onColorChanged: (Color color) {
+                                        print(colorToString(color));
+                                        provider.selectColor(color);
+                                      },
+                                      heading: Text(
+                                        'フォルダの色を変更できます',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline5,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              RaisedButton(
-                                child: const Text(
-                                  '保存',
-                                  style: TextStyle(color: Colors.white),
+                                RaisedButton(
+                                  child: const Text(
+                                    '保存',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed: () async {
+                                    if (provider.inputText == null ||
+                                        provider.inputText.isEmpty) {
+                                      showEmptyTextToast();
+                                    } else {
+                                      await provider.onTapSave();
+                                      provider.clear();
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  color: Color(0xff1995AD),
                                 ),
-                                onPressed: () async {
-                                  if (provider.inputText == null ||
-                                      provider.inputText.isEmpty) {
-                                    showEmptyTextToast();
-                                  } else {
-                                    await provider.onTapSave();
-                                    provider.clear();
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                color: Color(0xff1995AD),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    Spacer(
-                      flex: 2,
-                    ),
-                  ],
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 );
               }
             },

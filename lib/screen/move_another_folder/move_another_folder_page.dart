@@ -13,14 +13,17 @@ final folderProvider =
     ChangeNotifierProvider((ref) => MoveAnotherFolderModel());
 
 class MoveAnotherFolderPage extends HookWidget {
-  MoveAnotherFolderPage(this.note);
+  MoveAnotherFolderPage(this.note, this.noteList);
 
   final Note note;
+  final List<Note> noteList;
 
   @override
   Widget build(BuildContext context) {
     // 4. 観察する変数を useProvider を使って宣言
-    final provider = useProvider(folderProvider)..note = note;
+    final provider = useProvider(folderProvider)
+      ..note = note
+      ..noteList = noteList;
 
     return Scaffold(
       appBar: AppBar(
@@ -48,15 +51,28 @@ class MoveAnotherFolderPage extends HookWidget {
                     folder: folder,
                     notesCount: count ?? 0,
                     callback: () async {
-                      await provider.onTapFolder(folder.id);
+                      if (note != null) {
+                        await provider.onTapFolder(folder.id);
+                      } else {
+                        await provider
+                            .onTapFolderMultiNote(folder.id); // 複数のノートの移動
+                      }
                       Navigator.pop(context);
                     },
-                    enable: note.folderId != folder.id,
+                    enable: checkEnable(folder),
                   );
                 }),
           );
         },
       ),
     );
+  }
+
+  bool checkEnable(Folder folder) {
+    if (note != null) {
+      return note.folderId != folder.id;
+    } else {
+      return noteList.first.folderId != folder.id;
+    }
   }
 }
