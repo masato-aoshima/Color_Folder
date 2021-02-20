@@ -21,14 +21,19 @@ class NoteSelectListModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future getNotesNotify(int folderId) async {
+    _notes = await DBProvider.db.getNotesInFolder(folderId);
+    notifyListeners();
+  }
+
   Future deleteNote(int id, int folderId) async {
     await DBProvider.db.deleteNote(id.toString());
     _notes = await DBProvider.db.getNotesInFolder(folderId);
     notifyListeners();
   }
 
-  void onItemCheck(int noteId, bool isCheck) {
-    if (isCheck) {
+  void onItemCheck(int noteId, bool isChecked) {
+    if (isChecked) {
       checkedNoteIds.add(noteId);
     } else {
       checkedNoteIds.remove(noteId);
@@ -42,6 +47,7 @@ class NoteSelectListModel extends ChangeNotifier {
       final note = notes.firstWhere((note) => note.id == noteId);
       noteList.add(note);
     });
+    checkedNoteIds.clear();
     return noteList;
   }
 

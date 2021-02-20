@@ -72,11 +72,15 @@ class NoteSelectListPage extends HookWidget {
                         ? () {
                             // フォルダ移動
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MoveAnotherFolderPage(
-                                        null, provider.getCheckedNoteList()),
-                                    fullscreenDialog: true));
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MoveAnotherFolderPage(null,
+                                                provider.getCheckedNoteList()),
+                                        fullscreenDialog: true))
+                                .then((value) {
+                              provider.getNotesNotify(folder.id);
+                            });
                           }
                         : null,
                   )),
@@ -101,9 +105,7 @@ class NoteSelectListPage extends HookWidget {
           final note = notes[index];
           return ListItemNoteChecked(
             note: note,
-            onChecked: (isChecked) {
-              provider.onItemCheck(note.id, isChecked);
-            },
+            provider: provider,
           );
         },
       ),
