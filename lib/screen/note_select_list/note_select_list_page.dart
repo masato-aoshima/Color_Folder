@@ -51,8 +51,7 @@ class NoteSelectListPage extends HookWidget {
                     ),
                     onPressed: provider.checkedNoteIds.length > 0
                         ? () {
-                            // 削除
-                            print('削除アイコンをタップ');
+                            showDeleteDialog(context, provider);
                           }
                         : null,
                   )),
@@ -79,7 +78,7 @@ class NoteSelectListPage extends HookWidget {
                                                 provider.getCheckedNoteList()),
                                         fullscreenDialog: true))
                                 .then((value) {
-                              provider.getNotesNotify(folder.id);
+                              provider.getNotesNotify();
                             });
                           }
                         : null,
@@ -110,5 +109,36 @@ class NoteSelectListPage extends HookWidget {
         },
       ),
     );
+  }
+
+  void showDeleteDialog(BuildContext context, NoteSelectListModel provider) {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Text('${provider.checkedNoteIds.length}件のノートを削除しますか？'),
+            content: Text('この操作は取り消せません。'),
+            actions: [
+              // ボタン領域
+              FlatButton(
+                child: Text(
+                  "キャンセル",
+                ),
+                onPressed: () => Navigator.pop(context),
+              ),
+              FlatButton(
+                child: Text(
+                  "削除",
+                  style: TextStyle(color: Colors.red),
+                ),
+                onPressed: () async {
+                  await provider.deleteCheckedNotes();
+                  await provider.getNotesNotify();
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
   }
 }

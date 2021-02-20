@@ -189,11 +189,18 @@ class DBProvider {
   }
 
   // 複数のノートの、所属するフォルダーを一度に変更
-  Future moveAnotherFolderMulti(List<int> noteIds, int newFolderId) async {
+  Future moveAnotherFolderMultipleNotes(
+      List<int> noteIds, int newFolderId) async {
     final db = await database;
     await db.rawUpdate(
         'UPDATE notes SET folderId = ? WHERE id IN (${noteIds.join(', ')})',
         [newFolderId]);
+  }
+
+  // 複数のノートを一度に削除
+  Future deleteMultipleNotes(List<int> noteIds) async {
+    final db = await database;
+    await db.rawDelete('DELETE FROM notes WHERE id IN (${noteIds.join(', ')})');
   }
 
   // フォルダーごとのノートの数を取得
