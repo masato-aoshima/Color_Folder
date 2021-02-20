@@ -26,6 +26,11 @@ class FolderPage extends HookWidget {
           'フォルダー',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        leading: IconButton(
+          iconSize: 26,
+          icon: Icon(Icons.settings),
+          onPressed: () {},
+        ),
         actions: [
           Row(
             children: [
