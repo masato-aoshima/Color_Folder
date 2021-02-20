@@ -135,7 +135,9 @@ class FolderDetailPage extends HookWidget {
                         RaisedButton(
                           child: const Text(
                             '保存',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
                           ),
                           onPressed: () async {
                             if (provider.inputText == null ||
@@ -147,7 +149,7 @@ class FolderDetailPage extends HookWidget {
                               Navigator.pop(context);
                             }
                           },
-                          color: Color(0xff1995AD),
+                          color: Theme.of(context).primaryColor,
                         ),
                       ],
                     )),
@@ -223,7 +225,9 @@ class FolderDetailPage extends HookWidget {
                                 RaisedButton(
                                   child: const Text(
                                     '保存',
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   onPressed: () async {
                                     if (provider.inputText == null ||
@@ -235,7 +239,7 @@ class FolderDetailPage extends HookWidget {
                                       Navigator.pop(context);
                                     }
                                   },
-                                  color: Color(0xff1995AD),
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ],
                             ),
