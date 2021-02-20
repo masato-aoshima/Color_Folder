@@ -9,6 +9,7 @@ import 'package:sort_note/screen/folder_detail/folder_detail_page.dart';
 import 'package:sort_note/screen/folder_edit_list/folder_edit_list_page.dart';
 import 'package:sort_note/screen/note_list/note_list_page.dart';
 import 'package:sort_note/screen/settings/settings_page.dart';
+import 'package:sort_note/util/color.dart';
 
 import 'folder_list_model.dart';
 
@@ -59,7 +60,9 @@ class FolderPage extends HookWidget {
                 },
                 child: Text(
                   '編集',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  style: TextStyle(
+                      color: getWhiteOrBlack(getThemeColor(context)),
+                      fontSize: 18),
                 ),
               )),
               SizedBox(
@@ -90,7 +93,10 @@ class FolderPage extends HookWidget {
             provider.getFoldersNotify();
           });
         },
-        child: Icon(Icons.folder_open_sharp),
+        child: Icon(
+          Icons.folder_open_sharp,
+          color: getWhiteOrBlack(getThemeColor(context)),
+        ),
       ),
     );
   }

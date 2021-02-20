@@ -40,7 +40,6 @@ class FolderDetailPage extends HookWidget {
                 child: IconButton(
                     icon: Icon(
                       Icons.delete_forever,
-                      color: Colors.white,
                       size: 35,
                     ),
                     onPressed: () {
@@ -133,10 +132,10 @@ class FolderDetailPage extends HookWidget {
                           ),
                         ),
                         RaisedButton(
-                          child: const Text(
+                          child: Text(
                             '保存',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: getWhiteOrBlack(getThemeColor(context)),
                                 fontWeight: FontWeight.bold),
                           ),
                           onPressed: () async {
@@ -149,7 +148,7 @@ class FolderDetailPage extends HookWidget {
                               Navigator.pop(context);
                             }
                           },
-                          color: Theme.of(context).primaryColor,
+                          color: getThemeColor(context),
                         ),
                       ],
                     )),

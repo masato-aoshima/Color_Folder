@@ -11,6 +11,7 @@ import 'package:sort_note/model/note.dart';
 import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
 import 'package:sort_note/screen/note_add_edit/note_add_edit_page.dart';
 import 'package:sort_note/screen/note_select_list/note_select_list_page.dart';
+import 'package:sort_note/util/color.dart';
 
 import 'note_list_model.dart';
 
@@ -31,10 +32,12 @@ class NoteListPage extends HookWidget {
       appBar: AppBar(
         title: Text(
           folder.title,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: getWhiteOrBlack(folder.color)),
         ),
         backgroundColor: folder.color,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: getWhiteOrBlack(folder.color)),
         actions: [
           NoteListPagePopupMenu(
             sortCallback: () {
@@ -77,6 +80,7 @@ class NoteListPage extends HookWidget {
           });
         },
         backgroundColor: folder.color,
+        foregroundColor: getWhiteOrBlack(folder.color),
         child: Icon(Icons.text_snippet_outlined),
       ),
     );

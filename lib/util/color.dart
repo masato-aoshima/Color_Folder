@@ -1,8 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// アプリ全体
+
+// アプリのテーマカラーを取得
+Color getThemeColor(BuildContext context) {
+  return Theme.of(context).primaryColor;
+}
+
+// 与えられたカラーに対して、白か黒のうち、見やすい方の色を返す
+Color getWhiteOrBlack(Color color) {
+  return color.computeLuminance() > 0.6 ? Colors.black : Colors.white;
+}
+
+/// フォルダーの色関連
+
 class FolderGradientMask extends StatelessWidget {
   FolderGradientMask({this.child});
+
   final Icon child;
 
   @override

@@ -8,6 +8,7 @@ import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/model/note.dart';
 import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
+import 'package:sort_note/util/color.dart';
 
 import 'note_add_edit_model.dart';
 
@@ -54,10 +55,12 @@ class NoteAddEditPage extends HookWidget {
               ),
               Text(
                 folder.title,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: getWhiteOrBlack(folder.color)),
               ),
             ]),
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: getWhiteOrBlack(folder.color)),
             actions: [
               NoteAddEditPagePopupMenu(
                 moveCallback: () async {

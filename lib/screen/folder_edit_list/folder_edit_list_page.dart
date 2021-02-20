@@ -41,7 +41,6 @@ class FolderEditPage extends HookWidget {
               child: IconButton(
                   icon: Icon(
                     Icons.delete_forever,
-                    color: Colors.white,
                     size: 30,
                   ),
                   onPressed: provider.checkedFolderIds.length > 0
