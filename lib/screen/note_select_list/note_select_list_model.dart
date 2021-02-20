@@ -27,12 +27,6 @@ class NoteSelectListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future deleteNote(int id, int folderId) async {
-    await DBProvider.db.deleteNote(id.toString());
-    _notes = await DBProvider.db.getNotesInFolder(folderId);
-    notifyListeners();
-  }
-
   void onItemCheck(int noteId, bool isChecked) {
     if (isChecked) {
       checkedNoteIds.add(noteId);
@@ -50,6 +44,11 @@ class NoteSelectListModel extends ChangeNotifier {
     });
     checkedNoteIds.clear();
     return noteList;
+  }
+
+  Future deleteCheckedNotes() async {
+    await DBProvider.db.deleteMultipleNotes(checkedNoteIds.toList());
+    checkedNoteIds.clear();
   }
 
   void clear() {

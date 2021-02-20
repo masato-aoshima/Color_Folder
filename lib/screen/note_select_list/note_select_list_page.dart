@@ -132,7 +132,7 @@ class NoteSelectListPage extends HookWidget {
                   style: TextStyle(color: Colors.red),
                 ),
                 onPressed: () async {
-                  // await provider.deleteFolders();
+                  await provider.deleteCheckedNotes();
                   await provider.getNotesNotify();
                   Navigator.pop(context);
                 },

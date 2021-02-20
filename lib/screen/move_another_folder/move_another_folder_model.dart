@@ -51,7 +51,7 @@ class MoveAnotherFolderModel extends ChangeNotifier {
   }
 
   Future onTapFolderMultiNote(int newFolderId) async {
-    await DBProvider.db.moveAnotherFolderMulti(
+    await DBProvider.db.moveAnotherFolderMultipleNotes(
         noteList.map((note) => note.id).toList(), newFolderId);
   }
 
