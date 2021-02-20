@@ -41,7 +41,7 @@ class FolderDetailPage extends HookWidget {
                     icon: Icon(
                       Icons.delete_forever,
                       color: Colors.white,
-                      size: 30,
+                      size: 35,
                     ),
                     onPressed: () {
                       showDialog(
