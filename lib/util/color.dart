@@ -8,6 +8,11 @@ Color getThemeColor(BuildContext context) {
   return Theme.of(context).primaryColor;
 }
 
+// Scaffoldの背景色を取得
+Color getScaffoldColor(BuildContext context) {
+  return Theme.of(context).scaffoldBackgroundColor;
+}
+
 // 与えられたカラーに対して、白か黒のうち、見やすい方の色を返す
 Color getWhiteOrBlack(Color color) {
   return color.computeLuminance() > 0.6 ? Colors.black : Colors.white;
