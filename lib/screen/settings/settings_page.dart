@@ -108,7 +108,9 @@ class ColorPickerListTile extends StatelessWidget {
 // フォルダーのデフォルトの色設定
 class FolderColorSelectListTile extends StatelessWidget {
   FolderColorSelectListTile(this.provider);
+
   final SettingsModel provider;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -129,7 +131,9 @@ class FolderColorSelectListTile extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => FolderDefaultColorPage(snapshot.data),
                     fullscreenDialog: true));
-            print(result.toString());
+            if (result is Color) {
+              provider.saveFolderColor(result);
+            }
           },
         );
       },

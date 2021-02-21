@@ -43,4 +43,10 @@ class SettingsModel extends ChangeNotifier {
     final color = rawStringToColor(colorString);
     return color;
   }
+
+  void saveFolderColor(Color color) async {
+    folderColor = color;
+    notifyListeners();
+    saveFolderDefaultColor(color);
+  }
 }
