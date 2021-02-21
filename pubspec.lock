@@ -90,13 +90,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_colorpicker:
-    dependency: transitive
-    description:
-      name: flutter_colorpicker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.5"
   flutter_hooks:
     dependency: "direct main"
     description:
@@ -226,15 +219,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.4"
-  rxdart:
-    dependency: transitive
-    description:
-      name: rxdart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.23.1"
   shared_preferences:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
@@ -261,13 +247,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  shared_preferences_settings:
-    dependency: "direct main"
-    description:
-      name: shared_preferences_settings
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.0"
   shared_preferences_web:
     dependency: transitive
     description:

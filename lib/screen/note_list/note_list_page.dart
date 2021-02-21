@@ -227,7 +227,10 @@ class NoteListPagePopupMenu extends StatelessWidget {
           child: Row(
             children: [
               Expanded(child: Text('並び順を変更')),
-              Icon(Icons.compare_arrows)
+              Icon(
+                Icons.compare_arrows,
+                color: Colors.black,
+              )
             ],
           ),
         ),
