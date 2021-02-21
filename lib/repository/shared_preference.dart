@@ -7,11 +7,14 @@ class SharedPreferencesKey {
   // アプリのテーマカラー
   static const keyThemeColor = 'theme_color';
 
+  // フォルダーの初期色
+  static const keyFolderDefaultColor = 'folder_default_color';
+
   // ノートの並び順
   static const keyOrderOfNotes = 'order_of_notes';
 
-  // フォルダーの初期色
-  static const keyFolderDefaultColor = 'folder_default_color';
+  // ノートの日付表示
+  static const keyDateDisplay = 'date_display';
 }
 
 ///
@@ -27,6 +30,21 @@ void saveThemeColor(Color color) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final saveColor = rawColorToString(color);
   prefs.setString(SharedPreferencesKey.keyThemeColor, saveColor);
+}
+
+///
+/// フォルダーの色選択で、最初に選択されている色
+///
+Future<String> getFolderDefaultColor() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString(SharedPreferencesKey.keyFolderDefaultColor) ??
+      rawColorToString(defaultFolderColor); // デフォルトのテーマカラー
+}
+
+void saveFolderDefaultColor(Color color) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final saveColor = rawColorToString(color);
+  prefs.setString(SharedPreferencesKey.keyFolderDefaultColor, saveColor);
 }
 
 ///
@@ -52,16 +70,20 @@ void saveOrderOfNotesSetting(String setting) async {
 }
 
 ///
-/// フォルダーの色選択で、最初に選択されている色
+/// メモの日付表示
 ///
-Future<String> getFolderDefaultColor() async {
+Map<String, String> displayDateMap = {
+  'NONE': '表示しない',
+  'CREATE_DATE': '作成日を表示',
+  'UPDATE_DATE': '変更日を表示',
+};
+
+Future<String> getDisplayDateSetting() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString(SharedPreferencesKey.keyFolderDefaultColor) ??
-      rawColorToString(defaultFolderColor); // デフォルトのテーマカラー
+  return prefs.getString(SharedPreferencesKey.keyDateDisplay) ?? 'UPDATE_DATE';
 }
 
-void saveFolderDefaultColor(Color color) async {
+void saveDisplayDateSetting(String setting) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final saveColor = rawColorToString(color);
-  prefs.setString(SharedPreferencesKey.keyFolderDefaultColor, saveColor);
+  prefs.setString(SharedPreferencesKey.keyDateDisplay, setting);
 }

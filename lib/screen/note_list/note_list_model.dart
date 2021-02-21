@@ -8,6 +8,8 @@ class NoteListModel extends ChangeNotifier {
 
   List<Note> get notes => _notes;
 
+  String dateDisplaySetting = 'UPDATE_DATE';
+
   Future getNotes(int folderId) async {
     _notes = await DBProvider.db.getNotesInFolder(folderId);
     return _notes;

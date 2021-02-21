@@ -57,9 +57,14 @@ class SettingsModel extends ChangeNotifier {
   ///
   /// ノートの並び順設定
   ///
-  String orderBy;
-
   Future<String> getSortOrder() async {
     return await getOrderOfNotesSetting();
+  }
+
+  ///
+  /// ノートの日付表示設定
+  ///
+  Future<String> getDateDisplaySetting() async {
+    return await getDisplayDateSetting();
   }
 }

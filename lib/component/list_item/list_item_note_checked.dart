@@ -5,9 +5,10 @@ import 'package:sort_note/screen/note_select_list/note_select_list_model.dart';
 import 'package:sort_note/util/date.dart';
 
 class ListItemNoteChecked extends StatelessWidget {
-  ListItemNoteChecked({this.note, this.provider});
+  ListItemNoteChecked({this.note, this.dateDisplaySetting, this.provider});
 
   final Note note;
+  final String dateDisplaySetting;
   final NoteSelectListModel provider;
 
   @override
@@ -18,12 +19,27 @@ class ListItemNoteChecked extends StatelessWidget {
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         maxLines: 1,
       ),
-      subtitle: Text('変更日：${getJapaneseDate(note.updatedAt)}'),
+      subtitle: getSubtitle() == null ? null : Text(getSubtitle()),
       controlAffinity: ListTileControlAffinity.leading,
       value: provider.checkedNoteIds.contains(note.id),
       onChanged: (bool isChecked) {
         provider.onItemCheck(note.id, isChecked);
       },
     );
+  }
+
+  String getSubtitle() {
+    String subtitle;
+    switch (dateDisplaySetting) {
+      case 'NONE':
+        break;
+      case 'CREATE_DATE':
+        subtitle = '作成日：${getJapaneseDate(note.createdAt)}';
+        break;
+      case 'UPDATE_DATE':
+        subtitle = '変更日：${getJapaneseDate(note.updatedAt)}';
+        break;
+    }
+    return subtitle;
   }
 }

@@ -12,9 +12,10 @@ import 'package:sort_note/util/color.dart';
 final noteProvider = ChangeNotifierProvider((ref) => NoteSelectListModel());
 
 class NoteSelectListPage extends HookWidget {
-  NoteSelectListPage(this.folder);
+  NoteSelectListPage(this.folder, this.dateDisplaySetting);
 
   final Folder folder;
+  final String dateDisplaySetting;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +106,7 @@ class NoteSelectListPage extends HookWidget {
           final note = notes[index];
           return ListItemNoteChecked(
             note: note,
+            dateDisplaySetting: dateDisplaySetting,
             provider: provider,
           );
         },
