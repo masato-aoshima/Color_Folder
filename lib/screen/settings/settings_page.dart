@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/component/text/text_setting_heading.dart';
+import 'package:sort_note/screen/settings/folder_default_color/folder_default_color_page.dart';
 import 'package:sort_note/screen/settings/settings_model.dart';
 import 'package:sort_note/util/color.dart';
 
@@ -122,7 +123,14 @@ class FolderColorSelectListTile extends StatelessWidget {
           ),
           title: Text('フォルダーの色'),
           subtitle: Text('最初に選択されている色を変更します'),
-          onTap: () {},
+          onTap: () async {
+            final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => FolderDefaultColorPage(snapshot.data),
+                    fullscreenDialog: true));
+            print(result.toString());
+          },
         );
       },
     );
