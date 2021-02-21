@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         return DynamicTheme(
             defaultBrightness: Brightness.light,
             data: (brightness) {
-              return brightThemeData(brightness, color);
+              return brightThemeData(context, brightness, color);
             },
             themedWidgetBuilder: (context, theme) {
               return MaterialApp(
@@ -39,12 +39,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-ThemeData brightThemeData(Brightness brightness, Color color) {
+ThemeData brightThemeData(
+    BuildContext context, Brightness brightness, Color color) {
   return ThemeData(
     brightness: brightness,
     primarySwatch: Colors.blue,
     primaryColor: color,
     scaffoldBackgroundColor: Color(0xffF1F1F2),
+    iconTheme: IconThemeData(color: getWhiteOrBlackByThemeColor(context)),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: color, foregroundColor: getWhiteOrBlack(color)),
     visualDensity: VisualDensity.adaptivePlatformDensity,

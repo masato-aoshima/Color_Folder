@@ -34,8 +34,12 @@ class FolderDetailPage extends HookWidget {
           appBar: AppBar(
             title: Text(
               folder == null ? '新規作成' : 'フォルダー編集',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: getWhiteOrBlackByThemeColor(context)),
             ),
+            iconTheme:
+                IconThemeData(color: getWhiteOrBlackByThemeColor(context)),
             actions: [
               Visibility(
                 visible: folder != null,
@@ -43,6 +47,7 @@ class FolderDetailPage extends HookWidget {
                     icon: Icon(
                       Icons.delete_forever,
                       size: 35,
+                      color: getWhiteOrBlackByThemeColor(context),
                     ),
                     onPressed: () {
                       showDialog(
@@ -128,7 +133,7 @@ class FolderDetailPage extends HookWidget {
                               provider.selectColor(color);
                               DynamicTheme.of(context).setThemeData(
                                   brightThemeData(
-                                      Brightness.light, color)); // 消す
+                                      context, Brightness.light, color)); // 消す
                             },
                             heading: Text(
                               'フォルダの色を変更できます',

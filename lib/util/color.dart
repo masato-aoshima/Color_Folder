@@ -19,6 +19,10 @@ Color getWhiteOrBlack(Color color) {
   return color.computeLuminance() > 0.6 ? Colors.black : Colors.white;
 }
 
+Color getWhiteOrBlackByThemeColor(BuildContext context) {
+  return getWhiteOrBlack(getThemeColor(context));
+}
+
 /// フォルダーの色関連
 
 class FolderGradientMask extends StatelessWidget {

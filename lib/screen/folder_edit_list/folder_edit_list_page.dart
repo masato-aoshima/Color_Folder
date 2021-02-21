@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/list_item/list_item_folder_edit.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/screen/folder_detail/folder_detail_page.dart';
+import 'package:sort_note/util/color.dart';
 
 import 'folder_edit_list_model.dart';
 
@@ -32,8 +33,11 @@ class FolderEditPage extends HookWidget {
         appBar: AppBar(
           title: Text(
             '編集',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: getWhiteOrBlackByThemeColor(context)),
           ),
+          iconTheme: IconThemeData(color: getWhiteOrBlackByThemeColor(context)),
           actions: [
             AnimatedOpacity(
               opacity: provider.checkedFolderIds.length > 0 ? 1 : 0.3,
@@ -42,6 +46,7 @@ class FolderEditPage extends HookWidget {
                   icon: Icon(
                     Icons.delete_forever,
                     size: 30,
+                    color: getWhiteOrBlackByThemeColor(context),
                   ),
                   onPressed: provider.checkedFolderIds.length > 0
                       ? () async {

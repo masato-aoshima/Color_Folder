@@ -46,6 +46,7 @@ class NoteAddEditPage extends HookWidget {
           appBar: AppBar(
             backgroundColor: folder.color,
             titleSpacing: 0,
+            iconTheme: IconThemeData(color: getWhiteOrBlack(folder.color)),
             title: Row(children: [
               FolderSmallIcon(
                 color: folder.color,
@@ -60,7 +61,6 @@ class NoteAddEditPage extends HookWidget {
                     color: getWhiteOrBlack(folder.color)),
               ),
             ]),
-            iconTheme: IconThemeData(color: getWhiteOrBlack(folder.color)),
             actions: [
               NoteAddEditPagePopupMenu(
                 moveCallback: () async {

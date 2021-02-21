@@ -26,11 +26,17 @@ class FolderPage extends HookWidget {
       appBar: AppBar(
         title: Text(
           'フォルダー',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: getWhiteOrBlackByThemeColor(context)),
         ),
+        iconTheme: IconThemeData(color: getWhiteOrBlackByThemeColor(context)),
         leading: IconButton(
           iconSize: 26,
-          icon: Icon(Icons.settings),
+          icon: Icon(
+            Icons.settings,
+            color: getWhiteOrBlackByThemeColor(context),
+          ),
           onPressed: () {
             Navigator.push(
                 context,
@@ -61,7 +67,7 @@ class FolderPage extends HookWidget {
                 child: Text(
                   '編集',
                   style: TextStyle(
-                      color: getWhiteOrBlack(getThemeColor(context)),
+                      color: getWhiteOrBlackByThemeColor(context),
                       fontSize: 18),
                 ),
               )),
@@ -95,7 +101,7 @@ class FolderPage extends HookWidget {
         },
         child: Icon(
           Icons.folder_open_sharp,
-          color: getWhiteOrBlack(getThemeColor(context)),
+          color: getWhiteOrBlackByThemeColor(context),
         ),
       ),
     );
