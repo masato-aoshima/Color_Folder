@@ -8,12 +8,17 @@ class FolderDetailModel extends ChangeNotifier {
 
   Color _color;
 
+  Color defaultColor;
+
   Color get color {
     if (_color != null) {
       return _color;
     }
     if (_folder != null) {
       return _folder.color;
+    }
+    if (defaultColor != null) {
+      return defaultColor;
     }
     return defaultFolderColor;
   }

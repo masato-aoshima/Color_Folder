@@ -13,13 +13,16 @@ import 'folder_detail_model.dart';
 final folderProvider = ChangeNotifierProvider((ref) => FolderDetailModel());
 
 class FolderDetailPage extends HookWidget {
-  FolderDetailPage({this.folder});
+  FolderDetailPage({this.folder, this.defaultColor});
 
   final Folder folder;
+  final Color defaultColor;
 
   @override
   Widget build(BuildContext context) {
-    final provider = useProvider(folderProvider)..setFolder(folder);
+    final provider = useProvider(folderProvider)
+      ..setFolder(folder)
+      ..defaultColor = defaultColor;
     final myController = TextEditingController(text: provider.inputText);
 
     return WillPopScope(

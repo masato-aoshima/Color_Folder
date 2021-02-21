@@ -124,7 +124,7 @@ class FolderColorSelectListTile extends StatelessWidget {
             color: snapshot.data,
           ),
           title: Text('フォルダーの色'),
-          subtitle: Text('最初に選択されている色を変更します'),
+          subtitle: Text('フォルダーを新しく作成するとき、最初に選択されている色を変更します'),
           onTap: () async {
             final result = await Navigator.push(
                 context,
