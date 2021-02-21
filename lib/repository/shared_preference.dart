@@ -17,7 +17,7 @@ class SharedPreferencesKey {
 Future<String> getThemeColorString() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString(SharedPreferencesKey.keyThemeColor) ??
-      '0xff1995AD'; // デフォルトのテーマカラーをここで決める
+      rawColorToString(defaultThemeColor); // デフォルトのテーマカラー
 }
 
 void saveThemeColor(Color color) async {

@@ -71,6 +71,16 @@ class ColorPickerListTile extends StatelessWidget {
                 ),
                 actions: <Widget>[
                   FlatButton(
+                    child: const Text(
+                      'デフォルトの色に戻す',
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                    onPressed: () {
+                      provider.onColorSelectedDefault(context);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  FlatButton(
                     child: const Text('決定'),
                     onPressed: () {
                       provider.onColorSelected(context);

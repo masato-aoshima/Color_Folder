@@ -21,4 +21,12 @@ class SettingsModel extends ChangeNotifier {
     DynamicTheme.of(context)
         .setThemeData(brightThemeData(context, Brightness.light, pickerColor));
   }
+
+  void onColorSelectedDefault(BuildContext context) {
+    // sharedPreferences に 保存
+    saveThemeColor(defaultThemeColor);
+    // appThemeに反映
+    DynamicTheme.of(context).setThemeData(
+        brightThemeData(context, Brightness.light, defaultThemeColor));
+  }
 }
