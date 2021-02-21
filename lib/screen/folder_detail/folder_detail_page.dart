@@ -32,16 +32,20 @@ class FolderDetailPage extends HookWidget {
           appBar: AppBar(
             title: Text(
               folder == null ? '新規作成' : 'フォルダー編集',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: getWhiteOrBlackByThemeColor(context)),
             ),
+            iconTheme:
+                IconThemeData(color: getWhiteOrBlackByThemeColor(context)),
             actions: [
               Visibility(
                 visible: folder != null,
                 child: IconButton(
                     icon: Icon(
                       Icons.delete_forever,
-                      color: Colors.white,
                       size: 35,
+                      color: getWhiteOrBlackByThemeColor(context),
                     ),
                     onPressed: () {
                       showDialog(
@@ -133,9 +137,11 @@ class FolderDetailPage extends HookWidget {
                           ),
                         ),
                         RaisedButton(
-                          child: const Text(
+                          child: Text(
                             '保存',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: getWhiteOrBlack(getThemeColor(context)),
+                                fontWeight: FontWeight.bold),
                           ),
                           onPressed: () async {
                             if (provider.inputText == null ||
@@ -147,7 +153,7 @@ class FolderDetailPage extends HookWidget {
                               Navigator.pop(context);
                             }
                           },
-                          color: Color(0xff1995AD),
+                          color: getThemeColor(context),
                         ),
                       ],
                     )),
@@ -223,7 +229,9 @@ class FolderDetailPage extends HookWidget {
                                 RaisedButton(
                                   child: const Text(
                                     '保存',
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   onPressed: () async {
                                     if (provider.inputText == null ||
@@ -235,7 +243,7 @@ class FolderDetailPage extends HookWidget {
                                       Navigator.pop(context);
                                     }
                                   },
-                                  color: Color(0xff1995AD),
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ],
                             ),

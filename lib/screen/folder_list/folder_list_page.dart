@@ -8,6 +8,8 @@ import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/screen/folder_detail/folder_detail_page.dart';
 import 'package:sort_note/screen/folder_edit_list/folder_edit_list_page.dart';
 import 'package:sort_note/screen/note_list/note_list_page.dart';
+import 'package:sort_note/screen/settings/settings_page.dart';
+import 'package:sort_note/util/color.dart';
 
 import 'folder_list_model.dart';
 
@@ -24,7 +26,24 @@ class FolderPage extends HookWidget {
       appBar: AppBar(
         title: Text(
           'フォルダー',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: getWhiteOrBlackByThemeColor(context)),
+        ),
+        iconTheme: IconThemeData(color: getWhiteOrBlackByThemeColor(context)),
+        leading: IconButton(
+          iconSize: 26,
+          icon: Icon(
+            Icons.settings,
+            color: getWhiteOrBlackByThemeColor(context),
+          ),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SettingsPage(),
+                    fullscreenDialog: true));
+          },
         ),
         actions: [
           Row(
@@ -47,7 +66,9 @@ class FolderPage extends HookWidget {
                 },
                 child: Text(
                   '編集',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  style: TextStyle(
+                      color: getWhiteOrBlackByThemeColor(context),
+                      fontSize: 18),
                 ),
               )),
               SizedBox(
@@ -78,7 +99,10 @@ class FolderPage extends HookWidget {
             provider.getFoldersNotify();
           });
         },
-        child: Icon(Icons.folder_open_sharp),
+        child: Icon(
+          Icons.folder_open_sharp,
+          color: getWhiteOrBlackByThemeColor(context),
+        ),
       ),
     );
   }
