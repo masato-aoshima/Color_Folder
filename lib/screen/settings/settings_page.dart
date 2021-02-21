@@ -1,3 +1,4 @@
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -33,6 +34,12 @@ class SettingsPage extends HookWidget {
                 leading: Icon(Icons.color_lens_outlined),
                 title: Text('テーマ'),
                 subtitle: Text('アプリのテーマを設定します'),
+                trailing: ColorIndicator(
+                  width: 44,
+                  height: 44,
+                  borderRadius: 4,
+                  color: Colors.blue,
+                ),
               ),
             ],
           ),
