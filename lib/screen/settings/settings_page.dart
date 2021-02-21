@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sort_note/component/dialog/order_of_notes_dialog.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/component/text/text_setting_heading.dart';
 import 'package:sort_note/repository/shared_preference.dart';
@@ -127,7 +128,7 @@ class FolderColorSelectListTile extends StatelessWidget {
             color: snapshot.data,
           ),
           title: Text('フォルダーの色'),
-          subtitle: Text('フォルダーを新しく作成するとき、最初に選択されている色を変更します'),
+          subtitle: Text('フォルダーを新しく作成するときの、最初に選択されている色を変更します'),
           onTap: () async {
             final result = await Navigator.push(
                 context,
@@ -165,7 +166,12 @@ class SortNoteListTile extends StatelessWidget {
           ),
           title: Text('ノートの並び順'),
           subtitle: Text('現在の設定：${orderOfNotesMap[snapshot.data]}'),
-          onTap: () async {},
+          onTap: () {
+            showOrderOfNotesDialog(context, () {
+              Navigator.pop(context);
+              provider.onRefresh();
+            });
+          },
         );
       },
     );

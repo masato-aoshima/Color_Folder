@@ -6,6 +6,10 @@ import 'package:sort_note/util/color.dart';
 import '../../main.dart';
 
 class SettingsModel extends ChangeNotifier {
+  void onRefresh() {
+    notifyListeners();
+  }
+
   ///
   /// アプリのテーマ設定
   ///
