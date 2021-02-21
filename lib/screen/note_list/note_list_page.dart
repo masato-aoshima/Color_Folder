@@ -51,7 +51,8 @@ class NoteListPage extends HookWidget {
               await Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => NoteSelectListPage(folder),
+                          builder: (context) => NoteSelectListPage(
+                              folder, provider.dateDisplaySetting),
                           fullscreenDialog: true))
                   .then((value) {
                 provider.getNotesNotify(folder.id);
@@ -69,6 +70,7 @@ class NoteListPage extends HookWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
+          provider.dateDisplaySetting = snapshot.data[1];
           return getListViewWithEmptyMessage(
               context, snapshot.data[0], snapshot.data[1], provider);
         },
