@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
+import 'package:sort_note/repository/shared_preference.dart';
 import 'package:sort_note/screen/folder_detail/folder_detail_page.dart';
 import 'package:sort_note/screen/folder_edit_list/folder_edit_list_page.dart';
 import 'package:sort_note/screen/note_list/note_list_page.dart';
@@ -89,11 +90,14 @@ class FolderPage extends HookWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final folderColorString = await getFolderDefaultColor();
+          final folderColor = rawStringToColor(folderColorString);
+          await Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => FolderDetailPage(),
+                      builder: (context) =>
+                          FolderDetailPage(defaultColor: folderColor),
                       fullscreenDialog: true))
               .then((value) {
             provider.getFoldersNotify();

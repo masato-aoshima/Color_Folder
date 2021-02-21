@@ -2,29 +2,23 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
-import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/util/color.dart';
 
-import 'folder_detail_model.dart';
+import 'folder_default_color_model.dart';
 
-final folderProvider = ChangeNotifierProvider((ref) => FolderDetailModel());
+final folderProvider =
+    ChangeNotifierProvider((ref) => FolderDefaultColorModel());
 
-class FolderDetailPage extends HookWidget {
-  FolderDetailPage({this.folder, this.defaultColor});
+class FolderDefaultColorPage extends HookWidget {
+  FolderDefaultColorPage(this.color);
 
-  final Folder folder;
-  final Color defaultColor;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    final provider = useProvider(folderProvider)
-      ..setFolder(folder)
-      ..defaultColor = defaultColor;
-    final myController = TextEditingController(text: provider.inputText);
-
+    final provider = useProvider(folderProvider)..setColor(color);
     return WillPopScope(
       onWillPop: () {
         provider.clear();
@@ -34,55 +28,13 @@ class FolderDetailPage extends HookWidget {
       child: Scaffold(
           appBar: AppBar(
             title: Text(
-              folder == null ? '新規作成' : 'フォルダー編集',
+              'デフォルトの色を選択',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: getWhiteOrBlackByThemeColor(context)),
             ),
             iconTheme:
                 IconThemeData(color: getWhiteOrBlackByThemeColor(context)),
-            actions: [
-              Visibility(
-                visible: folder != null,
-                child: IconButton(
-                    icon: Icon(
-                      Icons.delete_forever,
-                      size: 35,
-                      color: getWhiteOrBlackByThemeColor(context),
-                    ),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (_) {
-                            return AlertDialog(
-                              title: Text('フォルダーを削除しますか？'),
-                              content: Text(
-                                  'このフォルダーと、フォルダー内のすべてのノートが削除されます。この操作は取り消せません。'),
-                              actions: [
-                                // ボタン領域
-                                FlatButton(
-                                  child: Text(
-                                    "キャンセル",
-                                  ),
-                                  onPressed: () => Navigator.pop(context),
-                                ),
-                                FlatButton(
-                                  child: Text(
-                                    "削除",
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                  onPressed: () async {
-                                    await provider.deleteFolder(folder);
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            );
-                          });
-                    }),
-              )
-            ],
           ),
           body: OrientationBuilder(
             builder: (context, orientation) {
@@ -95,24 +47,9 @@ class FolderDetailPage extends HookWidget {
                     child: Center(
                         child: Column(
                       children: [
-                        Hero(
-                            tag: folder == null
-                                ? ''
-                                : 'folderSmallIcon${folder.id}',
-                            child: FolderSmallIcon(
-                              color: provider.color,
-                              size: 200,
-                            )),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 20),
-                          child: TextFormField(
-                            controller: myController,
-                            textAlign: TextAlign.center,
-                            onChanged: provider.changeText,
-                            maxLines: 1,
-                            style: TextStyle(fontSize: 20),
-                          ),
+                        FolderSmallIcon(
+                          color: provider.color,
+                          size: 200,
                         ),
                         ConstrainedBox(
                           constraints: BoxConstraints(maxWidth: 400.0),
@@ -134,8 +71,8 @@ class FolderDetailPage extends HookWidget {
                               provider.selectColor(color);
                             },
                             heading: Text(
-                              'フォルダの色を変更できます',
-                              style: Theme.of(context).textTheme.headline5,
+                              '最初に選択されている色を変更できます',
+                              style: Theme.of(context).textTheme.headline6,
                             ),
                           ),
                         ),
@@ -147,14 +84,8 @@ class FolderDetailPage extends HookWidget {
                                 fontWeight: FontWeight.bold),
                           ),
                           onPressed: () async {
-                            if (provider.inputText == null ||
-                                provider.inputText.isEmpty) {
-                              showEmptyTextToast();
-                            } else {
-                              await provider.onTapSave();
-                              provider.clear();
-                              Navigator.pop(context);
-                            }
+                            Navigator.pop(context, provider.color);
+                            provider.clear();
                           },
                           color: getThemeColor(context),
                         ),
@@ -174,23 +105,9 @@ class FolderDetailPage extends HookWidget {
                             flex: 1,
                             child: Column(
                               children: [
-                                Hero(
-                                    tag: folder == null
-                                        ? ''
-                                        : 'folderSmallIcon${folder.id}',
-                                    child: FolderSmallIcon(
-                                      color: provider.color,
-                                      size: 200,
-                                    )),
-                                Container(
-                                  width: double.infinity,
-                                  child: TextFormField(
-                                    controller: myController,
-                                    textAlign: TextAlign.center,
-                                    onChanged: provider.changeText,
-                                    maxLines: 1,
-                                    style: TextStyle(fontSize: 20),
-                                  ),
+                                FolderSmallIcon(
+                                  color: provider.color,
+                                  size: 200,
                                 ),
                               ],
                             ),
@@ -236,15 +153,9 @@ class FolderDetailPage extends HookWidget {
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  onPressed: () async {
-                                    if (provider.inputText == null ||
-                                        provider.inputText.isEmpty) {
-                                      showEmptyTextToast();
-                                    } else {
-                                      await provider.onTapSave();
-                                      provider.clear();
-                                      Navigator.pop(context);
-                                    }
+                                  onPressed: () {
+                                    Navigator.pop(context, provider.color);
+                                    provider.clear();
                                   },
                                   color: Theme.of(context).primaryColor,
                                 ),
@@ -260,16 +171,5 @@ class FolderDetailPage extends HookWidget {
             },
           )),
     );
-  }
-
-  void showEmptyTextToast() {
-    Fluttertoast.showToast(
-        msg: "フォルダ名を入力して下さい",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.grey,
-        textColor: Colors.white,
-        fontSize: 16.0);
   }
 }
