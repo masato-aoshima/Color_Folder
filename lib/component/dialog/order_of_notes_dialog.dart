@@ -21,21 +21,22 @@ class OrderOfNotesDialog extends StatelessWidget {
 List<Widget> getDialogOptions(String savedSetting, Function onPressed) {
   List<Widget> list = List<Widget>();
   orderOfNotesMap.keys.forEach((key) {
-    final option = OrderOfNotesDialogOption(
-        savedSetting, key, orderOfNotesMap[key], onPressed);
+    final option = CheckIconDialogOption(savedSetting, key,
+        orderOfNotesMap[key], onPressed, DialogType.NoteSortSetting);
     list.add(option);
   });
   return list;
 }
 
-class OrderOfNotesDialogOption extends StatelessWidget {
-  OrderOfNotesDialogOption(
-      this.savedSetting, this.thisSetting, this.text, this.onPressed);
+class CheckIconDialogOption extends StatelessWidget {
+  CheckIconDialogOption(this.savedSetting, this.thisSetting, this.text,
+      this.onPressed, this.type);
 
   final String savedSetting;
   final String thisSetting;
   final String text;
   final Function onPressed;
+  final DialogType type;
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +61,21 @@ class OrderOfNotesDialogOption extends StatelessWidget {
         ],
       ),
       onPressed: () {
-        saveOrderOfNotesSetting(thisSetting);
-        onPressed();
+        switch (type) {
+          case DialogType.NoteSortSetting:
+            saveOrderOfNotesSetting(thisSetting);
+            break;
+          case DialogType.DisplayDateSetting:
+            saveDisplayDateSetting(thisSetting);
+            break;
+        }
+        onPressed(); // TODO ここで設定した内容を返すのもいいかも
       },
     );
   }
 }
+
+enum DialogType { NoteSortSetting, DisplayDateSetting }
 
 Future showOrderOfNotesDialog(
     BuildContext context, Function selectCallback) async {

@@ -38,7 +38,8 @@ class SettingsPage extends HookWidget {
               TextSettingHeading('フォルダー'),
               FolderColorSelectListTile(provider),
               TextSettingHeading('ノート'),
-              SortNoteListTile(provider)
+              SortNoteListTile(provider),
+              NoteDateDisplayListTile(provider)
             ],
           ),
         ));
@@ -163,6 +164,7 @@ class SortNoteListTile extends StatelessWidget {
           leading: Icon(
             Icons.compare_arrows,
             size: 30,
+            color: getWhiteOrBlack(getScaffoldColor(context)),
           ),
           title: Text('ノートの並び順'),
           subtitle: Text('現在の設定：${orderOfNotesMap[snapshot.data]}'),
@@ -175,5 +177,55 @@ class SortNoteListTile extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+// ノートの日付表示
+class NoteDateDisplayListTile extends StatelessWidget {
+  NoteDateDisplayListTile(this.provider);
+
+  final SettingsModel provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: provider.getDateDisplaySetting(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return ListTile(
+          leading: Icon(
+            Icons.date_range,
+            size: 30,
+            color: getWhiteOrBlack(getScaffoldColor(context)),
+          ),
+          title: Text('ノートの日付表示'),
+          subtitle: Text('現在の設定：${displayDateMap[snapshot.data]}'),
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return SimpleDialog(
+                    children: getDialogOptions(snapshot.data, () {
+                      Navigator.pop(context);
+                      provider.onRefresh();
+                    }),
+                  );
+                });
+          },
+        );
+      },
+    );
+  }
+
+  List<Widget> getDialogOptions(String savedSetting, Function onPressed) {
+    List<Widget> list = List<Widget>();
+    displayDateMap.keys.forEach((key) {
+      final option = CheckIconDialogOption(savedSetting, key,
+          displayDateMap[key], onPressed, DialogType.DisplayDateSetting);
+      list.add(option);
+    });
+    return list;
   }
 }
