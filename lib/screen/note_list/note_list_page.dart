@@ -8,6 +8,7 @@ import 'package:sort_note/component/dialog/text_input_dialog.dart';
 import 'package:sort_note/component/list_item/list_item_note.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/model/note.dart';
+import 'package:sort_note/repository/shared_preference.dart';
 import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
 import 'package:sort_note/screen/note_add_edit/note_add_edit_page.dart';
 import 'package:sort_note/screen/note_select_list/note_select_list_page.dart';
@@ -60,12 +61,16 @@ class NoteListPage extends HookWidget {
         ],
       ),
       body: FutureBuilder(
-        future: provider.getNotes(folder.id),
+        future: Future.wait([
+          provider.getNotes(folder.id),
+          getDisplayDateSetting()
+        ]), // ここをwaitにする
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-          return getListViewWithEmptyMessage(context, snapshot.data, provider);
+          return getListViewWithEmptyMessage(
+              context, snapshot.data[0], snapshot.data[1], provider);
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -86,8 +91,8 @@ class NoteListPage extends HookWidget {
     );
   }
 
-  Widget getListViewWithEmptyMessage(
-      BuildContext context, List<Note> notes, NoteListModel provider) {
+  Widget getListViewWithEmptyMessage(BuildContext context, List<Note> notes,
+      String dateDisplaySetting, NoteListModel provider) {
     if (notes.length > 0) {
       return Container(
         padding: const EdgeInsets.all(12.0),
@@ -99,6 +104,7 @@ class NoteListPage extends HookWidget {
             final note = notes[index];
             return ListItemNote(
               note: note,
+              dateDisplaySetting: dateDisplaySetting,
               onTapCallback: () async {
                 // メモ編集ページに移動
                 await Navigator.push(

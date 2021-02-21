@@ -4,9 +4,14 @@ import 'package:sort_note/model/note.dart';
 import 'package:sort_note/util/date.dart';
 
 class ListItemNote extends StatelessWidget {
-  ListItemNote({this.note, this.onTapCallback, this.onLongPressCallback});
+  ListItemNote(
+      {this.note,
+      this.dateDisplaySetting,
+      this.onTapCallback,
+      this.onLongPressCallback});
 
   final Note note;
+  final String dateDisplaySetting;
   final Function() onTapCallback;
   final Function() onLongPressCallback;
 
@@ -18,7 +23,7 @@ class ListItemNote extends StatelessWidget {
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         maxLines: 1,
       ),
-      subtitle: Text('変更日：${getJapaneseDate(note.updatedAt)}'),
+      subtitle: getSubtitle() == null ? null : Text(getSubtitle()),
       trailing: Icon(Icons.navigate_next),
       onTap: () {
         onTapCallback();
@@ -27,5 +32,20 @@ class ListItemNote extends StatelessWidget {
         onLongPressCallback();
       },
     );
+  }
+
+  String getSubtitle() {
+    String subtitle;
+    switch (dateDisplaySetting) {
+      case 'NONE':
+        break;
+      case 'CREATE_DATE':
+        subtitle = '作成日：${getJapaneseDate(note.createdAt)}';
+        break;
+      case 'UPDATE_DATE':
+        subtitle = '変更日：${getJapaneseDate(note.updatedAt)}';
+        break;
+    }
+    return subtitle;
   }
 }
