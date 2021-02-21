@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/model/folder.dart';
+import 'package:sort_note/util/color.dart';
 
 class ListItemFolder extends StatelessWidget {
   ListItemFolder({
@@ -35,7 +36,10 @@ class ListItemFolder extends StatelessWidget {
           Text(
             notesCount.toString(),
             style: TextStyle(
-                fontSize: 17, color: enable ? Colors.black : Colors.grey),
+                fontSize: 17,
+                color: enable
+                    ? getWhiteOrBlack(getScaffoldColor(context))
+                    : Colors.grey),
           ),
           SizedBox(
             width: 10,

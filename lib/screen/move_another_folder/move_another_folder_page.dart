@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/model/note.dart';
+import 'package:sort_note/util/color.dart';
 
 import 'move_another_folder_model.dart';
 
@@ -27,8 +28,11 @@ class MoveAnotherFolderPage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('移動先のフォルダーを選択', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('移動先のフォルダーを選択',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: getWhiteOrBlackByThemeColor(context))),
+        iconTheme: IconThemeData(color: getWhiteOrBlackByThemeColor(context)),
       ),
       body: FutureBuilder(
         future: Future.wait([provider.getFolders(), provider.getNotesCount()]),

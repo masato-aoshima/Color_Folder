@@ -7,6 +7,7 @@ import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/model/note.dart';
 import 'package:sort_note/screen/move_another_folder/move_another_folder_page.dart';
 import 'package:sort_note/screen/note_select_list/note_select_list_model.dart';
+import 'package:sort_note/util/color.dart';
 
 final noteProvider = ChangeNotifierProvider((ref) => NoteSelectListModel());
 
@@ -34,10 +35,12 @@ class NoteSelectListPage extends HookWidget {
           appBar: AppBar(
             title: Text(
               'ノート選択',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: getWhiteOrBlack(folder.color)),
             ),
             backgroundColor: folder.color,
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: IconThemeData(color: getWhiteOrBlack(folder.color)),
             centerTitle: true,
             actions: [
               AnimatedOpacity(
@@ -46,7 +49,6 @@ class NoteSelectListPage extends HookWidget {
                   child: IconButton(
                     icon: Icon(
                       Icons.delete_forever,
-                      color: Colors.white,
                       size: 35,
                     ),
                     onPressed: provider.checkedNoteIds.length > 0
@@ -64,7 +66,6 @@ class NoteSelectListPage extends HookWidget {
                   child: IconButton(
                     icon: Icon(
                       Icons.folder_open_rounded,
-                      color: Colors.white,
                       size: 35,
                     ),
                     onPressed: provider.checkedNoteIds.length > 0
