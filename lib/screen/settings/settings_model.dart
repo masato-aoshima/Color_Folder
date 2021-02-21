@@ -6,6 +6,9 @@ import 'package:sort_note/util/color.dart';
 import '../../main.dart';
 
 class SettingsModel extends ChangeNotifier {
+  ///
+  /// アプリのテーマ設定
+  ///
   Color pickerColor;
 
   Future<Color> getColor() async {
@@ -28,5 +31,16 @@ class SettingsModel extends ChangeNotifier {
     // appThemeに反映
     DynamicTheme.of(context).setThemeData(
         brightThemeData(context, Brightness.light, defaultThemeColor));
+  }
+
+  ///
+  /// フォルダーの色設定
+  ///
+  Color folderColor;
+
+  Future<Color> getFolderColor() async {
+    final colorString = await getFolderDefaultColor();
+    final color = rawStringToColor(colorString);
+    return color;
   }
 }

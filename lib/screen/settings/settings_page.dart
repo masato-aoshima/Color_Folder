@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/component/text/text_setting_heading.dart';
 import 'package:sort_note/screen/settings/settings_model.dart';
 import 'package:sort_note/util/color.dart';
@@ -31,6 +32,8 @@ class SettingsPage extends HookWidget {
             children: [
               TextSettingHeading('テーマ'),
               ColorPickerListTile(provider),
+              TextSettingHeading('フォルダー'),
+              FolderColorSelectListTile(provider)
             ],
           ),
         ));
@@ -52,7 +55,11 @@ class ColorPickerListTile extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         return ListTile(
-          leading: Icon(Icons.color_lens, color: snapshot.data),
+          leading: Icon(
+            Icons.color_lens,
+            size: 30,
+            color: snapshot.data,
+          ),
           title: Text('テーマ'),
           subtitle: Text('アプリのテーマを設定します'),
           onTap: () {
@@ -91,6 +98,31 @@ class ColorPickerListTile extends StatelessWidget {
               ),
             );
           },
+        );
+      },
+    );
+  }
+}
+
+// フォルダーのデフォルトの色設定
+class FolderColorSelectListTile extends StatelessWidget {
+  FolderColorSelectListTile(this.provider);
+  final SettingsModel provider;
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: provider.getFolderColor(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return ListTile(
+          leading: FolderSmallIcon(
+            color: snapshot.data,
+          ),
+          title: Text('フォルダーの色'),
+          subtitle: Text('最初に選択されている色を変更します'),
+          onTap: () {},
         );
       },
     );
