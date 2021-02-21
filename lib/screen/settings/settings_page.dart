@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/component/text/text_setting_heading.dart';
+import 'package:sort_note/repository/shared_preference.dart';
 import 'package:sort_note/screen/settings/folder_default_color/folder_default_color_page.dart';
 import 'package:sort_note/screen/settings/settings_model.dart';
 import 'package:sort_note/util/color.dart';
@@ -28,13 +29,15 @@ class SettingsPage extends HookWidget {
           iconTheme: IconThemeData(color: getWhiteOrBlackByThemeColor(context)),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
           child: ListView(
             children: [
               TextSettingHeading('テーマ'),
               ColorPickerListTile(provider),
               TextSettingHeading('フォルダー'),
-              FolderColorSelectListTile(provider)
+              FolderColorSelectListTile(provider),
+              TextSettingHeading('ノート'),
+              SortNoteListTile(provider)
             ],
           ),
         ));
@@ -135,6 +138,34 @@ class FolderColorSelectListTile extends StatelessWidget {
               provider.saveFolderColor(result);
             }
           },
+        );
+      },
+    );
+  }
+}
+
+// ノートの並び順を変更
+class SortNoteListTile extends StatelessWidget {
+  SortNoteListTile(this.provider);
+
+  final SettingsModel provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: provider.getSortOrder(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return ListTile(
+          leading: Icon(
+            Icons.compare_arrows,
+            size: 30,
+          ),
+          title: Text('ノートの並び順'),
+          subtitle: Text('現在の設定：${orderOfNotesMap[snapshot.data]}'),
+          onTap: () async {},
         );
       },
     );

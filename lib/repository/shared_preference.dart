@@ -32,14 +32,14 @@ void saveThemeColor(Color color) async {
 ///
 /// メモの並び順
 ///
-List<String> orderOfNotesList = [
-  'text ASC',
-  'text DESC',
-  'createdAt DESC',
-  'createdAt ASC',
-  'updatedAt DESC',
-  'updatedAt ASC',
-];
+Map<String, String> orderOfNotesMap = {
+  'text ASC': '本文の昇順',
+  'text DESC': '本文の降順',
+  'createdAt DESC': '作成日の新しい順',
+  'createdAt ASC': '作成日の古い順',
+  'updatedAt DESC': '変更日の新しい順',
+  'updatedAt ASC': '変更日の古い順',
+};
 
 Future<String> getOrderOfNotesSetting() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();

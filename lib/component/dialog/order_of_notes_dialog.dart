@@ -11,23 +11,21 @@ class OrderOfNotesDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(setting);
     final dialog = SimpleDialog(
-      children: [
-        OrderOfNotesDialogOption(setting, 'text ASC', '本文の昇順', selectCallback),
-        OrderOfNotesDialogOption(setting, 'text DESC', '本文の降順', selectCallback),
-        OrderOfNotesDialogOption(
-            setting, 'createdAt DESC', '作成日の新しい順', selectCallback),
-        OrderOfNotesDialogOption(
-            setting, 'createdAt ASC', '作成日の古い順', selectCallback),
-        OrderOfNotesDialogOption(
-            setting, 'updatedAt DESC', '変更日の新しい順', selectCallback),
-        OrderOfNotesDialogOption(
-            setting, 'updatedAt ASC', '変更日の古い順', selectCallback),
-      ],
+      children: getDialogOptions(setting, selectCallback),
     );
     return dialog;
   }
+}
+
+List<Widget> getDialogOptions(String savedSetting, Function onPressed) {
+  List<Widget> list = List<Widget>();
+  orderOfNotesMap.keys.forEach((key) {
+    final option = OrderOfNotesDialogOption(
+        savedSetting, key, orderOfNotesMap[key], onPressed);
+    list.add(option);
+  });
+  return list;
 }
 
 class OrderOfNotesDialogOption extends StatelessWidget {

@@ -49,4 +49,13 @@ class SettingsModel extends ChangeNotifier {
     notifyListeners();
     saveFolderDefaultColor(color);
   }
+
+  ///
+  /// ノートの並び順設定
+  ///
+  String orderBy;
+
+  Future<String> getSortOrder() async {
+    return await getOrderOfNotesSetting();
+  }
 }
