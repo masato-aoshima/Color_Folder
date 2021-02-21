@@ -1,6 +1,6 @@
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sort_note/component/text/text_setting_heading.dart';
@@ -30,19 +30,59 @@ class SettingsPage extends HookWidget {
           child: ListView(
             children: [
               TextSettingHeading('テーマ'),
-              ListTile(
-                leading: Icon(Icons.color_lens_outlined),
-                title: Text('テーマ'),
-                subtitle: Text('アプリのテーマを設定します'),
-                trailing: ColorIndicator(
-                  width: 44,
-                  height: 44,
-                  borderRadius: 4,
-                  color: Colors.blue,
-                ),
-              ),
+              ColorPickerListTile(provider),
             ],
           ),
         ));
+  }
+}
+
+// アプリのテーマ設定
+class ColorPickerListTile extends StatelessWidget {
+  ColorPickerListTile(this.provider);
+
+  final SettingsModel provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: provider.getColor(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return ListTile(
+          leading: Icon(Icons.color_lens, color: snapshot.data),
+          title: Text('テーマ'),
+          subtitle: Text('アプリのテーマを設定します'),
+          onTap: () {
+            showDialog(
+              context: context,
+              child: AlertDialog(
+                content: SingleChildScrollView(
+                  child: ColorPicker(
+                    pickerColor: snapshot.data,
+                    showLabel: false,
+                    pickerAreaHeightPercent: 0.8,
+                    onColorChanged: (Color value) {
+                      provider.pickerColor = value;
+                    },
+                  ),
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: const Text('決定'),
+                    onPressed: () {
+                      provider.onColorSelected(context);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }

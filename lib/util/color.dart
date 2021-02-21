@@ -63,3 +63,10 @@ String colorToString(Color color) {
   final rawColorString = color.toString();
   return rawColorString.substring(10, 16);
 }
+
+/// Color -> 10桁の16進数への変換
+/// 例：Color(0xffcddc39) -> 0xffcddc39　へ
+String rawColorToString(Color color) {
+  final rawColorString = color.toString();
+  return rawColorString.substring(6, 16);
+}

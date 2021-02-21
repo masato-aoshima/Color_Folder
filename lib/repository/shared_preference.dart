@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sort_note/util/color.dart';
 
 class SharedPreferencesKey {
   // アプリのテーマカラー
@@ -15,6 +18,12 @@ Future<String> getThemeColorString() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString(SharedPreferencesKey.keyThemeColor) ??
       '0xff1995AD'; // デフォルトのテーマカラーをここで決める
+}
+
+void saveThemeColor(Color color) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final saveColor = rawColorToString(color);
+  prefs.setString(SharedPreferencesKey.keyThemeColor, saveColor);
 }
 
 ///
