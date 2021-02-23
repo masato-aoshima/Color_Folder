@@ -39,7 +39,8 @@ class SettingsPage extends HookWidget {
               FolderColorSelectListTile(provider),
               TextSettingHeading('ノート'),
               SortNoteListTile(provider),
-              NoteDateDisplayListTile(provider)
+              NoteDateDisplayListTile(provider),
+              WordCountListTile(provider)
             ],
           ),
         ));
@@ -227,5 +228,38 @@ class NoteDateDisplayListTile extends StatelessWidget {
       list.add(option);
     });
     return list;
+  }
+}
+
+// 現在の文字数の表示
+class WordCountListTile extends StatelessWidget {
+  WordCountListTile(this.provider);
+
+  final SettingsModel provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: provider.getWordCountDisplaySetting(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return SwitchListTile(
+          secondary: Icon(
+            Icons.textsms_outlined,
+            size: 30,
+            color: getWhiteOrBlack(getScaffoldColor(context)),
+          ),
+          title: Text('現在の文字数を表示'),
+          subtitle: Text('現在の設定：${snapshot.data == true ? 'ON' : 'OFF'}'),
+          value: snapshot.data,
+          onChanged: (bool value) async {
+            await saveWordCountSetting(value);
+            provider.onRefresh();
+          },
+        );
+      },
+    );
   }
 }

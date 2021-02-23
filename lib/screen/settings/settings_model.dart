@@ -67,4 +67,12 @@ class SettingsModel extends ChangeNotifier {
   Future<String> getDateDisplaySetting() async {
     return await getDisplaySubtitleSetting();
   }
+
+  ///
+  /// 現在の文字数を表示するかどうかの設定
+  ///
+
+  Future<bool> getWordCountDisplaySetting() async {
+    return await getWordCountSetting();
+  }
 }

@@ -78,10 +78,12 @@ class NoteListPage extends HookWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           // メモ追加ページに移動
+          final isWordCountSetting = await getWordCountSetting();
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NoteAddEditPage(null, folder),
+                builder: (context) =>
+                    NoteAddEditPage(null, folder, isWordCountSetting),
               )).then((value) {
             provider.getNotesNotify(folder.id);
           });
@@ -108,11 +110,13 @@ class NoteListPage extends HookWidget {
               note: note,
               dateDisplaySetting: dateDisplaySetting,
               onTapCallback: () async {
+                final isWordCountSetting = await getWordCountSetting();
                 // メモ編集ページに移動
                 await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NoteAddEditPage(note, folder),
+                      builder: (context) =>
+                          NoteAddEditPage(note, folder, isWordCountSetting),
                     )).then((value) {
                   provider.getNotesNotify(folder.id);
                 });

@@ -16,10 +16,11 @@ import 'note_add_edit_model.dart';
 final noteAddEditProvider = ChangeNotifierProvider((ref) => NoteAddEditModel());
 
 class NoteAddEditPage extends HookWidget {
-  NoteAddEditPage(this.note, this.folder);
+  NoteAddEditPage(this.note, this.folder, this.isWordCount);
 
   final Note note;
   final Folder folder;
+  final isWordCount;
 
   @override
   Widget build(BuildContext context) {
@@ -43,91 +44,107 @@ class NoteAddEditPage extends HookWidget {
         return Future.value(false);
       },
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: folder.color,
-            titleSpacing: 0,
-            iconTheme: IconThemeData(color: getWhiteOrBlack(folder.color)),
-            title: Row(children: [
-              FolderSmallIcon(
-                color: folder.color,
-              ),
-              SizedBox(
-                width: 6,
-              ),
-              Text(
-                folder.title,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: getWhiteOrBlack(folder.color)),
-              ),
-            ]),
-            actions: [
-              NoteAddEditPagePopupMenu(
-                moveCallback: () async {
-                  if (provider.inputText == null ||
-                      provider.inputText.isEmpty) {
-                    showEmptyTextToast();
-                  } else {
-                    final newNote = Note(
-                        id: note == null ? null : note.id,
-                        text: provider.inputText,
-                        folderId: folder.id);
-                    await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                MoveAnotherFolderPage(newNote, null),
-                            fullscreenDialog: true));
-                    Navigator.pop(context);
-                  }
-                },
-                deleteCallback: () async {
-                  // 削除確認ダイアログ表示
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('このノートを削除しますか？'),
-                          content: Text('この操作は取り消せません。'),
-                          actions: [
-                            // ボタン領域
-                            FlatButton(
-                              child: Text(
-                                "キャンセル",
-                              ),
-                              onPressed: () async => Navigator.pop(context),
-                            ),
-                            FlatButton(
-                              child: Text(
-                                "削除",
-                                style: TextStyle(color: Colors.red),
-                              ),
-                              onPressed: () async {
-                                if (note != null) {
-                                  await provider.deleteNote(note.id);
-                                }
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
-                        );
-                      });
-                },
-              )
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: myController,
-              onChanged: provider.changeText,
-              maxLines: null,
-              expands: true,
-              autofocus: note == null,
-              style: TextStyle(fontSize: 20),
+        appBar: AppBar(
+          backgroundColor: folder.color,
+          titleSpacing: 0,
+          iconTheme: IconThemeData(color: getWhiteOrBlack(folder.color)),
+          title: Row(children: [
+            FolderSmallIcon(
+              color: folder.color,
             ),
-          )),
+            SizedBox(
+              width: 6,
+            ),
+            Text(
+              folder.title,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: getWhiteOrBlack(folder.color)),
+            ),
+          ]),
+          actions: [
+            NoteAddEditPagePopupMenu(
+              moveCallback: () async {
+                if (provider.inputText == null || provider.inputText.isEmpty) {
+                  showEmptyTextToast();
+                } else {
+                  final newNote = Note(
+                      id: note == null ? null : note.id,
+                      text: provider.inputText,
+                      folderId: folder.id);
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MoveAnotherFolderPage(newNote, null),
+                          fullscreenDialog: true));
+                  Navigator.pop(context);
+                }
+              },
+              deleteCallback: () async {
+                // 削除確認ダイアログ表示
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('このノートを削除しますか？'),
+                        content: Text('この操作は取り消せません。'),
+                        actions: [
+                          // ボタン領域
+                          FlatButton(
+                            child: Text(
+                              "キャンセル",
+                            ),
+                            onPressed: () async => Navigator.pop(context),
+                          ),
+                          FlatButton(
+                            child: Text(
+                              "削除",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            onPressed: () async {
+                              if (note != null) {
+                                await provider.deleteNote(note.id);
+                              }
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    });
+              },
+            )
+          ],
+        ),
+        body: isWordCount
+            ? SafeArea(
+                bottom: true,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: myController,
+                    onChanged: provider.changeText,
+                    maxLines: null,
+                    maxLength: TextField.noMaxLength,
+                    expands: true,
+                    autofocus: note == null,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: myController,
+                  onChanged: provider.changeText,
+                  maxLines: null,
+                  expands: true,
+                  autofocus: note == null,
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+      ),
     );
   }
 
