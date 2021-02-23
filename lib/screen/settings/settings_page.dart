@@ -240,43 +240,26 @@ class WordCountListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: provider.getDateDisplaySetting(),
+      future: provider.getWordCountDisplaySetting(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
-        return ListTile(
-          leading: Icon(
+        return SwitchListTile(
+          secondary: Icon(
             Icons.textsms_outlined,
             size: 30,
             color: getWhiteOrBlack(getScaffoldColor(context)),
           ),
           title: Text('現在の文字数を表示'),
-          subtitle: Text('現在の設定：${displaySubtitleMap[snapshot.data]}'),
-          onTap: () {
-            showDialog(
-                context: context,
-                builder: (_) {
-                  return SimpleDialog(
-                    children: getDialogOptions(snapshot.data, () {
-                      Navigator.pop(context);
-                      provider.onRefresh();
-                    }),
-                  );
-                });
+          subtitle: Text('現在の設定：${snapshot.data == true ? 'ON' : 'OFF'}'),
+          value: snapshot.data,
+          onChanged: (bool value) async {
+            await saveWordCountSetting(value);
+            provider.onRefresh();
           },
         );
       },
     );
-  }
-
-  List<Widget> getDialogOptions(String savedSetting, Function onPressed) {
-    List<Widget> list = List<Widget>();
-    displaySubtitleMap.keys.forEach((key) {
-      final option = CheckIconDialogOption(savedSetting, key,
-          displaySubtitleMap[key], onPressed, DialogType.DisplayDateSetting);
-      list.add(option);
-    });
-    return list;
   }
 }

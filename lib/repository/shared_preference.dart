@@ -101,7 +101,7 @@ Future<bool> getWordCountSetting() async {
   return prefs.getBool(SharedPreferencesKey.keyWordCount) ?? false;
 }
 
-void savWordCountSetting(bool setting) async {
+Future saveWordCountSetting(bool setting) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool(SharedPreferencesKey.keyWordCount, setting);
 }
