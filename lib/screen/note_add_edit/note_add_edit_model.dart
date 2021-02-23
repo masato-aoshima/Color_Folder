@@ -15,6 +15,9 @@ class NoteAddEditModel extends ChangeNotifier {
 
   Future addNoteWhenOnPagePop(Note newNote) async {
     await DBProvider.db.insertNote(newNote);
+    note = null;
+    folder = null;
+    inputText = null;
   }
 
   Future addNoteWhenOnPause(Note newNote) async {
