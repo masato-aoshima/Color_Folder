@@ -39,7 +39,8 @@ class SettingsPage extends HookWidget {
               FolderColorSelectListTile(provider),
               TextSettingHeading('ノート'),
               SortNoteListTile(provider),
-              NoteDateDisplayListTile(provider)
+              NoteDateDisplayListTile(provider),
+              WordCountListTile(provider)
             ],
           ),
         ));
@@ -201,6 +202,56 @@ class NoteDateDisplayListTile extends StatelessWidget {
             color: getWhiteOrBlack(getScaffoldColor(context)),
           ),
           title: Text('ノートのサブタイトル'),
+          subtitle: Text('現在の設定：${displaySubtitleMap[snapshot.data]}'),
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return SimpleDialog(
+                    children: getDialogOptions(snapshot.data, () {
+                      Navigator.pop(context);
+                      provider.onRefresh();
+                    }),
+                  );
+                });
+          },
+        );
+      },
+    );
+  }
+
+  List<Widget> getDialogOptions(String savedSetting, Function onPressed) {
+    List<Widget> list = List<Widget>();
+    displaySubtitleMap.keys.forEach((key) {
+      final option = CheckIconDialogOption(savedSetting, key,
+          displaySubtitleMap[key], onPressed, DialogType.DisplayDateSetting);
+      list.add(option);
+    });
+    return list;
+  }
+}
+
+// 現在の文字数の表示
+class WordCountListTile extends StatelessWidget {
+  WordCountListTile(this.provider);
+
+  final SettingsModel provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: provider.getDateDisplaySetting(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return ListTile(
+          leading: Icon(
+            Icons.textsms_outlined,
+            size: 30,
+            color: getWhiteOrBlack(getScaffoldColor(context)),
+          ),
+          title: Text('現在の文字数を表示'),
           subtitle: Text('現在の設定：${displaySubtitleMap[snapshot.data]}'),
           onTap: () {
             showDialog(

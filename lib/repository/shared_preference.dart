@@ -15,6 +15,9 @@ class SharedPreferencesKey {
 
   // ノートの日付表示
   static const keySubtitleDisplay = 'note_subtitle_display';
+
+  // 現在の文字数を表示するかどうか
+  static const keyWordCount = 'note_word_count';
 }
 
 ///
@@ -88,4 +91,17 @@ Future<String> getDisplaySubtitleSetting() async {
 void saveDisplaySubtitleSetting(String setting) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(SharedPreferencesKey.keySubtitleDisplay, setting);
+}
+
+///
+/// 現在の文字数を表示するかどうか
+///
+Future<bool> getWordCountSetting() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getBool(SharedPreferencesKey.keyWordCount) ?? false;
+}
+
+void savWordCountSetting(bool setting) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool(SharedPreferencesKey.keyWordCount, setting);
 }
