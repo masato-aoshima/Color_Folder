@@ -196,12 +196,12 @@ class NoteDateDisplayListTile extends StatelessWidget {
         }
         return ListTile(
           leading: Icon(
-            Icons.date_range,
+            Icons.subtitles_outlined,
             size: 30,
             color: getWhiteOrBlack(getScaffoldColor(context)),
           ),
-          title: Text('ノートの日付表示'),
-          subtitle: Text('現在の設定：${displayDateMap[snapshot.data]}'),
+          title: Text('ノートのサブタイトル'),
+          subtitle: Text('現在の設定：${displaySubtitleMap[snapshot.data]}'),
           onTap: () {
             showDialog(
                 context: context,
@@ -221,9 +221,9 @@ class NoteDateDisplayListTile extends StatelessWidget {
 
   List<Widget> getDialogOptions(String savedSetting, Function onPressed) {
     List<Widget> list = List<Widget>();
-    displayDateMap.keys.forEach((key) {
+    displaySubtitleMap.keys.forEach((key) {
       final option = CheckIconDialogOption(savedSetting, key,
-          displayDateMap[key], onPressed, DialogType.DisplayDateSetting);
+          displaySubtitleMap[key], onPressed, DialogType.DisplayDateSetting);
       list.add(option);
     });
     return list;

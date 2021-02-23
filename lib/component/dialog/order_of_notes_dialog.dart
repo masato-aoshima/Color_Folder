@@ -66,7 +66,7 @@ class CheckIconDialogOption extends StatelessWidget {
             saveOrderOfNotesSetting(thisSetting);
             break;
           case DialogType.DisplayDateSetting:
-            saveDisplayDateSetting(thisSetting);
+            saveDisplaySubtitleSetting(thisSetting);
             break;
         }
         onPressed(); // TODO ここで設定した内容を返すのもいいかも

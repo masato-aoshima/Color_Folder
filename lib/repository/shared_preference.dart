@@ -14,7 +14,7 @@ class SharedPreferencesKey {
   static const keyOrderOfNotes = 'order_of_notes';
 
   // ノートの日付表示
-  static const keyDateDisplay = 'date_display';
+  static const keySubtitleDisplay = 'note_subtitle_display';
 }
 
 ///
@@ -72,18 +72,20 @@ void saveOrderOfNotesSetting(String setting) async {
 ///
 /// メモの日付表示
 ///
-Map<String, String> displayDateMap = {
+Map<String, String> displaySubtitleMap = {
   'NONE': '表示しない',
+  'TEXT': '本文の続きを表示',
   'CREATE_DATE': '作成日を表示',
   'UPDATE_DATE': '変更日を表示',
 };
 
-Future<String> getDisplayDateSetting() async {
+Future<String> getDisplaySubtitleSetting() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  return prefs.getString(SharedPreferencesKey.keyDateDisplay) ?? 'UPDATE_DATE';
+  return prefs.getString(SharedPreferencesKey.keySubtitleDisplay) ??
+      'UPDATE_DATE';
 }
 
-void saveDisplayDateSetting(String setting) async {
+void saveDisplaySubtitleSetting(String setting) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(SharedPreferencesKey.keyDateDisplay, setting);
+  prefs.setString(SharedPreferencesKey.keySubtitleDisplay, setting);
 }

@@ -65,6 +65,6 @@ class SettingsModel extends ChangeNotifier {
   /// ノートの日付表示設定
   ///
   Future<String> getDateDisplaySetting() async {
-    return await getDisplayDateSetting();
+    return await getDisplaySubtitleSetting();
   }
 }

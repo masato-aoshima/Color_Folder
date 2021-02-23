@@ -64,7 +64,7 @@ class NoteListPage extends HookWidget {
       body: FutureBuilder(
         future: Future.wait([
           provider.getNotes(folder.id),
-          getDisplayDateSetting()
+          getDisplaySubtitleSetting()
         ]), // ここをwaitにする
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
