@@ -17,6 +17,7 @@ class ListItemNoteChecked extends StatelessWidget {
       title: Text(
         note.text.split("\n").first,
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        maxLines: 1,
       ),
       subtitle: getSubtitle() == null ? null : Text(getSubtitle()),
       controlAffinity: ListTileControlAffinity.leading,
@@ -34,9 +35,12 @@ class ListItemNoteChecked extends StatelessWidget {
       case 'NONE':
         break;
       case 'TEXT':
-        subtitle = note.text.split("\n").length > 1
-            ? note.text.split("\n")[1]
-            : note.text.split("\n").first;
+        subtitle = note.text.split("\n").length == 1
+            ? '-'
+            : note.text
+                .split("\n")
+                .skip(1)
+                .firstWhere((text) => text.isNotEmpty);
         break;
       case 'CREATE_DATE':
         subtitle = '作成日：${getJapaneseDate(note.createdAt)}';
