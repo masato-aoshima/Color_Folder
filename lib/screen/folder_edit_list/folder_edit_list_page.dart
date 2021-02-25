@@ -85,13 +85,38 @@ class FolderEditPage extends HookWidget {
             )
           ],
         ),
-        body: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
-          child: ReorderableListView(
-            onReorder: (int oldIndex, int newIndex) {
-              provider.onReorder(oldIndex, newIndex);
-            },
-            children: getList(context, provider),
+        body: SafeArea(
+          bottom: true,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 8,
+              ),
+              Flexible(
+                child: ReorderableListView(
+                  onReorder: (int oldIndex, int newIndex) {
+                    provider.onReorder(oldIndex, newIndex);
+                  },
+                  children: getList(context, provider),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(4.0),
+                child: Center(
+                    child: Text(
+                  '長押しで並び替えができます',
+                  style: TextStyle(color: Colors.black54),
+                )),
+                decoration: BoxDecoration(
+                  border: const Border(
+                    top: const BorderSide(
+                      color: Colors.grey,
+                      width: 1,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
