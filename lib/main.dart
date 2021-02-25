@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/repository/shared_preference.dart';
 import 'package:sort_note/screen/folder_list/folder_list_page.dart';
 import 'package:sort_note/util/color.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   // 1. ProviderScopeで囲む
@@ -26,6 +27,13 @@ class MyApp extends StatelessWidget {
         }, themedWidgetBuilder: (context, theme) {
           // ここに入る
           return MaterialApp(
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: [
+              Locale('ja', 'JP'),
+            ],
             // テーマ変更時リビルドされる
             title: 'Flutter Demo', // TODO
             theme: lightThemeData(context, theme.primaryColor),
