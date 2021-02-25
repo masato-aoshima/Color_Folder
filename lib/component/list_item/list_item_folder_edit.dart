@@ -49,9 +49,6 @@ class _ListItemFolderEditState extends State<ListItemFolderEdit> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              widget.folder.priority.toString(),
-            ),
-            Text(
               '⋮',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),

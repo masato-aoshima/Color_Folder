@@ -16,7 +16,7 @@ Color getScaffoldColor(BuildContext context) {
 
 // 与えられたカラーに対して、白か黒のうち、見やすい方の色を返す
 Color getWhiteOrBlack(Color color) {
-  return color.computeLuminance() > 0.6 ? Colors.black87 : Colors.white;
+  return color.computeLuminance() > 0.65 ? Colors.black87 : Colors.white;
 }
 
 Color getWhiteOrBlackByThemeColor(BuildContext context) {
