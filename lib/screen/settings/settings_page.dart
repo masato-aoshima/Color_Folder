@@ -7,6 +7,7 @@ import 'package:sort_note/component/dialog/order_of_notes_dialog.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/component/text/text_setting_heading.dart';
 import 'package:sort_note/repository/shared_preference.dart';
+import 'package:sort_note/screen/settings/character_size/character_setting_page.dart';
 import 'package:sort_note/screen/settings/folder_default_color/folder_default_color_page.dart';
 import 'package:sort_note/screen/settings/settings_model.dart';
 import 'package:sort_note/util/color.dart';
@@ -287,6 +288,16 @@ class CharacterSizeListTile extends StatelessWidget {
           ),
           title: Text('文字と行間の大きさ'),
           subtitle: Text('文字：　　　行間：'),
+          onTap: () async {
+            final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CharacterSettingPage(),
+                    fullscreenDialog: true));
+            if (result is Color) {
+              provider.saveFolderColor(result);
+            }
+          },
         );
       },
     );
