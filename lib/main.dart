@@ -21,31 +21,50 @@ class MyApp extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         final color = rawStringToColor(snapshot.data);
-        return DynamicTheme(
-            defaultBrightness: Brightness.light,
-            data: (brightness) {
-              return brightThemeData(context, brightness, color);
-            },
-            themedWidgetBuilder: (context, theme) {
-              return MaterialApp(
-                // テーマ変更時リビルドされる
-                title: 'Flutter Demo',
-                theme: theme,
-                home: FolderPage(),
-              );
-            });
+        return DynamicTheme(data: (brightness) {
+          return colorThemeData(color); // 1.ここで作ったthemeが
+        }, themedWidgetBuilder: (context, theme) {
+          // ここに入る
+          return MaterialApp(
+            // テーマ変更時リビルドされる
+            title: 'Flutter Demo', // TODO
+            theme: lightThemeData(context, theme.primaryColor),
+            darkTheme: darkThemeData(context, theme.primaryColor),
+            home: FolderPage(),
+          );
+        });
       },
     );
   }
 }
 
-ThemeData brightThemeData(
-    BuildContext context, Brightness brightness, Color color) {
+ThemeData colorThemeData(Color color) {
+  return ThemeData(primaryColor: color);
+}
+
+ThemeData lightThemeData(BuildContext context, Color color) {
   return ThemeData(
-    brightness: brightness,
+    brightness: Brightness.light,
     primarySwatch: Colors.blue,
     primaryColor: color,
     scaffoldBackgroundColor: Color(0xffF1F1F2),
+    iconTheme: IconThemeData(color: getWhiteOrBlackByThemeColor(context)),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: color, foregroundColor: getWhiteOrBlack(color)),
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: <TargetPlatform, PageTransitionsBuilder>{
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
+  );
+}
+
+ThemeData darkThemeData(BuildContext context, Color color) {
+  return ThemeData(
+    brightness: Brightness.dark,
+    primaryColor: color,
     iconTheme: IconThemeData(color: getWhiteOrBlackByThemeColor(context)),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: color, foregroundColor: getWhiteOrBlack(color)),

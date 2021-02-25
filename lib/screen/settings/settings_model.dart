@@ -25,16 +25,14 @@ class SettingsModel extends ChangeNotifier {
     // sharedPreferences に 保存
     saveThemeColor(pickerColor);
     // appThemeに反映
-    DynamicTheme.of(context)
-        .setThemeData(brightThemeData(context, Brightness.light, pickerColor));
+    DynamicTheme.of(context).setThemeData(colorThemeData(pickerColor));
   }
 
   void onColorSelectedDefault(BuildContext context) {
     // sharedPreferences に 保存
     saveThemeColor(defaultThemeColor);
     // appThemeに反映
-    DynamicTheme.of(context).setThemeData(
-        brightThemeData(context, Brightness.light, defaultThemeColor));
+    DynamicTheme.of(context).setThemeData(colorThemeData(defaultThemeColor));
   }
 
   ///

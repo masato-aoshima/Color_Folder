@@ -105,7 +105,7 @@ class FolderEditPage extends HookWidget {
                 child: Center(
                     child: Text(
                   '長押しで並び替えができます',
-                  style: TextStyle(color: Colors.black54),
+                  style: TextStyle(color: getWhiteOrBlackByThemeColor(context)),
                 )),
                 decoration: BoxDecoration(
                   border: const Border(
