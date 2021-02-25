@@ -45,9 +45,12 @@ class ListItemNote extends StatelessWidget {
       case 'NONE':
         break;
       case 'TEXT':
-        subtitle = note.text.split("\n").length > 1
-            ? note.text.split("\n")[1]
-            : note.text.split("\n").first;
+        subtitle = note.text.split("\n").length == 1
+            ? '-'
+            : note.text
+                .split("\n")
+                .skip(1)
+                .firstWhere((text) => text.isNotEmpty);
         break;
       case 'CREATE_DATE':
         subtitle = '作成日：${getJapaneseDate(note.createdAt)}';
