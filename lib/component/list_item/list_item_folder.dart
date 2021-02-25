@@ -22,6 +22,7 @@ class ListItemFolder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      tileColor: enable ? null : Colors.grey,
       leading: Hero(
         tag: 'folderSmallIcon${folder.id}',
         child: FolderSmallIcon(
@@ -37,9 +38,8 @@ class ListItemFolder extends StatelessWidget {
             notesCount.toString(),
             style: TextStyle(
                 fontSize: 17,
-                color: enable
-                    ? getWhiteOrBlack(getScaffoldColor(context))
-                    : Colors.grey),
+                color:
+                    enable ? getWhiteOrBlack(getScaffoldColor(context)) : null),
           ),
           SizedBox(
             width: 10,
