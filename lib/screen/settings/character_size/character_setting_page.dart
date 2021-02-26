@@ -74,12 +74,17 @@ class _CharacterSettingPageState extends State<CharacterSettingPage> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20))),
-                            CupertinoSlider(
-                              min: 12,
-                              max: 35,
-                              value: _fontSize,
-                              activeColor: Colors.blue,
-                              onChanged: _changeSizeSlider,
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 30),
+                              width: double.infinity,
+                              child: CupertinoSlider(
+                                min: 12,
+                                max: 35,
+                                value: _fontSize,
+                                activeColor: Colors.blue,
+                                onChanged: _changeSizeSlider,
+                              ),
                             ),
                           ],
                         ),
@@ -95,12 +100,17 @@ class _CharacterSettingPageState extends State<CharacterSettingPage> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             )),
-                            CupertinoSlider(
-                              min: 1,
-                              max: 2,
-                              value: _height,
-                              activeColor: Colors.blue,
-                              onChanged: _changeHeightSlider,
+                            Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 30),
+                              child: CupertinoSlider(
+                                min: 1,
+                                max: 2,
+                                value: _height,
+                                activeColor: Colors.blue,
+                                onChanged: _changeHeightSlider,
+                              ),
                             ),
                           ],
                         ),
