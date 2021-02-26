@@ -37,6 +37,16 @@ class _CharacterSettingPageState extends State<CharacterSettingPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          child: const Text(
+                            'デフォルトの設定に戻す',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
                       Spacer(
                         flex: 1,
                       ),
