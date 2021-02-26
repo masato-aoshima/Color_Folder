@@ -18,6 +18,12 @@ class SharedPreferencesKey {
 
   // 現在の文字数を表示するかどうか
   static const keyWordCount = 'note_word_count';
+
+  // 文字の大きさ
+  static const keyFontSize = 'note_font_size';
+
+  // 行間の大きさ (TextField の height)
+  static const keyFontHeight = 'note_font_height';
 }
 
 ///
@@ -104,4 +110,32 @@ Future<bool> getWordCountSetting() async {
 Future saveWordCountSetting(bool setting) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool(SharedPreferencesKey.keyWordCount, setting);
+}
+
+///
+/// 文字の大きさ
+///
+
+Future<double> getFontSizeSetting() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getDouble(SharedPreferencesKey.keyFontSize) ?? 20;
+}
+
+Future saveFontSizeSetting(double setting) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setDouble(SharedPreferencesKey.keyFontSize, setting);
+}
+
+///
+/// 行間の大きさ (文字の高さ)
+///
+
+Future<double> getFontHeightSetting() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getDouble(SharedPreferencesKey.keyFontHeight) ?? 1.16;
+}
+
+Future saveFontHeightSetting(double setting) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setDouble(SharedPreferencesKey.keyFontHeight, setting);
 }

@@ -16,11 +16,14 @@ import 'note_add_edit_model.dart';
 final noteAddEditProvider = ChangeNotifierProvider((ref) => NoteAddEditModel());
 
 class NoteAddEditPage extends HookWidget {
-  NoteAddEditPage(this.note, this.folder, this.isWordCount);
+  NoteAddEditPage(
+      this.note, this.folder, this.isWordCount, this.fontSize, this.fontHeight);
 
   final Note note;
   final Folder folder;
   final isWordCount;
+  final fontSize;
+  final fontHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +132,7 @@ class NoteAddEditPage extends HookWidget {
                     maxLength: TextField.noMaxLength,
                     expands: true,
                     autofocus: note == null,
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: fontSize, height: fontHeight),
                   ),
                 ),
               )
@@ -141,7 +144,7 @@ class NoteAddEditPage extends HookWidget {
                   maxLines: null,
                   expands: true,
                   autofocus: note == null,
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: fontSize, height: fontHeight),
                 ),
               ),
       ),

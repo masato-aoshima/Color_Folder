@@ -7,6 +7,7 @@ import 'package:sort_note/component/dialog/order_of_notes_dialog.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/component/text/text_setting_heading.dart';
 import 'package:sort_note/repository/shared_preference.dart';
+import 'package:sort_note/screen/settings/character_size/character_setting_page.dart';
 import 'package:sort_note/screen/settings/folder_default_color/folder_default_color_page.dart';
 import 'package:sort_note/screen/settings/settings_model.dart';
 import 'package:sort_note/util/color.dart';
@@ -40,7 +41,8 @@ class SettingsPage extends HookWidget {
               TextSettingHeading('ノート'),
               SortNoteListTile(provider),
               NoteDateDisplayListTile(provider),
-              WordCountListTile(provider)
+              WordCountListTile(provider),
+              CharacterSizeListTile(provider)
             ],
           ),
         ));
@@ -247,7 +249,7 @@ class WordCountListTile extends StatelessWidget {
         }
         return SwitchListTile(
           secondary: Icon(
-            Icons.textsms_outlined,
+            Icons.looks_6_outlined,
             size: 30,
             color: getWhiteOrBlack(getScaffoldColor(context)),
           ),
@@ -257,6 +259,44 @@ class WordCountListTile extends StatelessWidget {
           onChanged: (bool value) async {
             await saveWordCountSetting(value);
             provider.onRefresh();
+          },
+        );
+      },
+    );
+  }
+}
+
+// 文字のサイズと幅の設定
+class CharacterSizeListTile extends StatelessWidget {
+  CharacterSizeListTile(this.provider);
+
+  final SettingsModel provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: provider.getWordCountDisplaySetting(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return ListTile(
+          leading: Icon(
+            Icons.format_size,
+            size: 30,
+            color: getWhiteOrBlack(getScaffoldColor(context)),
+          ),
+          title: Text('文字と行間の大きさ'),
+          subtitle: Text('文字：　　　行間：'),
+          onTap: () async {
+            final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CharacterSettingPage(),
+                    fullscreenDialog: true));
+            if (result is Color) {
+              provider.saveFolderColor(result);
+            }
           },
         );
       },
