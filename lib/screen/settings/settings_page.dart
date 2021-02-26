@@ -44,6 +44,7 @@ class SettingsPage extends HookWidget {
               WordCountListTile(provider),
               CharacterSizeListTile(provider),
               TextSettingHeading('その他'),
+              LicenseListTile()
             ],
           ),
         ));
@@ -300,6 +301,20 @@ class CharacterSizeListTile extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+// ライセンス
+class LicenseListTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AboutListTile(
+      icon: Icon(
+        Icons.info_outline,
+        size: 30,
+        color: getWhiteOrBlack(getScaffoldColor(context)),
+      ),
     );
   }
 }
