@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sort_note/repository/shared_preference.dart';
@@ -68,49 +66,43 @@ class _CharacterSettingPageState extends State<CharacterSettingPage> {
                         Spacer(
                           flex: 1,
                         ),
-                        Container(
-                          color: Colors.blue[50],
-                          child: Column(
-                            children: <Widget>[
-                              Center(
-                                  child: Text(
-                                      "文字の大きさ：${_fontSize.toStringAsFixed(1)}",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20))),
-                              CupertinoSlider(
-                                min: 12,
-                                max: 35,
-                                value: _fontSize,
-                                activeColor: Colors.blue,
-                                onChanged: _changeSizeSlider,
-                              ),
-                            ],
-                          ),
+                        Column(
+                          children: <Widget>[
+                            Center(
+                                child: Text(
+                                    "文字の大きさ：${_fontSize.toStringAsFixed(1)}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20))),
+                            CupertinoSlider(
+                              min: 12,
+                              max: 35,
+                              value: _fontSize,
+                              activeColor: Colors.blue,
+                              onChanged: _changeSizeSlider,
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          color: Colors.blue[200],
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Center(
-                                  child: Text(
-                                "行間の大きさ：${_height.toStringAsFixed(1)}",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
-                              )),
-                              CupertinoSlider(
-                                min: 1,
-                                max: 2,
-                                value: _height,
-                                activeColor: Colors.blue,
-                                onChanged: _changeHeightSlider,
-                              ),
-                            ],
-                          ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Center(
+                                child: Text(
+                              "行間の大きさ：${_height.toStringAsFixed(1)}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            )),
+                            CupertinoSlider(
+                              min: 1,
+                              max: 2,
+                              value: _height,
+                              activeColor: Colors.blue,
+                              onChanged: _changeHeightSlider,
+                            ),
+                          ],
                         ),
                         Spacer(
                           flex: 3,
@@ -119,11 +111,20 @@ class _CharacterSettingPageState extends State<CharacterSettingPage> {
                     ),
                   ),
                 ),
+                Container(
+                    color: Colors.grey,
+                    child: SizedBox(
+                      height: orientation == Orientation.portrait
+                          ? 1
+                          : double.infinity,
+                      width: orientation == Orientation.portrait
+                          ? double.infinity
+                          : 1,
+                    )),
                 Flexible(
                   child: Container(
                     height: double.infinity,
                     width: double.infinity,
-                    color: Colors.red,
                     child: Text(
                       '文字のサイズを変更できます文字のサイズを変更できます文字のサイズを変更できます文字のサイズを変更できます文字のサイズを変更できます',
                       style: TextStyle(fontSize: _fontSize, height: _height),
