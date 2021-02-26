@@ -42,7 +42,8 @@ class SettingsPage extends HookWidget {
               SortNoteListTile(provider),
               NoteDateDisplayListTile(provider),
               WordCountListTile(provider),
-              CharacterSizeListTile(provider)
+              CharacterSizeListTile(provider),
+              TextSettingHeading('その他'),
             ],
           ),
         ));
