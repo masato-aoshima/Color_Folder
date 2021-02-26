@@ -79,11 +79,13 @@ class NoteListPage extends HookWidget {
         onPressed: () async {
           // メモ追加ページに移動
           final isWordCountSetting = await getWordCountSetting();
+          final fontSize = await getFontSizeSetting();
+          final fontHeight = await getFontHeightSetting();
           await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    NoteAddEditPage(null, folder, isWordCountSetting),
+                builder: (context) => NoteAddEditPage(
+                    null, folder, isWordCountSetting, fontSize, fontHeight),
               )).then((value) {
             provider.getNotesNotify(folder.id);
           });
@@ -111,12 +113,14 @@ class NoteListPage extends HookWidget {
               dateDisplaySetting: dateDisplaySetting,
               onTapCallback: () async {
                 final isWordCountSetting = await getWordCountSetting();
+                final fontSize = await getFontSizeSetting();
+                final fontHeight = await getFontHeightSetting();
                 // メモ編集ページに移動
                 await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          NoteAddEditPage(note, folder, isWordCountSetting),
+                      builder: (context) => NoteAddEditPage(note, folder,
+                          isWordCountSetting, fontSize, fontHeight),
                     )).then((value) {
                   provider.getNotesNotify(folder.id);
                 });
