@@ -275,7 +275,7 @@ class CharacterSizeListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: provider.getWordCountDisplaySetting(),
+      future: Future.wait([getFontSizeSetting(), getFontHeightSetting()]), //,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -287,16 +287,15 @@ class CharacterSizeListTile extends StatelessWidget {
             color: getWhiteOrBlack(getScaffoldColor(context)),
           ),
           title: Text('文字と行間の大きさ'),
-          subtitle: Text('文字：　　　行間：'),
-          onTap: () async {
-            final result = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CharacterSettingPage(),
-                    fullscreenDialog: true));
-            if (result is Color) {
-              provider.saveFolderColor(result);
-            }
+          subtitle: Text(
+              '文字：${(snapshot.data[0] as double).toStringAsFixed(1)}　　行間：${(snapshot.data[1] as double).toStringAsFixed(1)}'),
+          onTap: () {
+            Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CharacterSettingPage(),
+                        fullscreenDialog: true))
+                .then((value) => provider.onRefresh());
           },
         );
       },
