@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
               Locale('ja', 'JP'),
             ],
             // テーマ変更時リビルドされる
-            title: 'Flutter Demo', // TODO
+            title: 'Color Folder',
             theme: lightThemeData(context, theme.primaryColor),
             darkTheme: darkThemeData(context, theme.primaryColor),
             home: FolderPage(),
