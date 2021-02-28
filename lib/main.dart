@@ -1,4 +1,5 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:sort_note/repository/shared_preference.dart';
@@ -16,12 +17,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getThemeColorString(),
+      future: Future.wait([
+        getThemeColorString(),
+        Firebase.initializeApp(),
+      ]),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
-        final color = rawStringToColor(snapshot.data);
+        final color = rawStringToColor(snapshot.data[0]);
         return DynamicTheme(data: (brightness) {
           return colorThemeData(color); // 1.ここで作ったthemeが
         }, themedWidgetBuilder: (context, theme) {

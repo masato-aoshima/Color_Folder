@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -357,6 +358,8 @@ class PrivacyListTile extends StatelessWidget {
       ),
       title: Text('プライバシーポリシー'),
       onTap: () {
+        print('クラッシュします');
+        FirebaseCrashlytics.instance.crash();
         LaunchReview.launch();
       },
     );
