@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:package_info/package_info.dart';
 import 'package:sort_note/component/dialog/order_of_notes_dialog.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/component/text/text_setting_heading.dart';
@@ -42,7 +43,9 @@ class SettingsPage extends HookWidget {
               SortNoteListTile(provider),
               NoteDateDisplayListTile(provider),
               WordCountListTile(provider),
-              CharacterSizeListTile(provider)
+              CharacterSizeListTile(provider),
+              TextSettingHeading('その他'),
+              LicenseListTile()
             ],
           ),
         ));
@@ -296,6 +299,42 @@ class CharacterSizeListTile extends StatelessWidget {
                         builder: (context) => CharacterSettingPage(),
                         fullscreenDialog: true))
                 .then((value) => provider.onRefresh());
+          },
+        );
+      },
+    );
+  }
+}
+
+// ライセンス
+class LicenseListTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: PackageInfo.fromPlatform(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        final PackageInfo info = snapshot.data;
+        return ListTile(
+          leading: Icon(
+            Icons.info_outline,
+            size: 30,
+            color: getWhiteOrBlack(getScaffoldColor(context)),
+          ),
+          title: Text('このアプリについて'),
+          onTap: () {
+            showAboutDialog(
+                context: context,
+                applicationName: 'Color Folder',
+                applicationVersion: info.version,
+                applicationIcon: Image.asset(
+                  'assets/images/folder_app_icon_fore.png',
+                  width: 100,
+                  height: 100,
+                ),
+                applicationLegalese: '2021 Aocm');
           },
         );
       },
