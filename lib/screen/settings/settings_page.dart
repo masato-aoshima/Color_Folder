@@ -45,7 +45,8 @@ class SettingsPage extends HookWidget {
               WordCountListTile(provider),
               CharacterSizeListTile(provider),
               TextSettingHeading('その他'),
-              LicenseListTile()
+              LicenseListTile(),
+              ReviewListTile()
             ],
           ),
         ));
@@ -337,6 +338,24 @@ class LicenseListTile extends StatelessWidget {
                 applicationLegalese: '2021 Aocm');
           },
         );
+      },
+    );
+  }
+}
+
+// このアプリを評価する
+class ReviewListTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(
+        Icons.rate_review_outlined,
+        size: 30,
+        color: getWhiteOrBlack(getScaffoldColor(context)),
+      ),
+      title: Text('このアプリを評価する'),
+      onTap: () {
+        print('ストアへ遷移');
       },
     );
   }
