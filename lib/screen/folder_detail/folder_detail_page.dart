@@ -112,10 +112,6 @@ class FolderDetailPage extends HookWidget {
                             onChanged: provider.changeText,
                             maxLines: 1,
                             style: TextStyle(fontSize: 20),
-                            autofocus: (provider.inputText == null ||
-                                    provider.inputText.isEmpty)
-                                ? true
-                                : false,
                           ),
                         ),
                         ConstrainedBox(
@@ -194,10 +190,6 @@ class FolderDetailPage extends HookWidget {
                                     onChanged: provider.changeText,
                                     maxLines: 1,
                                     style: TextStyle(fontSize: 20),
-                                    autofocus: (provider.inputText == null ||
-                                            provider.inputText.isEmpty)
-                                        ? true
-                                        : false,
                                   ),
                                 ),
                               ],
