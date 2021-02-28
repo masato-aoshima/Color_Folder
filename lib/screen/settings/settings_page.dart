@@ -317,20 +317,25 @@ class LicenseListTile extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
         final PackageInfo info = snapshot.data;
-        return AboutListTile(
-          icon: Icon(
+        return ListTile(
+          leading: Icon(
             Icons.info_outline,
             size: 30,
             color: getWhiteOrBlack(getScaffoldColor(context)),
           ),
-          applicationName: info.appName, // TODO
-          applicationVersion: info.version,
-          applicationIcon: Image.asset(
-            'assets/images/folder_app_icon_fore.png',
-            width: 100,
-            height: 100,
-          ),
-          applicationLegalese: '2021 Aocm', // TODO
+          title: Text('このアプリについて'),
+          onTap: () {
+            showAboutDialog(
+                context: context,
+                applicationName: 'Color Folder',
+                applicationVersion: info.version,
+                applicationIcon: Image.asset(
+                  'assets/images/folder_app_icon_fore.png',
+                  width: 100,
+                  height: 100,
+                ),
+                applicationLegalese: '2021 Aocm');
+          },
         );
       },
     );
