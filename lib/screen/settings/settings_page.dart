@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -47,6 +48,7 @@ class SettingsPage extends HookWidget {
               CharacterSizeListTile(provider),
               TextSettingHeading('その他'),
               LicenseListTile(),
+              PrivacyListTile(),
               ReviewListTile()
             ],
           ),
@@ -339,6 +341,26 @@ class LicenseListTile extends StatelessWidget {
                 applicationLegalese: '2021 Aocm');
           },
         );
+      },
+    );
+  }
+}
+
+// プライバシーポリシー
+class PrivacyListTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(
+        Icons.person_outline,
+        size: 30,
+        color: getWhiteOrBlack(getScaffoldColor(context)),
+      ),
+      title: Text('プライバシーポリシー'),
+      onTap: () {
+        print('クラッシュします');
+        FirebaseCrashlytics.instance.crash();
+        LaunchReview.launch();
       },
     );
   }
