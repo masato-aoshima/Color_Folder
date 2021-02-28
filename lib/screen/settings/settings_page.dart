@@ -12,6 +12,7 @@ import 'package:sort_note/component/text/text_setting_heading.dart';
 import 'package:sort_note/repository/shared_preference.dart';
 import 'package:sort_note/screen/settings/character_size/character_setting_page.dart';
 import 'package:sort_note/screen/settings/folder_default_color/folder_default_color_page.dart';
+import 'package:sort_note/screen/settings/privacy_policy/privacy_policy_page.dart';
 import 'package:sort_note/screen/settings/settings_model.dart';
 import 'package:sort_note/util/color.dart';
 
@@ -358,9 +359,8 @@ class PrivacyListTile extends StatelessWidget {
       ),
       title: Text('プライバシーポリシー'),
       onTap: () {
-        print('クラッシュします');
-        FirebaseCrashlytics.instance.crash();
-        LaunchReview.launch();
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => PrivacyPolicyPage()));
       },
     );
   }
