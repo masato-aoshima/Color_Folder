@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:package_info/package_info.dart';
 import 'package:sort_note/component/dialog/order_of_notes_dialog.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
@@ -355,7 +356,7 @@ class ReviewListTile extends StatelessWidget {
       ),
       title: Text('このアプリを評価する'),
       onTap: () {
-        print('ストアへ遷移');
+        LaunchReview.launch();
       },
     );
   }
