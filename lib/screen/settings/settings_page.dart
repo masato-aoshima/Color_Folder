@@ -47,6 +47,7 @@ class SettingsPage extends HookWidget {
               CharacterSizeListTile(provider),
               TextSettingHeading('その他'),
               LicenseListTile(),
+              PrivacyListTile(),
               ReviewListTile()
             ],
           ),
@@ -339,6 +340,24 @@ class LicenseListTile extends StatelessWidget {
                 applicationLegalese: '2021 Aocm');
           },
         );
+      },
+    );
+  }
+}
+
+// プライバシーポリシー
+class PrivacyListTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Icon(
+        Icons.person_outline,
+        size: 30,
+        color: getWhiteOrBlack(getScaffoldColor(context)),
+      ),
+      title: Text('プライバシーポリシー'),
+      onTap: () {
+        LaunchReview.launch();
       },
     );
   }
