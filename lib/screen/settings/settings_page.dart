@@ -50,7 +50,7 @@ class SettingsPage extends HookWidget {
               TextSettingHeading('その他'),
               LicenseListTile(),
               PrivacyListTile(),
-              ReviewListTile()
+              // ReviewListTile() TODO 1.0.0では実装しない
             ],
           ),
         ));
