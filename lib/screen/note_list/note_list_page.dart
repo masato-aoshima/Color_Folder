@@ -191,7 +191,7 @@ class NoteListPage extends HookWidget {
           padding: const EdgeInsets.all(10.0),
           child: FittedBox(
               fit: BoxFit.fitWidth,
-              child: Text('+ ボタンを押して、メモを追加しましょう！',
+              child: Text('右下のボタンを押して、メモを追加しましょう！',
                   style: TextStyle(fontSize: 100))),
         ),
       );

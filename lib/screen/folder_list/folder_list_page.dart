@@ -154,7 +154,7 @@ class FolderPage extends HookWidget {
           padding: const EdgeInsets.all(10.0),
           child: FittedBox(
               fit: BoxFit.fitWidth,
-              child: Text('+ ボタンを押して、フォルダーを追加しましょう！',
+              child: Text('右下のボタンを押して、フォルダーを追加しましょう！',
                   style: TextStyle(fontSize: 100))),
         ),
       );
