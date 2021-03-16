@@ -133,10 +133,11 @@ class _CharacterSettingPageState extends State<CharacterSettingPage> {
                     )),
                 Flexible(
                   child: Container(
+                    padding: const EdgeInsets.all(8.0),
                     height: double.infinity,
                     width: double.infinity,
                     child: Text(
-                      '文字のサイズを変更できます文字のサイズを変更できます文字のサイズを変更できます文字のサイズを変更できます文字のサイズを変更できます',
+                      'このように表示されます。\nスライダーを調節して、文字と行間の大きさを変更できます。',
                       style: TextStyle(fontSize: _fontSize, height: _height),
                     ),
                   ),
