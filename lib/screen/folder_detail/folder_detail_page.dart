@@ -111,6 +111,9 @@ class FolderDetailPage extends HookWidget {
                             textAlign: TextAlign.center,
                             onChanged: provider.changeText,
                             maxLines: 1,
+                            decoration: folder != null
+                                ? null
+                                : InputDecoration(hintText: 'フォルダー名を入力'),
                             style: TextStyle(fontSize: 20),
                           ),
                         ),
@@ -134,7 +137,7 @@ class FolderDetailPage extends HookWidget {
                               provider.selectColor(color);
                             },
                             heading: Text(
-                              'フォルダの色を変更できます',
+                              'フォルダーの色を変更できます',
                               style: Theme.of(context).textTheme.headline5,
                             ),
                           ),
@@ -189,6 +192,10 @@ class FolderDetailPage extends HookWidget {
                                     textAlign: TextAlign.center,
                                     onChanged: provider.changeText,
                                     maxLines: 1,
+                                    decoration: folder != null
+                                        ? null
+                                        : InputDecoration(
+                                            hintText: 'フォルダー名を入力'),
                                     style: TextStyle(fontSize: 20),
                                   ),
                                 ),
@@ -221,7 +228,7 @@ class FolderDetailPage extends HookWidget {
                                         provider.selectColor(color);
                                       },
                                       heading: Text(
-                                        'フォルダの色を変更できます',
+                                        'フォルダーの色を変更できます',
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline5,
