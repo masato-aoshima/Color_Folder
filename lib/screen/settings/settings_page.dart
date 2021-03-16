@@ -50,7 +50,7 @@ class SettingsPage extends HookWidget {
               TextSettingHeading('その他'),
               LicenseListTile(),
               PrivacyListTile(),
-              // ReviewListTile() TODO 1.0.0では実装しない
+              ReviewListTile()
             ],
           ),
         ));
@@ -378,7 +378,8 @@ class ReviewListTile extends StatelessWidget {
       ),
       title: Text('このアプリを評価する'),
       onTap: () {
-        LaunchReview.launch();
+        LaunchReview.launch(
+            androidAppId: 'com.aoshima.sort_note', iOSAppId: '1557007173');
       },
     );
   }
