@@ -29,8 +29,14 @@ class NoteAddEditPage extends HookWidget {
   Widget build(BuildContext context) {
     final provider = useProvider(noteAddEditProvider)
       ..note = note
-      ..folder = folder
-      ..inputText = note == null ? '' : note.text;
+      ..folder = folder;
+
+    if (!provider.isFocusChanging) {
+      provider.inputText = note == null ? '' : note.text;
+    }
+
+    provider.isFocusChanging = false;
+
     final myController = TextEditingController(text: provider.inputText);
 
     SystemChannels.lifecycle.setMessageHandler((msg) {
@@ -121,6 +127,22 @@ class NoteAddEditPage extends HookWidget {
                       );
                     });
               },
+            ),
+            Visibility(
+              visible: provider.isTextFieldFocus,
+              child: GestureDetector(
+                child: Center(
+                    child: Text(
+                  '完了',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                },
+              ),
+            ),
+            SizedBox(
+              width: 15,
             )
           ],
         ),
@@ -140,15 +162,22 @@ class NoteAddEditPage extends HookWidget {
                   ),
                 ),
               )
-            : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: myController,
-                  onChanged: provider.changeText,
-                  maxLines: null,
-                  expands: true,
-                  autofocus: note == null,
-                  style: TextStyle(fontSize: fontSize, height: fontHeight),
+            : FocusScope(
+                child: Focus(
+                  onFocusChange: (focus) {
+                    provider.onFocusChange(focus);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: myController,
+                      onChanged: provider.changeText,
+                      maxLines: null,
+                      expands: true,
+                      autofocus: note == null,
+                      style: TextStyle(fontSize: fontSize, height: fontHeight),
+                    ),
+                  ),
                 ),
               ),
       ),

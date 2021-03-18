@@ -9,8 +9,17 @@ class NoteAddEditModel extends ChangeNotifier {
   Folder folder;
   String inputText;
 
+  bool isTextFieldFocus = false;
+  bool isFocusChanging = false;
+
   void changeText(String text) {
     inputText = text;
+  }
+
+  void onFocusChange(bool focus) {
+    isTextFieldFocus = focus;
+    isFocusChanging = true;
+    notifyListeners();
   }
 
   Future addNoteWhenOnPagePop(Note newNote) async {
