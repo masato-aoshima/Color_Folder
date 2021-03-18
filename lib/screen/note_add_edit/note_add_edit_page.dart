@@ -137,10 +137,7 @@ class NoteAddEditPage extends HookWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 )),
                 onTap: () {
-                  final FocusScopeNode currentScope = FocusScope.of(context);
-                  if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
-                    FocusManager.instance.primaryFocus.unfocus();
-                  }
+                  FocusScope.of(context).unfocus();
                 },
               ),
             ),
