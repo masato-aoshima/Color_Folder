@@ -121,6 +121,22 @@ class NoteAddEditPage extends HookWidget {
                       );
                     });
               },
+            ),
+            Visibility(
+              visible: true,
+              child: GestureDetector(
+                child: Center(
+                    child: Text(
+                  '完了',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
+                onTap: () {
+                  print('完了ボタンがタップされました');
+                },
+              ),
+            ),
+            SizedBox(
+              width: 15,
             )
           ],
         ),
