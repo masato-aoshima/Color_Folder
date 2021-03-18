@@ -29,8 +29,14 @@ class NoteAddEditPage extends HookWidget {
   Widget build(BuildContext context) {
     final provider = useProvider(noteAddEditProvider)
       ..note = note
-      ..folder = folder
-      ..inputText = note == null ? '' : note.text;
+      ..folder = folder;
+
+    if (!provider.isFocusChanging) {
+      provider.inputText = note == null ? '' : note.text;
+    }
+
+    provider.isFocusChanging = false;
+
     final myController = TextEditingController(text: provider.inputText);
 
     SystemChannels.lifecycle.setMessageHandler((msg) {

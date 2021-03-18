@@ -10,6 +10,7 @@ class NoteAddEditModel extends ChangeNotifier {
   String inputText;
 
   bool isTextFieldFocus = false;
+  bool isFocusChanging = false;
 
   void changeText(String text) {
     inputText = text;
@@ -17,6 +18,7 @@ class NoteAddEditModel extends ChangeNotifier {
 
   void onFocusChange(bool focus) {
     isTextFieldFocus = focus;
+    isFocusChanging = true;
     notifyListeners();
   }
 
