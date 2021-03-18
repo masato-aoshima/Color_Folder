@@ -123,7 +123,7 @@ class NoteAddEditPage extends HookWidget {
               },
             ),
             Visibility(
-              visible: true,
+              visible: provider.isTextFieldFocus,
               child: GestureDetector(
                 child: Center(
                     child: Text(
@@ -131,7 +131,10 @@ class NoteAddEditPage extends HookWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 )),
                 onTap: () {
-                  print('完了ボタンがタップされました');
+                  final FocusScopeNode currentScope = FocusScope.of(context);
+                  if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+                    FocusManager.instance.primaryFocus.unfocus();
+                  }
                 },
               ),
             ),
@@ -156,15 +159,22 @@ class NoteAddEditPage extends HookWidget {
                   ),
                 ),
               )
-            : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: myController,
-                  onChanged: provider.changeText,
-                  maxLines: null,
-                  expands: true,
-                  autofocus: note == null,
-                  style: TextStyle(fontSize: fontSize, height: fontHeight),
+            : FocusScope(
+                child: Focus(
+                  onFocusChange: (focus) {
+                    provider.onFocusChange(focus);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: myController,
+                      onChanged: provider.changeText,
+                      maxLines: null,
+                      expands: true,
+                      autofocus: note == null,
+                      style: TextStyle(fontSize: fontSize, height: fontHeight),
+                    ),
+                  ),
                 ),
               ),
       ),
