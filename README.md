@@ -12,3 +12,6 @@
 <a href='https://play.google.com/store/apps/details?id=com.aoshima.sort_note&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
   <img width="180" alt='Get it on Google Play' src='https://play.google.com/intl/ja/badges/static/images/badges/en_badge_web_generic.png'/>
 </a>
+
+## 解説記事
+[Flutterでメモ帳アプリを作ったときの話](https://aocm214.hatenablog.com/entry/2021/10/29/130412)
