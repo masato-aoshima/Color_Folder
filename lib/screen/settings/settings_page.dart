@@ -82,37 +82,39 @@ class ColorPickerListTile extends StatelessWidget {
           onTap: () {
             showDialog(
               context: context,
-              child: AlertDialog(
-                content: SingleChildScrollView(
-                  child: ColorPicker(
-                    pickerColor: snapshot.data,
-                    showLabel: false,
-                    pickerAreaHeightPercent: 0.8,
-                    onColorChanged: (Color value) {
-                      provider.pickerColor = value;
-                    },
-                  ),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    child: const Text(
-                      'デフォルトの色に戻す',
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+              builder: (_) {
+                return AlertDialog(
+                  content: SingleChildScrollView(
+                    child: ColorPicker(
+                      pickerColor: snapshot.data,
+                      showLabel: false,
+                      pickerAreaHeightPercent: 0.8,
+                      onColorChanged: (Color value) {
+                        provider.pickerColor = value;
+                      },
                     ),
-                    onPressed: () {
-                      provider.onColorSelectedDefault(context);
-                      Navigator.of(context).pop();
-                    },
                   ),
-                  FlatButton(
-                    child: const Text('決定'),
-                    onPressed: () {
-                      provider.onColorSelected(context);
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: const Text(
+                        'デフォルトの色に戻す',
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                      onPressed: () {
+                        provider.onColorSelectedDefault(context);
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: const Text('決定'),
+                      onPressed: () {
+                        provider.onColorSelected(context);
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
             );
           },
         );
