@@ -15,7 +15,7 @@ import 'note_add_edit_model.dart';
 // 3. Providerモデルクラスをグローバル定数に宣言
 final noteAddEditProvider = ChangeNotifierProvider((ref) => NoteAddEditModel());
 
-class NoteAddEditPage extends HookWidget {
+class NoteAddEditPage extends HookConsumerWidget {
   NoteAddEditPage(
       this.note, this.folder, this.isWordCount, this.fontSize, this.fontHeight);
 
@@ -26,8 +26,8 @@ class NoteAddEditPage extends HookWidget {
   final fontHeight;
 
   @override
-  Widget build(BuildContext context) {
-    final provider = useProvider(noteAddEditProvider)
+  Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(noteAddEditProvider)
       ..note = note
       ..folder = folder;
 

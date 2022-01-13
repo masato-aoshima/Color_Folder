@@ -1,7 +1,7 @@
 import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sort_note/repository/shared_preference.dart';
 import 'package:sort_note/screen/folder_list/folder_list_page.dart';
 import 'package:sort_note/util/color.dart';

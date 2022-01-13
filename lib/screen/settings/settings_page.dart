@@ -19,10 +19,10 @@ import 'package:sort_note/util/color.dart';
 // 3. Providerモデルクラスをグローバル定数に宣言
 final settingsProvider = ChangeNotifierProvider((ref) => SettingsModel());
 
-class SettingsPage extends HookWidget {
+class SettingsPage extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final provider = useProvider(settingsProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(settingsProvider);
 
     return Scaffold(
         appBar: AppBar(

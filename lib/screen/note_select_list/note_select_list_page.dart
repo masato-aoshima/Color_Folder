@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sort_note/component/list_item/list_item_note_checked.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/model/note.dart';
@@ -11,15 +11,15 @@ import 'package:sort_note/util/color.dart';
 
 final noteProvider = ChangeNotifierProvider((ref) => NoteSelectListModel());
 
-class NoteSelectListPage extends HookWidget {
+class NoteSelectListPage extends HookConsumerWidget {
   NoteSelectListPage(this.folder, this.dateDisplaySetting);
 
   final Folder folder;
   final String dateDisplaySetting;
 
   @override
-  Widget build(BuildContext context) {
-    final provider = useProvider(noteProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(noteProvider);
 
     // build完了直後に呼び出されるらしい
     WidgetsBinding.instance.addPostFrameCallback((_) {

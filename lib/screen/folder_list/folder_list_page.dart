@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:hooks_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sort_note/component/list_item/list_item_folder.dart';
 import 'package:sort_note/model/folder.dart';
 import 'package:sort_note/repository/shared_preference.dart';
@@ -17,11 +17,11 @@ import 'folder_list_model.dart';
 // 3. Providerモデルクラスをグローバル定数に宣言
 final folderProvider = ChangeNotifierProvider((ref) => FolderModel());
 
-class FolderPage extends HookWidget {
+class FolderPage extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // 4. 観察する変数を useProvider を使って宣言
-    final provider = useProvider(folderProvider);
+    final provider = ref.watch(folderProvider);
 
     return Scaffold(
       appBar: AppBar(
