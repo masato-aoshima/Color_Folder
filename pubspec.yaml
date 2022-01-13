@@ -29,7 +29,7 @@ dependencies:
   dynamic_theme:
     git:
       url: git://github.com/TesteurManiak/dynamic_theme.git
-      ref: master
+      ref: issue_#63
   flutter_launcher_icons: ^0.8.1
   package_info: ^0.4.3+4
   launch_review: ^2.0.0
