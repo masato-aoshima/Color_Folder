@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sort_note/component/dialog/move_or_delete_dialog.dart';
 import 'package:sort_note/component/dialog/order_of_notes_dialog.dart';
 import 'package:sort_note/component/dialog/text_input_dialog.dart';
@@ -19,15 +19,15 @@ import 'note_list_model.dart';
 // 3. Providerモデルクラスをグローバル定数に宣言
 final noteProvider = ChangeNotifierProvider((ref) => NoteListModel());
 
-class NoteListPage extends HookWidget {
+class NoteListPage extends HookConsumerWidget {
   NoteListPage(this.folder);
 
   final Folder folder;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // 4. 観察する変数を useProvider を使って宣言
-    final provider = useProvider(noteProvider);
+    final provider = ref.watch(noteProvider);
 
     return Scaffold(
       appBar: AppBar(

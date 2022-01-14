@@ -6,6 +6,7 @@ const defaultThemeColor = Color(0xff1995AD);
 
 // アプリのテーマカラーを取得
 Color getThemeColor(BuildContext context) {
+  debugPrint(Theme.of(context).primaryColor.toString());
   return Theme.of(context).primaryColor;
 }
 
