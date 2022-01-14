@@ -126,7 +126,7 @@ class FolderEditPage extends HookConsumerWidget {
 
   List<Widget> getList(BuildContext context, FolderEditModel provider) {
     List<Folder> folders = provider.folders;
-    List<Widget> listItems = List<Widget>();
+    List<Widget> listItems = <Widget>[];
 
     folders.asMap().forEach((int index, Folder folder) {
       listItems.add(Container(

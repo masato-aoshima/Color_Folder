@@ -8,7 +8,7 @@ class MoveAnotherFolderModel extends ChangeNotifier {
   Note note;
   List<Note> noteList;
 
-  var _folders = List<Folder>();
+  var _folders = <Folder>[];
   List<Folder> get folders => _folders;
 
   var _noteCounts = Map<int, int>();

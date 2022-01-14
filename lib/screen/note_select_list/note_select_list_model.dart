@@ -4,7 +4,7 @@ import 'package:sort_note/repository/database.dart';
 
 class NoteSelectListModel extends ChangeNotifier {
   var isInitializeComplete = false;
-  var _notes = List<Note>();
+  var _notes = <Note>[];
 
   List<Note> get notes => _notes;
 
@@ -37,7 +37,7 @@ class NoteSelectListModel extends ChangeNotifier {
   }
 
   List<Note> getCheckedNoteList() {
-    List<Note> noteList = List<Note>();
+    List<Note> noteList = <Note>[];
     checkedNoteIds.forEach((noteId) {
       final note = notes.firstWhere((note) => note.id == noteId);
       noteList.add(note);
@@ -52,7 +52,7 @@ class NoteSelectListModel extends ChangeNotifier {
   }
 
   void clear() {
-    _notes = List<Note>();
+    _notes = <Note>[];
     checkedNoteIds.clear();
     isInitializeComplete = false;
   }

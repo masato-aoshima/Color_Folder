@@ -19,7 +19,7 @@ class OrderOfNotesDialog extends StatelessWidget {
 }
 
 List<Widget> getDialogOptions(String savedSetting, Function onPressed) {
-  List<Widget> list = List<Widget>();
+  List<Widget> list = <Widget>[];
   orderOfNotesMap.keys.forEach((key) {
     final option = CheckIconDialogOption(savedSetting, key,
         orderOfNotesMap[key], onPressed, DialogType.NoteSortSetting);
