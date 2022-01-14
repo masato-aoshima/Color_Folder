@@ -142,7 +142,7 @@ class FolderDetailPage extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text(
                             '保存',
                             style: TextStyle(
@@ -159,7 +159,9 @@ class FolderDetailPage extends HookConsumerWidget {
                               Navigator.pop(context);
                             }
                           },
-                          color: getThemeColor(context),
+                          style: ElevatedButton.styleFrom(
+                              primary: getThemeColor(context)
+                          ),
                         ),
                       ],
                     )),
@@ -236,7 +238,7 @@ class FolderDetailPage extends HookConsumerWidget {
                                     ),
                                   ),
                                 ),
-                                RaisedButton(
+                                ElevatedButton(
                                   child: const Text(
                                     '保存',
                                     style: TextStyle(
@@ -253,7 +255,9 @@ class FolderDetailPage extends HookConsumerWidget {
                                       Navigator.pop(context);
                                     }
                                   },
-                                  color: Theme.of(context).primaryColor,
+                                  style: ElevatedButton.styleFrom(
+                                      primary: getThemeColor(context)
+                                  ),
                                 ),
                               ],
                             ),
