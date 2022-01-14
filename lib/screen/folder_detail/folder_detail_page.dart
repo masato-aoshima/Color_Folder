@@ -1,7 +1,5 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
@@ -60,13 +58,13 @@ class FolderDetailPage extends HookConsumerWidget {
                                   'このフォルダーと、フォルダー内のすべてのノートが削除されます。この操作は取り消せません。'),
                               actions: [
                                 // ボタン領域
-                                FlatButton(
+                                TextButton(
                                   child: Text(
                                     "キャンセル",
                                   ),
                                   onPressed: () => Navigator.pop(context),
                                 ),
-                                FlatButton(
+                                TextButton(
                                   child: Text(
                                     "削除",
                                     style: TextStyle(color: Colors.red),
@@ -142,7 +140,7 @@ class FolderDetailPage extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text(
                             '保存',
                             style: TextStyle(
@@ -159,7 +157,8 @@ class FolderDetailPage extends HookConsumerWidget {
                               Navigator.pop(context);
                             }
                           },
-                          color: getThemeColor(context),
+                          style: ElevatedButton.styleFrom(
+                              primary: getThemeColor(context)),
                         ),
                       ],
                     )),
@@ -236,7 +235,7 @@ class FolderDetailPage extends HookConsumerWidget {
                                     ),
                                   ),
                                 ),
-                                RaisedButton(
+                                ElevatedButton(
                                   child: const Text(
                                     '保存',
                                     style: TextStyle(
@@ -253,7 +252,8 @@ class FolderDetailPage extends HookConsumerWidget {
                                       Navigator.pop(context);
                                     }
                                   },
-                                  color: Theme.of(context).primaryColor,
+                                  style: ElevatedButton.styleFrom(
+                                      primary: getThemeColor(context)),
                                 ),
                               ],
                             ),

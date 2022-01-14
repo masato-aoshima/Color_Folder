@@ -1,8 +1,5 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:package_info/package_info.dart';
@@ -87,6 +84,7 @@ class ColorPickerListTile extends StatelessWidget {
                   content: SingleChildScrollView(
                     child: ColorPicker(
                       pickerColor: snapshot.data,
+                      // ignore: deprecated_member_use
                       showLabel: false,
                       pickerAreaHeightPercent: 0.8,
                       onColorChanged: (Color value) {
@@ -95,7 +93,7 @@ class ColorPickerListTile extends StatelessWidget {
                     ),
                   ),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: const Text(
                         'デフォルトの色に戻す',
                         style: TextStyle(fontSize: 12, color: Colors.grey),
@@ -105,7 +103,7 @@ class ColorPickerListTile extends StatelessWidget {
                         Navigator.of(context).pop();
                       },
                     ),
-                    FlatButton(
+                    TextButton(
                       child: const Text('決定'),
                       onPressed: () {
                         provider.onColorSelected(context);
@@ -233,7 +231,7 @@ class NoteDateDisplayListTile extends StatelessWidget {
   }
 
   List<Widget> getDialogOptions(String savedSetting, Function onPressed) {
-    List<Widget> list = List<Widget>();
+    List<Widget> list = <Widget>[];
     displaySubtitleMap.keys.forEach((key) {
       final option = CheckIconDialogOption(savedSetting, key,
           displaySubtitleMap[key], onPressed, DialogType.DisplayDateSetting);

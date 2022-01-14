@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sort_note/model/note.dart';
 import 'package:sort_note/screen/note_select_list/note_select_list_model.dart';

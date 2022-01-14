@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/model/folder.dart';

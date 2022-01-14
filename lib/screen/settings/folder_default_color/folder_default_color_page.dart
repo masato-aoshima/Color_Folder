@@ -1,7 +1,5 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/util/color.dart';
@@ -76,7 +74,7 @@ class FolderDefaultColorPage extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        RaisedButton(
+                        ElevatedButton(
                           child: Text(
                             '保存',
                             style: TextStyle(
@@ -87,7 +85,8 @@ class FolderDefaultColorPage extends HookConsumerWidget {
                             Navigator.pop(context, provider.color);
                             provider.clear();
                           },
-                          color: getThemeColor(context),
+                          style: ElevatedButton.styleFrom(
+                              primary: getThemeColor(context)),
                         ),
                       ],
                     )),
@@ -146,7 +145,7 @@ class FolderDefaultColorPage extends HookConsumerWidget {
                                     ),
                                   ),
                                 ),
-                                RaisedButton(
+                                ElevatedButton(
                                   child: const Text(
                                     '保存',
                                     style: TextStyle(
@@ -157,7 +156,8 @@ class FolderDefaultColorPage extends HookConsumerWidget {
                                     Navigator.pop(context, provider.color);
                                     provider.clear();
                                   },
-                                  color: Theme.of(context).primaryColor,
+                                  style: ElevatedButton.styleFrom(
+                                      primary: getThemeColor(context)),
                                 ),
                               ],
                             ),

@@ -6,7 +6,7 @@ import 'package:sort_note/repository/database.dart';
 class FolderEditModel extends ChangeNotifier {
   var isInitializeComplete = false;
 
-  var _folders = List<Folder>();
+  var _folders = <Folder>[];
 
   List<Folder> get folders => _folders;
 
@@ -33,7 +33,7 @@ class FolderEditModel extends ChangeNotifier {
   }
 
   void clear() {
-    _folders = List<Folder>();
+    _folders = <Folder>[];
     checkedFolderIds.clear();
     isInitializeComplete = false;
   }

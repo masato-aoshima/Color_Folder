@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sort_note/repository/shared_preference.dart';
 
@@ -19,7 +18,7 @@ class OrderOfNotesDialog extends StatelessWidget {
 }
 
 List<Widget> getDialogOptions(String savedSetting, Function onPressed) {
-  List<Widget> list = List<Widget>();
+  List<Widget> list = <Widget>[];
   orderOfNotesMap.keys.forEach((key) {
     final option = CheckIconDialogOption(savedSetting, key,
         orderOfNotesMap[key], onPressed, DialogType.NoteSortSetting);
