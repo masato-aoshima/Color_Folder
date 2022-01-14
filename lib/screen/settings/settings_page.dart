@@ -1,8 +1,5 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:package_info/package_info.dart';
@@ -87,6 +84,7 @@ class ColorPickerListTile extends StatelessWidget {
                   content: SingleChildScrollView(
                     child: ColorPicker(
                       pickerColor: snapshot.data,
+                      // ignore: deprecated_member_use
                       showLabel: false,
                       pickerAreaHeightPercent: 0.8,
                       onColorChanged: (Color value) {

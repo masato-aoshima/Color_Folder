@@ -1,7 +1,5 @@
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/util/color.dart';
@@ -88,8 +86,7 @@ class FolderDefaultColorPage extends HookConsumerWidget {
                             provider.clear();
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: getThemeColor(context)
-                          ),
+                              primary: getThemeColor(context)),
                         ),
                       ],
                     )),
@@ -160,8 +157,7 @@ class FolderDefaultColorPage extends HookConsumerWidget {
                                     provider.clear();
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      primary: getThemeColor(context)
-                                  ),
+                                      primary: getThemeColor(context)),
                                 ),
                               ],
                             ),
