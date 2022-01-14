@@ -19,12 +19,12 @@ class TextInputDialogState extends State<TextInputDialog> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> actions = [
-      FlatButton(
+      TextButton(
           onPressed: () {
             Navigator.pop(context);
           },
           child: Text('キャンセル')),
-      FlatButton(
+      TextButton(
           onPressed: () {
             String inputText = textEditingController.text.toString();
             Navigator.pop(context, inputText);

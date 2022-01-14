@@ -155,14 +155,14 @@ class NoteListPage extends HookConsumerWidget {
                                   content: Text('この操作は取り消せません。'),
                                   actions: [
                                     // ボタン領域
-                                    FlatButton(
+                                    TextButton(
                                       child: Text(
                                         "キャンセル",
                                       ),
                                       onPressed: () async =>
                                           Navigator.pop(context),
                                     ),
-                                    FlatButton(
+                                    TextButton(
                                       child: Text(
                                         "削除",
                                         style: TextStyle(color: Colors.red),
