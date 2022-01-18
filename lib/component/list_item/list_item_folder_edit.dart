@@ -3,7 +3,10 @@ import 'package:sort_note/component/icon/folder_small_icon.dart';
 import 'package:sort_note/model/folder.dart';
 
 class ListItemFolderEdit extends StatefulWidget {
-  ListItemFolderEdit({this.folder, this.onTapCallback, this.checkedCallback});
+  ListItemFolderEdit(
+      {required this.folder,
+      required this.onTapCallback,
+      required this.checkedCallback});
 
   final Folder folder;
   final Function() onTapCallback;
@@ -16,7 +19,7 @@ class ListItemFolderEdit extends StatefulWidget {
 class _ListItemFolderEditState extends State<ListItemFolderEdit> {
   bool _isCheck = false;
 
-  void _handleCheckbox(bool isCheck) {
+  void _handleCheckbox(bool? isCheck) {
     setState(() {
       _isCheck = isCheck;
     });

@@ -4,7 +4,10 @@ import 'package:sort_note/model/folder.dart';
 
 class MoveOrDeleteDialog extends StatelessWidget {
   MoveOrDeleteDialog(
-      {this.folder, this.noteText, this.moveFunction, this.deleteFunction});
+      {required this.folder,
+      required this.noteText,
+      required this.moveFunction,
+      required this.deleteFunction});
 
   final Folder folder;
   final Function moveFunction;

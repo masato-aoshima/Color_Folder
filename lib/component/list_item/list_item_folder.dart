@@ -5,10 +5,10 @@ import 'package:sort_note/util/color.dart';
 
 class ListItemFolder extends StatelessWidget {
   ListItemFolder({
-    this.folder,
+    required this.folder,
     this.notesCount = 0,
-    this.callback,
-    this.longPressCallback,
+    required this.callback,
+    required this.longPressCallback,
     this.enable = true,
   });
 

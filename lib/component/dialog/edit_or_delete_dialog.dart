@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sort_note/component/icon/folder_small_icon.dart';
 
 class EditOrDeleteDialog extends StatelessWidget {
-  EditOrDeleteDialog({this.title, this.editFunction, this.deleteFunction});
+  EditOrDeleteDialog(
+      {required this.title,
+      required this.editFunction,
+      required this.deleteFunction});
 
   final String title;
   final Function editFunction;

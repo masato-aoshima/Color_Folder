@@ -21,7 +21,7 @@ List<Widget> getDialogOptions(String savedSetting, Function onPressed) {
   List<Widget> list = <Widget>[];
   orderOfNotesMap.keys.forEach((key) {
     final option = CheckIconDialogOption(savedSetting, key,
-        orderOfNotesMap[key], onPressed, DialogType.NoteSortSetting);
+        orderOfNotesMap[key]!, onPressed, DialogType.NoteSortSetting);
     list.add(option);
   });
   return list;
