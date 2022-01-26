@@ -20,9 +20,10 @@ class _ListItemFolderEditState extends State<ListItemFolderEdit> {
   bool _isCheck = false;
 
   void _handleCheckbox(bool? isCheck) {
-    setState(() {
-      _isCheck = isCheck;
-    });
+    if (isCheck == null)
+      return setState(() {
+        _isCheck = isCheck!;
+      });
     widget.checkedCallback(isCheck);
   }
 

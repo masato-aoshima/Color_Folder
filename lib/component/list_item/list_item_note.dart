@@ -4,10 +4,10 @@ import 'package:sort_note/util/date.dart';
 
 class ListItemNote extends StatelessWidget {
   ListItemNote(
-      {this.note,
-      this.dateDisplaySetting,
-      this.onTapCallback,
-      this.onLongPressCallback});
+      {required this.note,
+      required this.dateDisplaySetting,
+      required this.onTapCallback,
+      required this.onLongPressCallback});
 
   final Note note;
   final String dateDisplaySetting;
@@ -25,7 +25,7 @@ class ListItemNote extends StatelessWidget {
       subtitle: getSubtitle() == null
           ? null
           : Text(
-              getSubtitle(),
+              getSubtitle()!,
             ),
       trailing: Icon(Icons.navigate_next),
       onTap: () {
@@ -38,8 +38,8 @@ class ListItemNote extends StatelessWidget {
     );
   }
 
-  String getSubtitle() {
-    String subtitle;
+  String? getSubtitle() {
+    String? subtitle;
     switch (dateDisplaySetting) {
       case 'NONE':
         break;

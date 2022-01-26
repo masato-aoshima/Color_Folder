@@ -4,7 +4,10 @@ import 'package:sort_note/screen/note_select_list/note_select_list_model.dart';
 import 'package:sort_note/util/date.dart';
 
 class ListItemNoteChecked extends StatelessWidget {
-  ListItemNoteChecked({this.note, this.dateDisplaySetting, this.provider});
+  ListItemNoteChecked(
+      {required this.note,
+      required this.dateDisplaySetting,
+      required this.provider});
 
   final Note note;
   final String dateDisplaySetting;
@@ -18,18 +21,20 @@ class ListItemNoteChecked extends StatelessWidget {
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         maxLines: 1,
       ),
-      subtitle: getSubtitle() == null ? null : Text(getSubtitle()),
+      subtitle: getSubtitle() == null ? null : Text(getSubtitle()!),
       controlAffinity: ListTileControlAffinity.leading,
       value: provider.checkedNoteIds.contains(note.id),
-      onChanged: (bool isChecked) {
-        provider.onItemCheck(note.id, isChecked);
+      onChanged: (bool? isChecked) {
+        if(isChecked != null){
+          provider.onItemCheck(note.id, isChecked);
+        }
       },
       isThreeLine: false,
     );
   }
 
-  String getSubtitle() {
-    String subtitle;
+  String? getSubtitle() {
+    String? subtitle;
     switch (dateDisplaySetting) {
       case 'NONE':
         break;
