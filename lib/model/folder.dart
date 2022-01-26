@@ -9,8 +9,8 @@ class Folder {
   final int priority;
 
   Folder(
-      {this.id,
-      this.title,
+      {required this.id,
+      required this.title,
       this.color = defaultFolderColor,
       this.priority = 0});
 

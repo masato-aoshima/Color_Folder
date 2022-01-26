@@ -6,11 +6,11 @@ class Note {
   final int folderId;
 
   Note({
-    this.id,
-    this.text,
-    this.createdAt,
-    this.updatedAt,
-    this.folderId,
+    required this.id,
+    required this.text,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.folderId,
   });
 
   // SQLiteのテーブルにinsertするために、Map型に変換
